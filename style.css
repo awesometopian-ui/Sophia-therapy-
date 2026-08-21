@@ -88,7 +88,7 @@ body {
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     font-weight: 400;
     color: #7a3a4a;
     letter-spacing: 1px;
@@ -651,7 +651,7 @@ body {
     color: #7a3a4a;
 }
 
-.form-group input {
+.form-group input, .form-group select, .form-group textarea {
     width: 100%;
     padding: 0.7rem 1rem;
     border: 2px solid #f0e0e4;
@@ -659,7 +659,13 @@ body {
     font-size: 1rem;
 }
 
-.form-group input:focus {
+.form-group textarea {
+    border-radius: 16px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
     border-color: #d47a8a;
     outline: none;
 }
@@ -841,5 +847,8 @@ hr {
     }
     .modal-content {
         padding: 1.5rem;
+    }
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
