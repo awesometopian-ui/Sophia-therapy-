@@ -6,7 +6,22 @@
     <title>Sophia Message & Therapy</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script async src="https://monetag.io/script.js"></script>
+    
+    <!-- ====== MONETAG AD TAG ====== -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="271938" async data-cfasync="false"></script>
+    
+    <!-- ====== SERVICE WORKER ====== -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(reg) {
+                    console.log('✅ Service Worker registered');
+                })
+                .catch(function(err) {
+                    console.log('❌ Service Worker failed:', err);
+                });
+        }
+    </script>
 </head>
 <body>
 
@@ -23,10 +38,10 @@
 
 <div class="container">
 
-    <!-- Monetag Ad -->
+    <!-- ====== AD 1: TOP BANNER ====== -->
     <div class="ad-container">
         <span class="ad-label">Sponsored</span>
-        <div id="monetag-top"></div>
+        <div id="monetag-top-banner"></div>
     </div>
 
     <!-- Page: Home -->
@@ -73,13 +88,17 @@
             </div>
         </div>
 
+        <!-- ====== AD 2: IN-CONTENT ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-in-content"></div>
+        </div>
+
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-spa"></i>
                 <h3>Services</h3>
-                <ul class="service-list" id="homeServiceList">
-                    <!-- Will be loaded by JavaScript -->
-                </ul>
+                <ul class="service-list" id="homeServiceList"></ul>
             </div>
 
             <div class="card">
@@ -102,6 +121,12 @@
             </div>
         </div>
 
+        <!-- ====== AD 3: MIDDLE ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-middle-banner"></div>
+        </div>
+
         <div class="booking-section">
             <div class="booking-box">
                 <div>
@@ -121,43 +146,71 @@
     <!-- Page: Services -->
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
-        <div class="services-grid" id="servicesGrid">
-            <!-- Will be loaded by JavaScript -->
+        
+        <!-- ====== AD 4: SERVICES TOP ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-services-top"></div>
         </div>
+        
+        <div class="services-grid" id="servicesGrid"></div>
     </div>
 
     <!-- Page: Gallery -->
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
         <p class="gallery-desc">Subscribe to unlock all images. Individual images can also be unlocked with a PIN.</p>
+        
+        <!-- ====== AD 5: GALLERY TOP ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-gallery-top"></div>
+        </div>
+        
         <div class="gallery-grid" id="galleryGrid"></div>
+        
+        <!-- ====== AD 6: GALLERY BOTTOM ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-gallery-bottom"></div>
+        </div>
     </div>
 
     <!-- Page: Videos -->
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
         <p class="gallery-desc">Subscribe to unlock all videos. Individual videos can also be unlocked with a PIN.</p>
+        
+        <!-- ====== AD 7: VIDEOS TOP ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-videos-top"></div>
+        </div>
+        
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
     <!-- Page: Account -->
     <div id="page-account" class="page">
         <h2 class="section-title">My Account</h2>
-        <div id="accountContent">
-            <!-- Will be filled by JavaScript -->
-        </div>
+        <div id="accountContent"></div>
     </div>
 
-    <!-- Book Page (hidden, used by button) -->
+    <!-- Book Page -->
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
+        
+        <!-- ====== AD 8: BOOK TOP ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-book-top"></div>
+        </div>
+        
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-hand-sparkles"></i>
                 <h3>Choose Your Service</h3>
-                <ul class="service-list" id="bookServiceList">
-                    <!-- Will be loaded by JavaScript -->
-                </ul>
+                <ul class="service-list" id="bookServiceList"></ul>
             </div>
             <div class="card">
                 <i class="fas fa-phone"></i>
@@ -224,6 +277,12 @@
                 <i class="fas fa-info-circle"></i> Your unique ID will be generated and sent to you
             </p>
         </div>
+    </div>
+
+    <!-- ====== AD 9: BOTTOM ====== -->
+    <div class="ad-container">
+        <span class="ad-label">Sponsored</span>
+        <div id="monetag-bottom"></div>
     </div>
 
     <!-- Footer -->
