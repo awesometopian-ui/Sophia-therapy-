@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophia Message & Therapy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script async src="https://monetag.io/script.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">Sophia <span>Therapy</span></div>
+    <div class="nav-links">
+        <a href="#" class="active" data-page="home">Home</a>
+        <a href="#" data-page="services">Services</a>
+        <a href="#" data-page="gallery">Gallery</a>
+        <a href="#" data-page="videos">Videos</a>
+        <a href="#" data-page="account">Account</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Monetag Ad -->
+    <div class="ad-container">
+        <span class="ad-label">Sponsored</span>
+        <div id="monetag-top"></div>
+    </div>
+
+    <!-- Page: Home -->
+    <div id="page-home" class="page active">
+        <div class="hero">
+            <h1>Sophia <span>Message & Therapy</span></h1>
+            <div>
+                <span class="tagline">Gentle · Deep · Restorative</span>
+                <span class="badge-us">US Resident Only</span>
+            </div>
+            <div class="hero-info">
+                <span><i class="fas fa-calendar-check"></i> Online Booking</span>
+                <span><i class="fas fa-home"></i> Home Delivery / In-House</span>
+                <span><i class="fas fa-phone-alt"></i> +1 (404) 907-0581</span>
+            </div>
+        </div>
+
+        <!-- Subscription Plans -->
+        <div class="plans-section">
+            <h2 class="section-title">Subscription Plans</h2>
+            <div class="plans-grid">
+                <div class="plan-card featured">
+                    <div class="plan-header">Monthly</div>
+                    <div class="plan-price">$8 <span>/ month</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Access to all images</li>
+                        <li><i class="fas fa-check"></i> Access to all videos</li>
+                        <li><i class="fas fa-check"></i> New content weekly</li>
+                        <li><i class="fas fa-check"></i> Cancel anytime</li>
+                    </ul>
+                    <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">Yearly</div>
+                    <div class="plan-price">$30 <span>/ year</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Access to all images</li>
+                        <li><i class="fas fa-check"></i> Access to all videos</li>
+                        <li><i class="fas fa-check"></i> New content weekly</li>
+                        <li><i class="fas fa-check"></i> Save 68%</li>
+                    </ul>
+                    <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <i class="fas fa-spa"></i>
+                <h3>Services</h3>
+                <ul class="service-list">
+                    <li><i class="fas fa-hand-holding-heart"></i> Therapeutic Massage – $120</li>
+                    <li><i class="fas fa-user-md"></i> Craniosacral Therapy – $150</li>
+                    <li><i class="fas fa-leaf"></i> Aromatherapy & Energy Balance – $100</li>
+                    <li><i class="fas fa-house-chimney"></i> In-House Session – $180+</li>
+                    <li><i class="fas fa-truck"></i> Home Delivery Kit – $60</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-credit-card"></i>
+                <h3>Payment Methods</h3>
+                <div class="payment-icons">
+                    <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
+                    <span><i class="fas fa-coins"></i> Cryptocurrency</span>
+                    <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
+                </div>
+                <p><i class="fas fa-lock"></i> Secure Payment · Upfront Required</p>
+                <div class="contact-block">
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/14049070581" target="_blank">WhatsApp Manager</a>
+                    <span>|</span>
+                    <i class="fas fa-sms"></i>
+                    <a href="sms:+14049070581">Text Message</a>
+                </div>
+                <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery · In-House</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Services -->
+    <div id="page-services" class="page">
+        <h2 class="section-title">Our Services & Pricing</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>Therapeutic Massage</h3>
+                <p>Deep tissue and relaxation massage tailored to your needs.</p>
+                <div class="service-price">$120</div>
+                <div class="service-duration">60-90 minutes</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-user-md"></i></div>
+                <h3>Craniosacral Therapy</h3>
+                <p>Gentle hands-on therapy for the central nervous system.</p>
+                <div class="service-price">$150</div>
+                <div class="service-duration">60 minutes</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-leaf"></i></div>
+                <h3>Aromatherapy & Energy Balance</h3>
+                <p>Essential oils and energy healing for complete wellness.</p>
+                <div class="service-price">$100</div>
+                <div class="service-duration">45-60 minutes</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-house-chimney"></i></div>
+                <h3>In-House Session</h3>
+                <p>We come to your location for a personalized session.</p>
+                <div class="service-price">$180+</div>
+                <div class="service-duration">60-90 minutes</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-truck"></i></div>
+                <h3>Home Delivery Kit</h3>
+                <p>Therapy kit delivered to your door with remote guidance.</p>
+                <div class="service-price">$60</div>
+                <div class="service-duration">Self-guided</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
+                <h3>Video Therapy Session</h3>
+                <p>Remote therapy session via video call.</p>
+                <div class="service-price">$90</div>
+                <div class="service-duration">45 minutes</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Gallery -->
+    <div id="page-gallery" class="page">
+        <h2 class="section-title">Premium Gallery</h2>
+        <p class="gallery-desc">Subscribe to unlock all images. Individual images can also be unlocked with a PIN.</p>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+
+    <!-- Page: Videos -->
+    <div id="page-videos" class="page">
+        <h2 class="section-title">Video Library</h2>
+        <p class="gallery-desc">Subscribe to unlock all videos. Individual videos can also be unlocked with a PIN.</p>
+        <div class="video-grid" id="videoGrid"></div>
+    </div>
+
+    <!-- Page: Account -->
+    <div id="page-account" class="page">
+        <h2 class="section-title">My Account</h2>
+        <div id="accountContent">
+            <!-- Will be filled by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Unlock Modal -->
+    <div class="modal" id="unlockModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2>Unlock Content</h2>
+            <div class="price-display" id="modalPrice">$5.00</div>
+            <p>Pay via WhatsApp to get your unlock PIN</p>
+            <div class="payment-methods">
+                <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
+                <span><i class="fas fa-coins"></i> Crypto</span>
+                <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
+            </div>
+            <a href="https://wa.me/14049070581?text=I%20want%20to%20unlock%20content%20-%20My%20ID%3A%20" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn">
+                <i class="fab fa-whatsapp"></i> Pay & Get PIN
+            </a>
+            <hr>
+            <p>Already have a PIN?</p>
+            <div class="code-input">
+                <input type="text" id="unlockCodeInput" placeholder="Enter PIN" maxlength="10">
+                <button id="unlockCodeBtn">Unlock</button>
+            </div>
+            <div id="unlockMessage"></div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" id="registerClose">&times;</button>
+            <h2>Create Account</h2>
+            <p>Get your unique ID to access premium content</p>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="regName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="regPhone" placeholder="Enter your phone number">
+            </div>
+            <button class="btn" id="registerBtn" style="width:100%; justify-content:center;">Register</button>
+            <div id="registerMessage" style="margin-top:0.5rem;font-weight:500;"></div>
+            <p style="margin-top:1rem;font-size:0.85rem;color:#8a7b6b;">
+                <i class="fas fa-info-circle"></i> Your unique ID will be generated and sent to you
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <i class="fas fa-flag-usa"></i> US Residents Only · Sophia Message & Therapy
+        <br>
+        <span>&copy; 2026 · Online Booking · Home Delivery · <i class="fab fa-whatsapp"></i> +1 (404) 907-0581</span>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
