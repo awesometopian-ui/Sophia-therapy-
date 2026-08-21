@@ -1,4 +1,4 @@
-// ====== ADMIN LOGIC ======
+// ====== ADMIN WITH SUPABASE ======
 
 // ====== LOGIN ======
 var loginScreen = document.getElementById('loginScreen');
@@ -71,134 +71,42 @@ for (var i = 0; i < tabBtns.length; i++) {
     });
 }
 
-// ====== LOAD DATA ======
-var galleryItems = [];
-var videoItems = [];
-var users = [];
-var services = [];
-
-function loadAllData() {
-    loadGallery();
-    loadVideos();
-    loadUsers();
-    loadServices();
+// ====== LOAD FUNCTIONS ======
+async function loadAllData() {
+    await renderImageList();
+    await renderVideoList();
+    await renderServiceList();
+    await renderUsersList();
     renderStats();
-}
-
-function loadGallery() {
-    var saved = localStorage.getItem('sophia_gallery');
-    if (saved) {
-        try { galleryItems = JSON.parse(saved); } catch(e) {}
-    }
-    renderImageList();
-}
-
-function loadVideos() {
-    var saved = localStorage.getItem('sophia_videos');
-    if (saved) {
-        try { videoItems = JSON.parse(saved); } catch(e) {}
-    }
-    renderVideoList();
-}
-
-function loadUsers() {
-    var saved = localStorage.getItem('sophia_users');
-    if (saved) {
-        try { users = JSON.parse(saved); } catch(e) {}
-    }
-    renderUsersList();
-}
-
-function loadServices() {
-    var saved = localStorage.getItem('sophia_services');
-    if (saved) {
-        try { services = JSON.parse(saved); } catch(e) { services = []; }
-    } else {
-        services = [
-            { name: 'Therapeutic Massage', description: 'Deep tissue and relaxation massage tailored to your needs.', price: 120, duration: '60-90 minutes', icon: 'fas fa-hand-holding-heart' },
-            { name: 'Craniosacral Therapy', description: 'Gentle hands-on therapy for the central nervous system.', price: 150, duration: '60 minutes', icon: 'fas fa-user-md' },
-            { name: 'Aromatherapy & Energy Balance', description: 'Essential oils and energy healing for complete wellness.', price: 100, duration: '45-60 minutes', icon: 'fas fa-leaf' },
-            { name: 'In-House Session', description: 'We come to your location for a personalized session.', price: 180, duration: '60-90 minutes', icon: 'fas fa-house-chimney' },
-            { name: 'Home Delivery Kit', description: 'Therapy kit delivered to your door with remote guidance.', price: 60, duration: 'Self-guided', icon: 'fas fa-truck' },
-            { name: 'Video Therapy Session', description: 'Remote therapy session via video call.', price: 90, duration: '45 minutes', icon: 'fas fa-video' }
-        ];
-        localStorage.setItem('sophia_services', JSON.stringify(services));
-    }
-    renderServiceList();
-}
-
-function saveGallery() {
-    localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
-    renderImageList();
-    renderStats();
-    window.dispatchEvent(new StorageEvent('storage', {
-        key: 'sophia_gallery',
-        newValue: JSON.stringify(galleryItems)
-    }));
-}
-
-function saveVideos() {
-    localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
-    renderVideoList();
-    renderStats();
-    window.dispatchEvent(new StorageEvent('storage', {
-        key: 'sophia_videos',
-        newValue: JSON.stringify(videoItems)
-    }));
-}
-
-function saveServices() {
-    localStorage.setItem('sophia_services', JSON.stringify(services));
-    renderServiceList();
-    renderStats();
-    window.dispatchEvent(new StorageEvent('storage', {
-        key: 'sophia_services',
-        newValue: JSON.stringify(services)
-    }));
-}
-
-function renderStats() {
-    document.getElementById('totalImages').textContent = galleryItems.length;
-    document.getElementById('totalVideos').textContent = videoItems.length;
-    document.getElementById('totalUsers').textContent = users.length;
-    document.getElementById('totalServices').textContent = services.length;
-    
-    var active = 0;
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].subscription && users[i].subscription.active) {
-            var endDate = new Date(users[i].subscription.endDate);
-            if (endDate > new Date()) active++;
-        }
-    }
-    document.getElementById('activeSubs').textContent = active;
 }
 
 // ====== RENDER IMAGE LIST ======
-function renderImageList() {
+async function renderImageList() {
     var container = document.getElementById('imageList');
     if (!container) return;
     
-    if (galleryItems.length === 0) {
+    var images = await getImages();
+    
+    if (images.length === 0) {
         container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No images uploaded yet.</p>';
         return;
     }
     
     var html = '';
-    for (var i = 0; i < galleryItems.length; i++) {
-        var item = galleryItems[i];
-        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+    for (var i = 0; i < images.length; i++) {
+        var item = images[i];
         var num = i + 1;
         html += `
             <div class="image-item">
-                <img src="${item.src}" alt="${item.title}">
+                <img src="${item.url}" alt="${item.title}">
                 <div class="info">
                     <div class="title">#${num} - ${item.title || 'Untitled'}</div>
                     <div class="details">Price: $${item.price} · ID: ${item.id}</div>
-                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
+                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${item.pin || 'N/A'}</strong></div>
                 </div>
                 <div>
-                    <button class="copy-btn" onclick="copyPin('${pin}')"><i class="fas fa-copy"></i></button>
-                    <button class="btn-danger" onclick="deleteImage(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                    <button class="copy-btn" onclick="copyText('${item.pin || ''}')"><i class="fas fa-copy"></i></button>
+                    <button class="btn-danger" onclick="deleteImageItem(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         `;
@@ -207,32 +115,32 @@ function renderImageList() {
 }
 
 // ====== RENDER VIDEO LIST ======
-function renderVideoList() {
+async function renderVideoList() {
     var container = document.getElementById('videoList');
     if (!container) return;
     
-    if (videoItems.length === 0) {
+    var videos = await getVideos();
+    
+    if (videos.length === 0) {
         container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No videos uploaded yet.</p>';
         return;
     }
     
     var html = '';
-    for (var i = 0; i < videoItems.length; i++) {
-        var item = videoItems[i];
-        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+    for (var i = 0; i < videos.length; i++) {
+        var item = videos[i];
         var num = i + 1;
-        var thumbnail = item.thumbnail || 'https://via.placeholder.com/60x60/8b3a4a/fff?text=Video';
         html += `
             <div class="video-item">
-                <img src="${thumbnail}" alt="${item.title}">
+                <img src="${item.thumbnail || 'https://via.placeholder.com/60x60/8b3a4a/fff?text=Video'}" alt="${item.title}">
                 <div class="info">
                     <div class="title">#${num} - ${item.title || 'Untitled'}</div>
                     <div class="details">Price: $${item.price} · ID: ${item.id}</div>
-                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
+                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${item.pin || 'N/A'}</strong></div>
                 </div>
                 <div>
-                    <button class="copy-btn" onclick="copyPin('${pin}')"><i class="fas fa-copy"></i></button>
-                    <button class="btn-danger" onclick="deleteVideo(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                    <button class="copy-btn" onclick="copyText('${item.pin || ''}')"><i class="fas fa-copy"></i></button>
+                    <button class="btn-danger" onclick="deleteVideoItem(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         `;
@@ -240,10 +148,12 @@ function renderVideoList() {
     container.innerHTML = html;
 }
 
-// ====== RENDER SERVICES LIST ======
-function renderServiceList() {
+// ====== RENDER SERVICE LIST ======
+async function renderServiceList() {
     var container = document.getElementById('serviceListAdmin');
     if (!container) return;
+    
+    var services = await getServices();
     
     if (services.length === 0) {
         container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No services added yet.</p>';
@@ -264,7 +174,7 @@ function renderServiceList() {
                     <div><span class="price">$${service.price}</span> · <span class="duration">${service.duration || 'N/A'}</span></div>
                 </div>
                 <div>
-                    <button class="btn-danger" onclick="deleteService(${i})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                    <button class="btn-danger" onclick="deleteServiceItem(${service.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         `;
@@ -273,9 +183,11 @@ function renderServiceList() {
 }
 
 // ====== RENDER USERS LIST ======
-function renderUsersList() {
+async function renderUsersList() {
     var container = document.getElementById('usersList');
     if (!container) return;
+    
+    var users = await getUsers();
     
     if (users.length === 0) {
         container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No users registered yet.</p>';
@@ -285,9 +197,12 @@ function renderUsersList() {
     var html = '';
     for (var i = 0; i < users.length; i++) {
         var user = users[i];
-        var status = checkSubscriptionStatus(user.id);
-        var statusClass = status.active ? 'active' : 'inactive';
-        var statusText = status.active ? status.remainingDays + ' days left' : 'Inactive';
+        var statusClass = 'inactive';
+        var statusText = 'Inactive';
+        if (user.subscription === 'active' || user.subscription === 'Active') {
+            statusClass = 'active';
+            statusText = 'Active';
+        }
         
         html += `
             <div class="user-item">
@@ -306,164 +221,82 @@ function renderUsersList() {
     container.innerHTML = html;
 }
 
+// ====== STATS ======
+async function renderStats() {
+    var images = await getImages();
+    var videos = await getVideos();
+    var services = await getServices();
+    var users = await getUsers();
+    
+    document.getElementById('totalImages').textContent = images.length;
+    document.getElementById('totalVideos').textContent = videos.length;
+    document.getElementById('totalServices').textContent = services.length;
+    document.getElementById('totalUsers').textContent = users.length;
+    
+    var active = 0;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].subscription === 'active' || users[i].subscription === 'Active') {
+            active++;
+        }
+    }
+    document.getElementById('activeSubs').textContent = active;
+}
+
 // ====== UPLOAD IMAGE ======
-var imageUploadArea = document.getElementById('imageUploadArea');
-var imageFileInput = document.getElementById('imageFileInput');
-var imagePrice = document.getElementById('imagePrice');
-var imageTitle = document.getElementById('imageTitle');
-var imageUploadBtn = document.getElementById('imageUploadBtn');
-var imageUploadStatus = document.getElementById('imageUploadStatus');
-
-imageUploadArea.addEventListener('click', function() { imageFileInput.click(); });
-imageUploadArea.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#d47a8a';
-    this.style.background = '#fff5f7';
-});
-imageUploadArea.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#f0b8c8';
-    this.style.background = 'white';
-});
-imageUploadArea.addEventListener('drop', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#f0b8c8';
-    this.style.background = 'white';
-    handleImageFiles(e.dataTransfer.files);
-});
-imageFileInput.addEventListener('change', function(e) { handleImageFiles(this.files); });
-
-function handleImageFiles(files) {
-    if (files.length === 0) return;
-    var price = parseInt(imagePrice.value) || 5;
-    if (price < 1) {
-        imageUploadStatus.textContent = 'Price must be at least $1';
-        imageUploadStatus.style.color = '#c0392b';
+document.getElementById('imageUploadBtn').addEventListener('click', async function() {
+    var title = document.getElementById('imageTitle').value.trim();
+    var price = parseInt(document.getElementById('imagePrice').value) || 5;
+    var url = document.getElementById('imageUrl').value.trim();
+    
+    if (!title || !url) {
+        document.getElementById('imageUploadStatus').textContent = 'Please fill in Title and URL';
+        document.getElementById('imageUploadStatus').style.color = '#c0392b';
         return;
     }
     
-    var uploaded = 0;
-    imageUploadStatus.textContent = 'Uploading...';
-    imageUploadStatus.style.color = '#d47a8a';
+    var pin = generatePin();
+    await addImage(title, url, price, pin);
     
-    for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('image/')) continue;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var title = imageTitle.value.trim() || file.name.slice(0, 30);
-            var newItem = {
-                id: Date.now() + Math.floor(Math.random() * 10000),
-                src: e.target.result,
-                price: price,
-                title: title,
-                date: new Date().toISOString()
-            };
-            galleryItems.push(newItem);
-            var pin = generatePin();
-            localStorage.setItem('sophia_pin_' + newItem.id, pin);
-            uploaded++;
-            if (uploaded === files.length) {
-                saveGallery();
-                imageUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
-                imageUploadStatus.style.color = '#2b6e4f';
-                imageTitle.value = '';
-                imageFileInput.value = '';
-                var allPins = '';
-                for (var j = 0; j < galleryItems.length; j++) {
-                    var p = localStorage.getItem('sophia_pin_' + galleryItems[j].id);
-                    allPins += 'Image #' + (j+1) + ': ' + p + '\n';
-                }
-                alert('Upload successful!\n\n' + uploaded + ' image(s) uploaded.\n\nPINs:\n' + allPins);
-            }
-        };
-        reader.readAsDataURL(files[i]);
-    }
-}
-
-imageUploadBtn.addEventListener('click', function() { imageUploadArea.click(); });
+    document.getElementById('imageUploadStatus').textContent = '✅ Image added! PIN: ' + pin;
+    document.getElementById('imageUploadStatus').style.color = '#2b6e4f';
+    
+    document.getElementById('imageTitle').value = '';
+    document.getElementById('imageUrl').value = '';
+    document.getElementById('imagePrice').value = '5';
+    
+    await loadAllData();
+});
 
 // ====== UPLOAD VIDEO ======
-var videoUploadArea = document.getElementById('videoUploadArea');
-var videoFileInput = document.getElementById('videoFileInput');
-var videoPrice = document.getElementById('videoPrice');
-var videoTitle = document.getElementById('videoTitle');
-var videoUploadBtn = document.getElementById('videoUploadBtn');
-var videoUploadStatus = document.getElementById('videoUploadStatus');
-
-videoUploadArea.addEventListener('click', function() { videoFileInput.click(); });
-videoUploadArea.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#d47a8a';
-    this.style.background = '#fff5f7';
-});
-videoUploadArea.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#f0b8c8';
-    this.style.background = 'white';
-});
-videoUploadArea.addEventListener('drop', function(e) {
-    e.preventDefault();
-    this.style.borderColor = '#f0b8c8';
-    this.style.background = 'white';
-    handleVideoFiles(e.dataTransfer.files);
-});
-videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.files); });
-
-function handleVideoFiles(files) {
-    if (files.length === 0) return;
-    var price = parseInt(videoPrice.value) || 8;
-    if (price < 1) {
-        videoUploadStatus.textContent = 'Price must be at least $1';
-        videoUploadStatus.style.color = '#c0392b';
+document.getElementById('videoUploadBtn').addEventListener('click', async function() {
+    var title = document.getElementById('videoTitle').value.trim();
+    var price = parseInt(document.getElementById('videoPrice').value) || 8;
+    var url = document.getElementById('videoUrl').value.trim();
+    
+    if (!title || !url) {
+        document.getElementById('videoUploadStatus').textContent = 'Please fill in Title and URL';
+        document.getElementById('videoUploadStatus').style.color = '#c0392b';
         return;
     }
     
-    var uploaded = 0;
-    videoUploadStatus.textContent = 'Uploading...';
-    videoUploadStatus.style.color = '#d47a8a';
+    var pin = generatePin();
+    await addVideo(title, url, price, pin);
     
-    for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('video/')) continue;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var title = videoTitle.value.trim() || file.name.slice(0, 30);
-            var newItem = {
-                id: Date.now() + Math.floor(Math.random() * 10000),
-                src: e.target.result,
-                price: price,
-                title: title,
-                thumbnail: '',
-                date: new Date().toISOString()
-            };
-            videoItems.push(newItem);
-            var pin = generatePin();
-            localStorage.setItem('sophia_pin_' + newItem.id, pin);
-            uploaded++;
-            if (uploaded === files.length) {
-                saveVideos();
-                videoUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
-                videoUploadStatus.style.color = '#2b6e4f';
-                videoTitle.value = '';
-                videoFileInput.value = '';
-                var allPins = '';
-                for (var j = 0; j < videoItems.length; j++) {
-                    var p = localStorage.getItem('sophia_pin_' + videoItems[j].id);
-                    allPins += 'Video #' + (j+1) + ': ' + p + '\n';
-                }
-                alert('Upload successful!\n\n' + uploaded + ' video(s) uploaded.\n\nPINs:\n' + allPins);
-            }
-        };
-        reader.readAsDataURL(files[i]);
-    }
-}
-
-videoUploadBtn.addEventListener('click', function() { videoUploadArea.click(); });
+    document.getElementById('videoUploadStatus').textContent = '✅ Video added! PIN: ' + pin;
+    document.getElementById('videoUploadStatus').style.color = '#2b6e4f';
+    
+    document.getElementById('videoTitle').value = '';
+    document.getElementById('videoUrl').value = '';
+    document.getElementById('videoPrice').value = '8';
+    
+    await loadAllData();
+});
 
 // ====== ADD SERVICE ======
-document.getElementById('addServiceBtn').addEventListener('click', function() {
+document.getElementById('addServiceBtn').addEventListener('click', async function() {
     var name = document.getElementById('serviceName').value.trim();
     var description = document.getElementById('serviceDescription').value.trim();
-    var price = document.getElementById('servicePrice').value.trim();
+    var price = parseInt(document.getElementById('servicePrice').value);
     var duration = document.getElementById('serviceDuration').value.trim();
     var icon = document.getElementById('serviceIcon').value;
     
@@ -473,18 +306,9 @@ document.getElementById('addServiceBtn').addEventListener('click', function() {
         return;
     }
     
-    var newService = {
-        name: name,
-        description: description || 'Professional therapy service',
-        price: parseFloat(price),
-        duration: duration || '60 minutes',
-        icon: icon || 'fas fa-star'
-    };
+    await addService(name, description, price, duration, icon);
     
-    services.push(newService);
-    saveServices();
-    
-    document.getElementById('serviceStatus').textContent = 'Service added successfully!';
+    document.getElementById('serviceStatus').textContent = '✅ Service added!';
     document.getElementById('serviceStatus').style.color = '#2b6e4f';
     
     document.getElementById('serviceName').value = '';
@@ -492,17 +316,8 @@ document.getElementById('addServiceBtn').addEventListener('click', function() {
     document.getElementById('servicePrice').value = '';
     document.getElementById('serviceDuration').value = '';
     
-    setTimeout(function() {
-        document.getElementById('serviceStatus').textContent = '';
-    }, 3000);
+    await loadAllData();
 });
-
-// ====== DELETE SERVICE ======
-window.deleteService = function(index) {
-    if (!confirm('Delete this service?')) return;
-    services.splice(index, 1);
-    saveServices();
-};
 
 // ====== GENERATE PIN ======
 function generatePin() {
@@ -514,73 +329,26 @@ function generatePin() {
     return pin;
 }
 
-// ====== GENERATE PIN FOR USER ======
-document.getElementById('generatePinBtn').addEventListener('click', function() {
-    var userId = document.getElementById('pinUserId').value.trim();
-    var contentType = document.getElementById('pinContentType').value;
-    var duration = parseInt(document.getElementById('pinDuration').value) || 30;
-    
-    if (!userId) {
-        alert('Please enter a User ID');
-        return;
-    }
-    
-    var usersData = JSON.parse(localStorage.getItem('sophia_users') || '[]');
-    var user = null;
-    for (var i = 0; i < usersData.length; i++) {
-        if (usersData[i].id === userId) {
-            user = usersData[i];
-            break;
-        }
-    }
-    if (!user) {
-        alert('User not found. Please check the ID.');
-        return;
-    }
-    
-    var pin = generatePin();
-    
-    var result = updateUserSubscription(userId, duration, 'monthly');
-    if (result.success) {
-        localStorage.setItem('sophia_user_pin_' + userId, pin);
-        
-        if (contentType === 'all' || contentType === 'image') {
-            for (var j = 0; j < galleryItems.length; j++) {
-                localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin);
-            }
-        }
-        if (contentType === 'all' || contentType === 'video') {
-            for (var k = 0; k < videoItems.length; k++) {
-                localStorage.setItem('sophia_pin_' + videoItems[k].id, pin);
-            }
-        }
-        
-        var resultDiv = document.getElementById('generateResult');
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-            <h4 style="color:#2b6e4f;">PIN Generated Successfully!</h4>
-            <p><strong>User:</strong> ${user.name} (${user.id})</p>
-            <p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#d47a8a;">${pin}</span></p>
-            <p><strong>Duration:</strong> ${duration} days</p>
-            <p><strong>Content:</strong> ${contentType}</p>
-            <button class="copy-btn" onclick="copyText('${pin}')"><i class="fas fa-copy"></i> Copy PIN</button>
-            <br>
-            <a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20${pin}%20for%20User%20ID%3A%20${userId}" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;">
-                <i class="fab fa-whatsapp"></i> Send PIN via WhatsApp
-            </a>
-        `;
-        
-        loadAllData();
-    } else {
-        alert(result.message);
-    }
-});
-
-// ====== COPY FUNCTIONS ======
-window.copyPin = function(pin) {
-    copyText(pin);
+// ====== DELETE FUNCTIONS ======
+window.deleteImageItem = async function(id) {
+    if (!confirm('Delete this image?')) return;
+    await deleteImage(id);
+    await loadAllData();
 };
 
+window.deleteVideoItem = async function(id) {
+    if (!confirm('Delete this video?')) return;
+    await deleteVideo(id);
+    await loadAllData();
+};
+
+window.deleteServiceItem = async function(id) {
+    if (!confirm('Delete this service?')) return;
+    await deleteService(id);
+    await loadAllData();
+};
+
+// ====== COPY FUNCTION ======
 window.copyText = function(text) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(function() {
@@ -603,42 +371,36 @@ function fallbackCopy(text) {
     alert('Copied: ' + text);
 }
 
-// ====== DELETE FUNCTIONS ======
-window.deleteImage = function(id) {
-    if (!confirm('Delete this image?')) return;
-    var newItems = [];
-    for (var i = 0; i < galleryItems.length; i++) {
-        if (galleryItems[i].id !== id) {
-            newItems.push(galleryItems[i]);
-        }
+// ====== GENERATE PIN FOR USER ======
+document.getElementById('generatePinBtn').addEventListener('click', function() {
+    var userId = document.getElementById('pinUserId').value.trim();
+    var duration = parseInt(document.getElementById('pinDuration').value) || 30;
+    
+    if (!userId) {
+        alert('Please enter a User ID');
+        return;
     }
-    galleryItems = newItems;
-    localStorage.removeItem('sophia_pin_' + id);
-    saveGallery();
-    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
-    delete unlocked[id];
-    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
-};
-
-window.deleteVideo = function(id) {
-    if (!confirm('Delete this video?')) return;
-    var newItems = [];
-    for (var i = 0; i < videoItems.length; i++) {
-        if (videoItems[i].id !== id) {
-            newItems.push(videoItems[i]);
-        }
-    }
-    videoItems = newItems;
-    localStorage.removeItem('sophia_pin_' + id);
-    saveVideos();
-    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
-    delete unlocked[id];
-    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
-};
+    
+    var pin = generatePin();
+    
+    var resultDiv = document.getElementById('generateResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+        <h4 style="color:#2b6e4f;">PIN Generated Successfully!</h4>
+        <p><strong>User ID:</strong> ${userId}</p>
+        <p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#d47a8a;">${pin}</span></p>
+        <p><strong>Duration:</strong> ${duration} days</p>
+        <button class="copy-btn" onclick="copyText('${pin}')"><i class="fas fa-copy"></i> Copy PIN</button>
+        <br>
+        <a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20${pin}%20for%20User%20ID%3A%20${userId}" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;">
+            <i class="fab fa-whatsapp"></i> Send PIN via WhatsApp
+        </a>
+    `;
+});
 
 // ====== REFRESH ======
 document.getElementById('refreshImagesBtn').addEventListener('click', function() {
-    loadGallery();
+    loadAllData();
     this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
     setTimeout(function() { 
         this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; 
@@ -646,7 +408,7 @@ document.getElementById('refreshImagesBtn').addEventListener('click', function()
 });
 
 document.getElementById('refreshVideosBtn').addEventListener('click', function() {
-    loadVideos();
+    loadAllData();
     this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
     setTimeout(function() { 
         this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; 
@@ -654,7 +416,7 @@ document.getElementById('refreshVideosBtn').addEventListener('click', function()
 });
 
 document.getElementById('refreshUsersBtn').addEventListener('click', function() {
-    loadUsers();
+    loadAllData();
     this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
     setTimeout(function() { 
         this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; 
@@ -662,7 +424,7 @@ document.getElementById('refreshUsersBtn').addEventListener('click', function() 
 });
 
 document.getElementById('refreshServicesBtn').addEventListener('click', function() {
-    loadServices();
+    loadAllData();
     this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
     setTimeout(function() { 
         this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; 
@@ -672,5 +434,5 @@ document.getElementById('refreshServicesBtn').addEventListener('click', function
 // ====== INIT ======
 checkSession();
 
-console.log('Admin Panel · Ready');
-console.log('Default login: admin / admin123');
+console.log('✅ Admin connected to Supabase!');
+console.log('🔑 Default login: admin / admin123');
