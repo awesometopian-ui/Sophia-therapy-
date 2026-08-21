@@ -3,6 +3,7 @@
 let galleryItems = [];
 let videoItems = [];
 let unlockCodes = {};
+let services = [];
 
 // ====== NAVIGATION ======
 const navLinks = document.querySelectorAll('.nav-links a');
@@ -11,7 +12,8 @@ const pages = {
     services: document.getElementById('page-services'),
     gallery: document.getElementById('page-gallery'),
     videos: document.getElementById('page-videos'),
-    account: document.getElementById('page-account')
+    account: document.getElementById('page-account'),
+    book: document.getElementById('page-book')
 };
 
 navLinks.forEach(link => {
@@ -27,6 +29,8 @@ navLinks.forEach(link => {
         if (page === 'account') loadAccountPage();
         if (page === 'gallery') renderGallery();
         if (page === 'videos') renderVideos();
+        if (page === 'services') renderServices();
+        if (page === 'home') renderHomeServices();
     });
 });
 
@@ -45,9 +49,78 @@ document.querySelectorAll('[data-page]').forEach(el => {
             if (page === 'account') loadAccountPage();
             if (page === 'gallery') renderGallery();
             if (page === 'videos') renderVideos();
+            if (page === 'services') renderServices();
+            if (page === 'home') renderHomeServices();
         }
     });
 });
+
+// ====== SERVICES ======
+function loadServices() {
+    const saved = localStorage.getItem('sophia_services');
+    if (saved) {
+        try { services = JSON.parse(saved); } catch(e) { services = []; }
+    } else {
+        // Default services
+        services = [
+            { name: 'Therapeutic Massage', description: 'Deep tissue and relaxation massage tailored to your needs.', price: 120, duration: '60-90 minutes', icon: 'fas fa-hand-holding-heart' },
+            { name: 'Craniosacral Therapy', description: 'Gentle hands-on therapy for the central nervous system.', price: 150, duration: '60 minutes', icon: 'fas fa-user-md' },
+            { name: 'Aromatherapy & Energy Balance', description: 'Essential oils and energy healing for complete wellness.', price: 100, duration: '45-60 minutes', icon: 'fas fa-leaf' },
+            { name: 'In-House Session', description: 'We come to your location for a personalized session.', price: 180, duration: '60-90 minutes', icon: 'fas fa-house-chimney' },
+            { name: 'Home Delivery Kit', description: 'Therapy kit delivered to your door with remote guidance.', price: 60, duration: 'Self-guided', icon: 'fas fa-truck' },
+            { name: 'Video Therapy Session', description: 'Remote therapy session via video call.', price: 90, duration: '45 minutes', icon: 'fas fa-video' }
+        ];
+        localStorage.setItem('sophia_services', JSON.stringify(services));
+    }
+}
+
+function renderServices() {
+    const grid = document.getElementById('servicesGrid');
+    if (!grid) return;
+    
+    loadServices();
+    
+    let html = '';
+    services.forEach(service => {
+        html += `
+            <div class="service-card">
+                <div class="service-icon"><i class="${service.icon || 'fas fa-star'}"></i></div>
+                <h3>${service.name}</h3>
+                <p>${service.description || 'Professional therapy service'}</p>
+                <div class="service-price">$${service.price}</div>
+                <div class="service-duration">${service.duration || '60 minutes'}</div>
+                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
+            </div>
+        `;
+    });
+    grid.innerHTML = html;
+}
+
+function renderHomeServices() {
+    const container = document.getElementById('homeServiceList');
+    if (!container) return;
+    
+    loadServices();
+    
+    let html = '';
+    services.slice(0, 5).forEach(service => {
+        html += `<li><i class="${service.icon || 'fas fa-star'}"></i> ${service.name} – $${service.price}</li>`;
+    });
+    if (services.length > 5) {
+        html += `<li><i class="fas fa-ellipsis-h"></i> And more...</li>`;
+    }
+    container.innerHTML = html;
+    
+    // Also update book page services
+    const bookList = document.getElementById('bookServiceList');
+    if (bookList) {
+        let bookHtml = '';
+        services.forEach(service => {
+            bookHtml += `<li><i class="${service.icon || 'fas fa-star'}"></i> ${service.name} – $${service.price}</li>`;
+        });
+        bookList.innerHTML = bookHtml;
+    }
+}
 
 // ====== LOAD CONTENT ======
 function loadGallery() {
@@ -188,7 +261,6 @@ function openUnlockModal(id, type) {
         modalPrice.textContent = '$' + item.price + '.00';
     }
     
-    // Update WhatsApp link with user ID
     const currentUser = getCurrentUser();
     if (currentUser) {
         whatsappUnlockBtn.href = `https://wa.me/14049070581?text=I%20want%20to%20unlock%20content%20-%20My%20ID%3A%20${currentUser.id}%20-%20Content%20ID%3A%20${id}`;
@@ -230,7 +302,6 @@ unlockCodeBtn.addEventListener('click', function() {
         unlockCodes[currentUnlockId] = true;
         localStorage.setItem('sophia_unlocked', JSON.stringify(unlockCodes));
         
-        // Also unlock in user account
         const currentUser = getCurrentUser();
         if (currentUser) {
             unlockContent(currentUser.id, currentUnlockId, currentUnlockType);
@@ -287,7 +358,7 @@ registerBtn.addEventListener('click', function() {
     
     const result = registerUser(name, email, phone);
     if (result.success) {
-        registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
+        registerMessage.textContent = 'Account created! Your ID: ' + result.user.id;
         registerMessage.style.color = '#2b6e4f';
         regName.value = '';
         regEmail.value = '';
@@ -354,7 +425,7 @@ function loadAccountPage() {
             <h3 style="text-align:center;">My Account</h3>
             <div class="user-id">
                 <i class="fas fa-id-card"></i> Your ID: ${currentUser.id}
-                <button class="copy-btn" onclick="copyText('${currentUser.id}')" style="margin-left:0.5rem;">
+                <button class="copy-btn" onclick="copyText('${currentUser.id}')" style="margin-left:0.5rem;background:#f8d0d8;border:none;padding:0.2rem 0.8rem;border-radius:30px;cursor:pointer;">
                     <i class="fas fa-copy"></i> Copy
                 </button>
             </div>
@@ -395,26 +466,25 @@ function copyText(text) {
 }
 
 // ====== INIT ======
+loadServices();
 loadGallery();
 loadVideos();
 loadUnlocked();
+renderHomeServices();
+renderServices();
 
-// Check if user is logged in
 const currentUser = getCurrentUser();
 if (currentUser) {
-    // Check subscription status
     const status = checkSubscriptionStatus(currentUser.id);
-    if (!status.active) {
-        // Clean up
-    }
+    if (!status.active) {}
 }
 
-// Listen for storage changes
 window.addEventListener('storage', function(e) {
     if (e.key === 'sophia_gallery') { loadGallery(); renderGallery(); }
     if (e.key === 'sophia_videos') { loadVideos(); renderVideos(); }
     if (e.key === 'sophia_unlocked') { loadUnlocked(); renderGallery(); renderVideos(); }
     if (e.key === 'sophia_current_user') { loadAccountPage(); }
+    if (e.key === 'sophia_services') { loadServices(); renderServices(); renderHomeServices(); }
 });
 
 console.log('Sophia Therapy · Ready');
