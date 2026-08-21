@@ -1,8 +1,8 @@
 // ====== SUPABASE CONNECTION ======
 
-// 🔑 REPLACE WITH YOUR DETAILS
+//
 const SUPABASE_URL = 'https://ytwldarvwlsglrrzftj.supabase.co';
-const SUPABASE_KEY = 'sb_publis...'; // Your publishable key
+const SUPABASE_KEY = 'sb_publishable_UtvoatDB8TCfbkQWVS8MBA_Pvxd9uf_'; //
 
 // ====== GET FUNCTIONS ======
 
