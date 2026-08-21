@@ -77,12 +77,8 @@
             <div class="card">
                 <i class="fas fa-spa"></i>
                 <h3>Services</h3>
-                <ul class="service-list">
-                    <li><i class="fas fa-hand-holding-heart"></i> Therapeutic Massage – $120</li>
-                    <li><i class="fas fa-user-md"></i> Craniosacral Therapy – $150</li>
-                    <li><i class="fas fa-leaf"></i> Aromatherapy & Energy Balance – $100</li>
-                    <li><i class="fas fa-house-chimney"></i> In-House Session – $180+</li>
-                    <li><i class="fas fa-truck"></i> Home Delivery Kit – $60</li>
+                <ul class="service-list" id="homeServiceList">
+                    <!-- Will be loaded by JavaScript -->
                 </ul>
             </div>
 
@@ -105,60 +101,28 @@
                 <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery · In-House</div>
             </div>
         </div>
+
+        <div class="booking-section">
+            <div class="booking-box">
+                <div>
+                    <i class="fas fa-calendar-circle-plus"></i>
+                    <span>Online Booking · US Residents Only</span>
+                </div>
+                <a href="#" class="btn" data-page="book">Book Now</a>
+            </div>
+            <div class="booking-notes">
+                <span><i class="fas fa-circle-check"></i> Pay Upfront to Confirm</span>
+                <span><i class="fas fa-calendar-day"></i> Choose Date via WhatsApp</span>
+                <span><i class="fas fa-location-dot"></i> In-House or Home Delivery</span>
+            </div>
+        </div>
     </div>
 
     <!-- Page: Services -->
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                <h3>Therapeutic Massage</h3>
-                <p>Deep tissue and relaxation massage tailored to your needs.</p>
-                <div class="service-price">$120</div>
-                <div class="service-duration">60-90 minutes</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-user-md"></i></div>
-                <h3>Craniosacral Therapy</h3>
-                <p>Gentle hands-on therapy for the central nervous system.</p>
-                <div class="service-price">$150</div>
-                <div class="service-duration">60 minutes</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-leaf"></i></div>
-                <h3>Aromatherapy & Energy Balance</h3>
-                <p>Essential oils and energy healing for complete wellness.</p>
-                <div class="service-price">$100</div>
-                <div class="service-duration">45-60 minutes</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-house-chimney"></i></div>
-                <h3>In-House Session</h3>
-                <p>We come to your location for a personalized session.</p>
-                <div class="service-price">$180+</div>
-                <div class="service-duration">60-90 minutes</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-truck"></i></div>
-                <h3>Home Delivery Kit</h3>
-                <p>Therapy kit delivered to your door with remote guidance.</p>
-                <div class="service-price">$60</div>
-                <div class="service-duration">Self-guided</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-video"></i></div>
-                <h3>Video Therapy Session</h3>
-                <p>Remote therapy session via video call.</p>
-                <div class="service-price">$90</div>
-                <div class="service-duration">45 minutes</div>
-                <button class="btn btn-small" onclick="showRegister()">Book Now</button>
-            </div>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Will be loaded by JavaScript -->
         </div>
     </div>
 
@@ -184,6 +148,33 @@
         </div>
     </div>
 
+    <!-- Book Page (hidden, used by button) -->
+    <div id="page-book" class="page">
+        <h2 class="section-title">Book a Session</h2>
+        <div class="grid-2">
+            <div class="card">
+                <i class="fas fa-hand-sparkles"></i>
+                <h3>Choose Your Service</h3>
+                <ul class="service-list" id="bookServiceList">
+                    <!-- Will be loaded by JavaScript -->
+                </ul>
+            </div>
+            <div class="card">
+                <i class="fas fa-phone"></i>
+                <h3>Book via WhatsApp</h3>
+                <p>Contact us directly to book your session:</p>
+                <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp +1 (404) 907-0581
+                </a>
+                <p><i class="fas fa-sms"></i> Or text: <strong>+1 (404) 907-0581</strong></p>
+                <div class="book-info">
+                    <p><i class="fas fa-lock"></i> <strong>Pay Upfront</strong> · Apple Pay · Crypto · Bitcoin</p>
+                    <p>US Residents Only · Home Delivery Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Unlock Modal -->
     <div class="modal" id="unlockModal">
         <div class="modal-content">
@@ -196,7 +187,7 @@
                 <span><i class="fas fa-coins"></i> Crypto</span>
                 <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
             </div>
-            <a href="https://wa.me/14049070581?text=I%20want%20to%20unlock%20content%20-%20My%20ID%3A%20" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn">
+            <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn">
                 <i class="fab fa-whatsapp"></i> Pay & Get PIN
             </a>
             <hr>
