@@ -6,6 +6,10 @@
     <title>Admin · Sophia Therapy</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- ====== MONETAG AD TAG ====== -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="271938" async data-cfasync="false"></script>
+    
     <style>
         .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
         .login-screen { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
@@ -81,8 +85,6 @@
         .btn-primary:hover { background: #c06a7a; }
         .btn-danger { background: #c0392b; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
         .btn-danger:hover { background: #a93226; }
-        .btn-success { background: #2b6e4f; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .btn-success:hover { background: #1f573d; }
         .image-list, .video-list, .service-list-admin { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
         .image-item, .video-item, .service-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; }
         .image-item img, .video-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
@@ -112,6 +114,8 @@
         .instructions-box h4 { color: #8b3a4a; }
         .instructions-box ol { padding-left: 1.5rem; color: #3d352c; }
         #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
+        .ad-container { background: #f5ecee; border-radius: 16px; padding: 0.8rem; margin: 1rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
         @media (max-width: 700px) { 
             .admin-grid { grid-template-columns: 1fr; }
             .login-box { padding: 2rem 1.5rem; }
@@ -122,6 +126,12 @@
 <body>
 
 <div class="admin-container">
+
+    <!-- ====== AD: ADMIN TOP ====== -->
+    <div class="ad-container">
+        <span class="ad-label">Sponsored</span>
+        <div id="monetag-admin-top"></div>
+    </div>
 
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
@@ -329,6 +339,12 @@
                 <li>Countdown timer shows remaining days</li>
                 <li>Add services from the Services tab</li>
             </ol>
+        </div>
+
+        <!-- ====== AD: ADMIN BOTTOM ====== -->
+        <div class="ad-container">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-admin-bottom"></div>
         </div>
     </div>
 </div>
