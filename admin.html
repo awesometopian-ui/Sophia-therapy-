@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ====== MONETAG AD TAG ====== -->
-    <script src="https://quge5.com/88/tag.min.js" data-zone="271938" async data-cfasync="false"></script>
+    <!-- ====== ADSTERRA POPUNDER ====== -->
+    <script src="https://pl30955346.effectivecpmnetwork.com/20/df/e5/20dfe5163634eccc1f82d9fb632ccfa6.js"></script>
     
     <style>
         .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
@@ -116,6 +116,7 @@
         #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
         .ad-container { background: #f5ecee; border-radius: 16px; padding: 0.8rem; margin: 1rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
+        .ad-container.hidden { display: none !important; }
         @media (max-width: 700px) { 
             .admin-grid { grid-template-columns: 1fr; }
             .login-box { padding: 2rem 1.5rem; }
@@ -127,12 +128,13 @@
 
 <div class="admin-container">
 
-    <!-- ====== AD: ADMIN TOP ====== -->
-    <div class="ad-container">
+    <!-- AD: ADMIN TOP -->
+    <div class="ad-container" id="ad-admin-top">
         <span class="ad-label">Sponsored</span>
-        <div id="monetag-admin-top"></div>
+        <div id="adsterra-admin-top"></div>
     </div>
 
+    <!-- LOGIN SCREEN -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
             <div class="lock-icon"><i class="fas fa-lock"></i></div>
@@ -153,6 +155,7 @@
         </div>
     </div>
 
+    <!-- ADMIN PANEL -->
     <div class="admin-panel" id="adminPanel">
         <div class="admin-header">
             <h1>Admin <span>·</span> Sophia Therapy</h1>
@@ -162,6 +165,7 @@
             </div>
         </div>
 
+        <!-- STATS -->
         <div class="admin-stats" id="statsContainer">
             <div class="stat-card"><div class="number" id="totalUsers">0</div><div class="label">Users</div></div>
             <div class="stat-card"><div class="number" id="totalServices">0</div><div class="label">Services</div></div>
@@ -170,6 +174,7 @@
             <div class="stat-card"><div class="number" id="activeSubs">0</div><div class="label">Active Subs</div></div>
         </div>
 
+        <!-- TABS -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="images">Images</button>
             <button class="tab-btn" data-tab="videos">Videos</button>
@@ -178,7 +183,7 @@
             <button class="tab-btn" data-tab="generate">Generate PIN</button>
         </div>
 
-        <!-- Images Tab -->
+        <!-- IMAGES TAB -->
         <div class="tab-content active" id="tab-images">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -210,7 +215,7 @@
             </div>
         </div>
 
-        <!-- Videos Tab -->
+        <!-- VIDEOS TAB -->
         <div class="tab-content" id="tab-videos">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -242,7 +247,7 @@
             </div>
         </div>
 
-        <!-- Services Tab -->
+        <!-- SERVICES TAB -->
         <div class="tab-content" id="tab-services">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -293,7 +298,7 @@
             </div>
         </div>
 
-        <!-- Users Tab -->
+        <!-- USERS TAB -->
         <div class="tab-content" id="tab-users">
             <div class="upload-section">
                 <h3><i class="fas fa-users"></i> Registered Users</h3>
@@ -304,7 +309,7 @@
             </div>
         </div>
 
-        <!-- Generate PIN Tab -->
+        <!-- GENERATE PIN TAB -->
         <div class="tab-content" id="tab-generate">
             <div class="upload-section">
                 <h3><i class="fas fa-key"></i> Generate PIN for User</h3>
@@ -329,6 +334,7 @@
             </div>
         </div>
 
+        <!-- INSTRUCTIONS -->
         <div class="instructions-box">
             <h4><i class="fas fa-info-circle"></i> How It Works</h4>
             <ol>
@@ -338,17 +344,22 @@
                 <li>User enters PIN to unlock all content for the duration</li>
                 <li>Countdown timer shows remaining days</li>
                 <li>Add services from the Services tab</li>
+                <li>Premium users see NO ads</li>
             </ol>
         </div>
 
-        <!-- ====== AD: ADMIN BOTTOM ====== -->
-        <div class="ad-container">
+        <!-- AD: ADMIN BOTTOM -->
+        <div class="ad-container" id="ad-admin-bottom">
             <span class="ad-label">Sponsored</span>
-            <div id="monetag-admin-bottom"></div>
+            <div id="adsterra-admin-bottom"></div>
         </div>
     </div>
 </div>
 
 <script src="admin.js"></script>
+
+<!-- ====== ADSTERRA SOCIAL BAR ====== -->
+<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
 </body>
 </html>
