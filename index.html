@@ -5,41 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sophia Message & Therapy</title>
     
-    <!-- NO CACHE META TAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <!-- PRODUCTION CACHE CONTROL -->
     <meta name="cache-control" content="no-cache, no-store, must-revalidate">
     <meta name="pragma" content="no-cache">
     <meta name="expires" content="0">
 
     <script>
     (function () {
-        // Change this number whenever you publish a major new version.
-        var APP_VERSION = '2026.08.22.2';
-
+        var APP_VERSION = '2026.08.22.3';
         var storedVersion = localStorage.getItem('sophia_app_version');
-
         if (storedVersion !== APP_VERSION) {
-            console.log(
-                'New website version detected:',
-                storedVersion,
-                '→',
-                APP_VERSION
-            );
-
+            console.log('New website version detected:', storedVersion, '→', APP_VERSION);
             localStorage.setItem('sophia_app_version', APP_VERSION);
-
             if (!sessionStorage.getItem('sophia_cache_refresh')) {
                 sessionStorage.setItem('sophia_cache_refresh', '1');
-
                 var url = window.location.href.split('#')[0];
-
                 url += (url.indexOf('?') === -1 ? '?' : '&');
                 url += '_v=' + encodeURIComponent(APP_VERSION);
-
                 window.location.replace(url);
             } else {
                 sessionStorage.removeItem('sophia_cache_refresh');
@@ -49,6 +34,8 @@
     </script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- ADSTERRA SOCIAL BAR IS STILL HERE -->
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -169,8 +156,15 @@
         .payment-modal .payment-option:hover { border-color: #d47a8a; transform: scale(1.02); }
         .payment-modal .payment-option i { font-size: 2rem; color: #d47a8a; margin-bottom: 0.5rem; }
         .payment-modal .payment-option .disabled { opacity: 0.5; cursor: not-allowed; }
-        .address-box { background: #f5ecee; padding: 0.8rem; border-radius: 12px; word-break: break-all; font-size: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+        .address-box { background: #f5ecee; padding: 0.8rem; border-radius: 12px; word-break: break-all; font-size: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
         .address-box button { background: #d47a8a; color: white; border: none; padding: 0.3rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
+        .pin-input-group { display: flex; align-items: center; gap: 0.5rem; }
+        .pin-input-group input { flex: 1; }
+        .pin-input-group button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #7a3a4a; padding: 0.5rem; }
+        .pin-input-group button:hover { color: #d47a8a; }
+        .amount-options { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }
+        .amount-options button { background: #f5ecee; border: 2px solid #f0e0e4; border-radius: 30px; padding: 0.3rem 1rem; cursor: pointer; transition: 0.3s; }
+        .amount-options button:hover, .amount-options button.active { border-color: #d47a8a; background: #fff5f7; }
         @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .plans-grid { grid-template-columns: 1fr; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
     </style>
 </head>
@@ -189,6 +183,7 @@
 
 <div class="container">
 
+    <!-- AD 1: TOP -->
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-top"></div></div>
 
     <div id="page-home" class="page active">
@@ -231,6 +226,9 @@
             </div>
         </div>
 
+        <!-- AD 2: IN-CONTENT -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-incontent"></div></div>
+
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-spa"></i>
@@ -244,6 +242,7 @@
                     <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
                     <span><i class="fas fa-coins"></i> Crypto</span>
                     <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
+                    <span><i class="fas fa-gamepad"></i> Razer Gold</span>
                 </div>
                 <p><i class="fas fa-lock"></i> Secure Payment</p>
                 <div class="contact-block">
@@ -256,6 +255,9 @@
                 <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery</div>
             </div>
         </div>
+
+        <!-- AD 3: MIDDLE -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-middle"></div></div>
 
         <div class="booking-section">
             <div class="booking-box">
@@ -271,18 +273,33 @@
 
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
+        
+        <!-- AD 4: SERVICES TOP -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-services-top"></div></div>
+        
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
         <p class="gallery-desc">Subscribe to unlock all content.</p>
+        
+        <!-- AD 5: GALLERY TOP -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-gallery-top"></div></div>
+        
         <div class="gallery-grid" id="galleryGrid"></div>
+        
+        <!-- AD 6: GALLERY BOTTOM -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-gallery-bottom"></div></div>
     </div>
 
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
         <p class="gallery-desc">Subscribe to unlock all videos.</p>
+        
+        <!-- AD 7: VIDEOS TOP -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-videos-top"></div></div>
+        
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
@@ -293,6 +310,10 @@
 
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
+        
+        <!-- AD 8: BOOK TOP -->
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-book-top"></div></div>
+        
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-hand-sparkles"></i>
@@ -316,26 +337,66 @@
             <div class="price-display" id="paymentAmount">$30.00</div>
             <p style="margin-bottom:1rem;">Choose your payment method:</p>
             
-            <div class="payment-option" onclick="selectPayment('apple')">
+            <!-- APPLE PAY -->
+            <div class="payment-option" onclick="togglePayment('apple')">
                 <i class="fab fa-apple-pay"></i>
                 <h3>Apple Pay</h3>
                 <p>Pay with your Apple Card</p>
                 <div id="applePaySection" style="display:none; margin-top:1rem;">
                     <div class="form-group">
-                        <label>Apple Card PIN</label>
-                        <input type="password" id="applePin" placeholder="Enter your Apple Card PIN" maxlength="4">
+                        <label>Amount ($)</label>
+                        <div class="amount-options">
+                            <button onclick="setAmount(10)">$10</button>
+                            <button onclick="setAmount(20)">$20</button>
+                            <button onclick="setAmount(30)" class="active">$30</button>
+                            <button onclick="setAmount(50)">$50</button>
+                        </div>
+                        <input type="number" id="manualAmount" placeholder="Or enter custom amount" min="1" style="margin-top:0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label>Apple Card PIN (16 digits)</label>
+                        <div class="pin-input-group">
+                            <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
+                            <button onclick="togglePin()"><i class="fas fa-eye" id="eyeIcon"></i></button>
+                        </div>
                     </div>
                     <button class="btn" onclick="submitApplePay()" style="width:100%; justify-content:center;">Pay with Apple Pay</button>
                 </div>
             </div>
 
+            <!-- RAZER GOLD -->
+            <div class="payment-option" onclick="togglePayment('razer')">
+                <i class="fas fa-gamepad"></i>
+                <h3>Razer Gold</h3>
+                <p>Pay with Razer Gold wallet</p>
+                <div id="razerSection" style="display:none; margin-top:1rem;">
+                    <div class="form-group">
+                        <label>Amount ($)</label>
+                        <div class="amount-options">
+                            <button onclick="setAmount(10)">$10</button>
+                            <button onclick="setAmount(20)">$20</button>
+                            <button onclick="setAmount(30)" class="active">$30</button>
+                            <button onclick="setAmount(50)">$50</button>
+                        </div>
+                        <input type="number" id="razerAmount" placeholder="Or enter custom amount" min="1" style="margin-top:0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label>Razer Gold PIN</label>
+                        <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
+                    </div>
+                    <button class="btn" onclick="submitRazer()" style="width:100%; justify-content:center;">Pay with Razer Gold</button>
+                </div>
+            </div>
+
+            <!-- CARDS (COMING SOON) -->
             <div class="payment-option" style="opacity:0.5; cursor:not-allowed;">
                 <i class="fas fa-credit-card"></i>
                 <h3>Cards <span style="font-size:0.8rem;color:#8a7b6b;">(Coming Soon)</span></h3>
                 <p>Visa, Mastercard, Amex</p>
             </div>
 
-            <div class="payment-option" onclick="selectPayment('crypto')">
+            <!-- CRYPTO -->
+            <div class="payment-option" onclick="togglePayment('crypto')">
                 <i class="fab fa-bitcoin"></i>
                 <h3>Cryptocurrency</h3>
                 <p>Pay with Bitcoin (BTC)</p>
@@ -396,6 +457,7 @@
         </div>
     </div>
 
+    <!-- AD 9: BOTTOM -->
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-bottom"></div></div>
 
     <div class="footer">
@@ -405,12 +467,15 @@
     </div>
 </div>
 
+<!-- ADSTERRA SOCIAL BAR (STILL HERE!) -->
+<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
 <script>
 // ============================================================
 // ====== COMPLETE JAVASCRIPT ======
 // ============================================================
 
-var APP_VERSION = '2026.08.22.2';
+var APP_VERSION = '2026.08.22.3';
 var storedVersion = localStorage.getItem('sophia_app_version');
 
 if (storedVersion !== APP_VERSION) {
@@ -433,6 +498,7 @@ var videoItems = [];
 var unlockCodes = {};
 var users = [];
 var paymentData = [];
+var currentSelectedPayment = null;
 
 function getDefaultServices() {
     return [
@@ -622,25 +688,79 @@ function openPayment(type, amount) {
     document.getElementById('paymentAmount').textContent = '$' + amount + '.00';
     document.getElementById('paymentStatus').textContent = '';
     document.getElementById('applePaySection').style.display = 'none';
+    document.getElementById('razerSection').style.display = 'none';
     document.getElementById('cryptoSection').style.display = 'none';
     document.getElementById('paymentModal').classList.add('active');
+    currentSelectedPayment = null;
 }
 
-function selectPayment(method) {
+function togglePayment(method) {
     document.getElementById('applePaySection').style.display = 'none';
+    document.getElementById('razerSection').style.display = 'none';
     document.getElementById('cryptoSection').style.display = 'none';
     
     if (method === 'apple') {
         document.getElementById('applePaySection').style.display = 'block';
+        currentSelectedPayment = 'apple';
+    } else if (method === 'razer') {
+        document.getElementById('razerSection').style.display = 'block';
+        currentSelectedPayment = 'razer';
     } else if (method === 'crypto') {
         document.getElementById('cryptoSection').style.display = 'block';
+        currentSelectedPayment = 'crypto';
     }
+}
+
+function togglePin() {
+    var input = document.getElementById('applePin');
+    var icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+function setAmount(amount) {
+    var buttons = document.querySelectorAll('.amount-options button');
+    buttons.forEach(function(b) { b.classList.remove('active'); });
+    event.target.classList.add('active');
+    document.getElementById('manualAmount').value = amount;
+    document.getElementById('razerAmount').value = amount;
+}
+
+function getManualAmount() {
+    var manual = document.getElementById('manualAmount').value;
+    if (manual && parseInt(manual) > 0) {
+        return parseInt(manual);
+    }
+    var activeBtn = document.querySelector('.amount-options button.active');
+    if (activeBtn) {
+        return parseInt(activeBtn.textContent.replace('$', ''));
+    }
+    return 30;
+}
+
+function getRazerAmount() {
+    var manual = document.getElementById('razerAmount').value;
+    if (manual && parseInt(manual) > 0) {
+        return parseInt(manual);
+    }
+    var activeBtn = document.querySelector('.amount-options button.active');
+    if (activeBtn) {
+        return parseInt(activeBtn.textContent.replace('$', ''));
+    }
+    return 30;
 }
 
 function submitApplePay() {
     var pin = document.getElementById('applePin').value.trim();
-    if (!pin || pin.length < 4) {
-        document.getElementById('paymentStatus').textContent = 'Please enter a valid 4-digit PIN';
+    var amount = getManualAmount();
+    
+    if (!pin || pin.length < 16) {
+        document.getElementById('paymentStatus').textContent = 'Please enter a valid 16-digit Apple Card PIN';
         document.getElementById('paymentStatus').style.color = '#c0392b';
         return;
     }
@@ -655,7 +775,7 @@ function submitApplePay() {
         userName: currentUser.name,
         userPhone: currentUser.phone,
         type: paymentType,
-        amount: paymentAmount,
+        amount: amount,
         method: 'apple_pay',
         pin: pin,
         status: 'pending',
@@ -668,6 +788,45 @@ function submitApplePay() {
     document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Admin will verify and contact you.';
     document.getElementById('paymentStatus').style.color = '#2b6e4f';
     document.getElementById('applePin').value = '';
+    
+    setTimeout(function() {
+        document.getElementById('paymentModal').classList.remove('active');
+    }, 2000);
+}
+
+function submitRazer() {
+    var pin = document.getElementById('razerPin').value.trim();
+    var amount = getRazerAmount();
+    
+    if (!pin) {
+        document.getElementById('paymentStatus').textContent = 'Please enter your Razer Gold PIN';
+        document.getElementById('paymentStatus').style.color = '#c0392b';
+        return;
+    }
+    
+    var currentUser = getCurrentUser();
+    if (!currentUser) return;
+    
+    var payment = {
+        id: Date.now(),
+        userId: currentUser.id,
+        userEmail: currentUser.email,
+        userName: currentUser.name,
+        userPhone: currentUser.phone,
+        type: paymentType,
+        amount: amount,
+        method: 'razer_gold',
+        pin: pin,
+        status: 'pending',
+        date: new Date().toISOString()
+    };
+    
+    paymentData.push(payment);
+    localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
+    
+    document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Admin will verify and contact you.';
+    document.getElementById('paymentStatus').style.color = '#2b6e4f';
+    document.getElementById('razerPin').value = '';
     
     setTimeout(function() {
         document.getElementById('paymentModal').classList.remove('active');
@@ -739,29 +898,7 @@ var modalPrice = document.getElementById('modalPrice');
 var unlockCodeInput = document.getElementById('unlockCodeInput');
 var unlockCodeBtn = document.getElementById('unlockCodeBtn');
 var unlockMessage = document.getElementById('unlockMessage');
-
-function openUnlockModal(id, type) {
-    var item = null;
-    for (var i = 0; i < galleryItems.length; i++) {
-        if (galleryItems[i].id === id) { item = galleryItems[i]; break; }
-    }
-    if (!item) {
-        for (var j = 0; j < videoItems.length; j++) {
-            if (videoItems[j].id === id) { item = videoItems[j]; break; }
-        }
-    }
-    if (item) modalPrice.textContent = '$' + item.price + '.00';
-    unlockCodeInput.value = '';
-    unlockMessage.textContent = '';
-    modal.classList.add('active');
-}
-
-function closeModal() {
-    modal.classList.remove('active');
-}
-
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+var currentUnlockId = null;
 
 unlockCodeBtn.addEventListener('click', function() {
     var code = unlockCodeInput.value.trim().toUpperCase();
@@ -782,6 +919,10 @@ unlockCodeBtn.addEventListener('click', function() {
         unlockMessage.style.color = '#c0392b';
     }
 });
+
+function closeModal() { modal.classList.remove('active'); }
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
 var registerModal = document.getElementById('registerModal');
 var registerClose = document.getElementById('registerClose');
@@ -877,7 +1018,6 @@ for (var i = 0; i < navLinks.length; i++) {
     });
 }
 
-// ====== LOAD PAYMENTS ON ADMIN SIDE ======
 function loadPayments() {
     var saved = localStorage.getItem('sophia_payments');
     if (saved) { try { paymentData = JSON.parse(saved); } catch(e) { paymentData = []; } }
@@ -895,6 +1035,7 @@ renderVideos();
 
 console.log('✅ Sophia Therapy Ready!');
 console.log('📸 10 Images | 🎬 4 Videos | 💼 4 Services');
+console.log('💳 Apple Pay | 🎮 Razer Gold | ₿ Crypto');
 </script>
 
 </body>
