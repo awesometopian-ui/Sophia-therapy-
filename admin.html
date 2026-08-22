@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin · Sophia Therapy</title>
     
-    <!-- NO CACHE META TAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -14,7 +13,6 @@
     <meta name="pragma" content="no-cache">
     <meta name="expires" content="0">
 
-    <!-- ADMIN VERSION CHECK -->
     <script>
     (function () {
         var ADMIN_VERSION = '2026.08.23.8';
@@ -127,7 +125,6 @@
 
 <div class="admin-container">
 
-    <!-- AD: ADMIN TOP -->
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-top"></div></div>
 
     <div class="admin-login" id="loginScreen">
@@ -229,7 +226,7 @@
                     <div class="upload-area" id="videoUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color:#8a7b6b;font-size:0.9rem;">MP4, WebM up to 50MB</p>
+                        <p style="color:#8a7b6b;font-size:0.9rem;">MP4, WebM up to 20MB</p>
                         <input type="file" id="videoFileInput" accept="video/*" multiple>
                     </div>
                     <div class="form-group">
@@ -351,24 +348,20 @@
             </ol>
         </div>
 
-        <!-- AD: ADMIN BOTTOM -->
         <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-bottom"></div></div>
     </div>
 </div>
 
-<!-- ADSTERRA SOCIAL BAR -->
 <script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
 
 <script>
 // ============================================================
-// ====== COMPLETE ADMIN JAVASCRIPT ======
+// ====== COMPLETE ADMIN JAVASCRIPT VERSION 8 ======
 // ============================================================
 
-// ====== ADMIN VERSION ======
-var ADMIN_VERSION = '2026.08.23.1';
+var ADMIN_VERSION = '2026.08.23.8';
 var storedAdminVersion = localStorage.getItem('sophia_admin_version');
 
-// ====== LOGIN ======
 var loginScreen = document.getElementById('loginScreen');
 var adminPanel = document.getElementById('adminPanel');
 var loginBtn = document.getElementById('loginBtn');
@@ -421,7 +414,6 @@ logoutBtn.addEventListener('click', function() {
     loginError.textContent = '';
 });
 
-// ====== TABS ======
 var tabBtns = document.querySelectorAll('.tab-btn');
 for (var i = 0; i < tabBtns.length; i++) {
     tabBtns[i].addEventListener('click', function() {
@@ -434,7 +426,6 @@ for (var i = 0; i < tabBtns.length; i++) {
     });
 }
 
-// ====== LOAD DATA ======
 var galleryItems = [];
 var videoItems = [];
 var users = [];
@@ -520,7 +511,6 @@ function renderStats() {
     document.getElementById('activeSubs').textContent = active;
 }
 
-// ====== RENDER PAYMENT LIST ======
 function renderPaymentList() {
     var container = document.getElementById('paymentList');
     if (!container) return;
@@ -553,7 +543,6 @@ function renderPaymentList() {
     container.innerHTML = html;
 }
 
-// ====== APPROVE/DECLINE PAYMENTS ======
 function approvePayment(id) {
     if (!confirm('Approve this payment? The user will get WhatsApp booking link.')) return;
     for (var i = 0; i < paymentData.length; i++) {
@@ -580,7 +569,6 @@ function declinePayment(id) {
     alert('❌ Payment declined.');
 }
 
-// ====== RENDER IMAGE LIST ======
 function renderImageList() {
     var container = document.getElementById('imageList');
     if (!container) return;
@@ -598,7 +586,6 @@ function renderImageList() {
     container.innerHTML = html;
 }
 
-// ====== RENDER VIDEO LIST ======
 function renderVideoList() {
     var container = document.getElementById('videoList');
     if (!container) return;
@@ -616,7 +603,6 @@ function renderVideoList() {
     container.innerHTML = html;
 }
 
-// ====== RENDER SERVICES LIST ======
 function renderServiceList() {
     var container = document.getElementById('serviceListAdmin');
     if (!container) return;
@@ -634,7 +620,6 @@ function renderServiceList() {
     container.innerHTML = html;
 }
 
-// ====== RENDER USERS LIST ======
 function renderUsersList() {
     var container = document.getElementById('usersList');
     if (!container) return;
@@ -653,7 +638,6 @@ function renderUsersList() {
     container.innerHTML = html;
 }
 
-// ====== UPLOAD FUNCTIONS ======
 var imageUploadArea = document.getElementById('imageUploadArea');
 var imageFileInput = document.getElementById('imageFileInput');
 var imagePrice = document.getElementById('imagePrice');
@@ -672,26 +656,43 @@ function handleImageFiles(files) {
     var price = parseInt(imagePrice.value) || 5;
     if (price < 1) { imageUploadStatus.textContent = 'Price must be at least $1'; imageUploadStatus.style.color = '#c0392b'; return; }
     var uploaded = 0;
-    imageUploadStatus.textContent = 'Uploading...';
+    var total = files.length;
+    imageUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
     imageUploadStatus.style.color = '#d47a8a';
     for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('image/')) continue;
+        if (!files[i].type.startsWith('image/')) {
+            uploaded++;
+            continue;
+        }
         var reader = new FileReader();
         reader.onload = function(e) {
-            var title = imageTitle.value.trim() || file.name.slice(0, 30);
-            var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, date: new Date().toISOString() };
-            galleryItems.push(newItem);
-            var pin = generatePin();
-            localStorage.setItem('sophia_pin_' + newItem.id, pin);
-            uploaded++;
-            if (uploaded === files.length) {
-                saveGallery();
-                imageUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
-                imageUploadStatus.style.color = '#2b6e4f';
-                imageTitle.value = '';
-                imageFileInput.value = '';
-                alert('Upload successful!\n\nPIN: ' + pin);
+            try {
+                var title = imageTitle.value.trim() || file.name.slice(0, 30);
+                var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, date: new Date().toISOString() };
+                galleryItems.push(newItem);
+                var pin = generatePin();
+                localStorage.setItem('sophia_pin_' + newItem.id, pin);
+                uploaded++;
+                var percent = Math.round((uploaded / total) * 100);
+                imageUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
+                imageUploadStatus.style.color = '#d47a8a';
+                if (uploaded === total) {
+                    saveGallery();
+                    imageUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
+                    imageUploadStatus.style.color = '#2b6e4f';
+                    imageTitle.value = '';
+                    imageFileInput.value = '';
+                    alert('✅ Upload successful!\n\n' + uploaded + ' image(s) uploaded.\n\nPIN: ' + pin);
+                }
+            } catch (err) {
+                imageUploadStatus.textContent = '❌ Upload failed: ' + err.message;
+                imageUploadStatus.style.color = '#c0392b';
+                console.error(err);
             }
+        };
+        reader.onerror = function() {
+            imageUploadStatus.textContent = '❌ Failed to read image file. Please try again.';
+            imageUploadStatus.style.color = '#c0392b';
         };
         reader.readAsDataURL(files[i]);
     }
@@ -699,7 +700,7 @@ function handleImageFiles(files) {
 
 imageUploadBtn.addEventListener('click', function() { imageUploadArea.click(); });
 
-// ====== VIDEO UPLOAD ======
+// ====== VIDEO UPLOAD (WITH PROGRESS & FEEDBACK) ======
 var videoUploadArea = document.getElementById('videoUploadArea');
 var videoFileInput = document.getElementById('videoFileInput');
 var videoPrice = document.getElementById('videoPrice');
@@ -715,29 +716,75 @@ videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.fi
 
 function handleVideoFiles(files) {
     if (files.length === 0) return;
-    var price = parseInt(videoPrice.value) || 8;
-    if (price < 1) { videoUploadStatus.textContent = 'Price must be at least $1'; videoUploadStatus.style.color = '#c0392b'; return; }
-    var uploaded = 0;
-    videoUploadStatus.textContent = 'Uploading...';
-    videoUploadStatus.style.color = '#d47a8a';
+    
+    // Check file size (max 20MB)
+    var maxSize = 20 * 1024 * 1024; // 20MB
     for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('video/')) continue;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var title = videoTitle.value.trim() || file.name.slice(0, 30);
-            var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, thumbnail: '', date: new Date().toISOString() };
-            videoItems.push(newItem);
-            var pin = generatePin();
-            localStorage.setItem('sophia_pin_' + newItem.id, pin);
+        if (files[i].size > maxSize) {
+            videoUploadStatus.textContent = '❌ Video too large! Max 20MB. Please compress first.';
+            videoUploadStatus.style.color = '#c0392b';
+            alert('❌ Video too large! Maximum size is 20MB.\n\nPlease compress your video to under 20MB and try again.');
+            return;
+        }
+    }
+    
+    var price = parseInt(videoPrice.value) || 8;
+    if (price < 1) {
+        videoUploadStatus.textContent = 'Price must be at least $1';
+        videoUploadStatus.style.color = '#c0392b';
+        return;
+    }
+
+    var uploaded = 0;
+    var total = files.length;
+    videoUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
+    videoUploadStatus.style.color = '#d47a8a';
+
+    for (var i = 0; i < files.length; i++) {
+        if (!files[i].type.startsWith('video/')) {
             uploaded++;
-            if (uploaded === files.length) {
-                saveVideos();
-                videoUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
-                videoUploadStatus.style.color = '#2b6e4f';
-                videoTitle.value = '';
-                videoFileInput.value = '';
-                alert('Upload successful!\n\nPIN: ' + pin);
+            continue;
+        }
+        var reader = new FileReader();
+        var file = files[i];
+        reader.onload = function(e) {
+            try {
+                var title = videoTitle.value.trim() || file.name.slice(0, 30);
+                var newItem = {
+                    id: Date.now() + Math.floor(Math.random() * 10000),
+                    src: e.target.result,
+                    price: price,
+                    title: title,
+                    thumbnail: '',
+                    date: new Date().toISOString()
+                };
+                videoItems.push(newItem);
+                var pin = generatePin();
+                localStorage.setItem('sophia_pin_' + newItem.id, pin);
+                uploaded++;
+                var percent = Math.round((uploaded / total) * 100);
+                videoUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
+                videoUploadStatus.style.color = '#d47a8a';
+
+                if (uploaded === total) {
+                    saveVideos();
+                    videoUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
+                    videoUploadStatus.style.color = '#2b6e4f';
+                    videoTitle.value = '';
+                    videoFileInput.value = '';
+                    alert('✅ Upload successful!\n\n' + uploaded + ' video(s) uploaded.\n\nPIN: ' + pin);
+                }
+            } catch (err) {
+                videoUploadStatus.textContent = '❌ Upload failed: ' + err.message;
+                videoUploadStatus.style.color = '#c0392b';
+                console.error(err);
+                alert('❌ Upload failed: ' + err.message);
             }
+        };
+        reader.onerror = function() {
+            videoUploadStatus.textContent = '❌ Failed to read video file. Please try again.';
+            videoUploadStatus.style.color = '#c0392b';
+            alert('❌ Failed to read video file. Please try again.');
         };
         reader.readAsDataURL(files[i]);
     }
@@ -745,7 +792,6 @@ function handleVideoFiles(files) {
 
 videoUploadBtn.addEventListener('click', function() { videoUploadArea.click(); });
 
-// ====== ADD SERVICE ======
 document.getElementById('addServiceBtn').addEventListener('click', function() {
     var name = document.getElementById('serviceName').value.trim();
     var description = document.getElementById('serviceDescription').value.trim();
@@ -769,7 +815,6 @@ document.getElementById('addServiceBtn').addEventListener('click', function() {
     setTimeout(function() { document.getElementById('serviceStatus').textContent = ''; }, 3000);
 });
 
-// ====== DELETE FUNCTIONS ======
 window.deleteService = function(index) {
     if (!confirm('Delete this service?')) return;
     services.splice(index, 1);
@@ -796,7 +841,6 @@ window.deleteVideo = function(id) {
     localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
 };
 
-// ====== GENERATE PIN ======
 function generatePin() {
     var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     var pin = '';
@@ -852,7 +896,6 @@ document.getElementById('generatePinBtn').addEventListener('click', function() {
     resultDiv.innerHTML = '<h4 style="color:#2b6e4f;">PIN Generated Successfully!</h4><p><strong>User:</strong> ' + userId + '</p><p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#d47a8a;">' + pin + '</span></p><p><strong>Duration:</strong> ' + duration + ' days</p><p><strong>Content:</strong> ' + contentType + '</p><button class="copy-btn" onclick="copyText(\'' + pin + '\')"><i class="fas fa-copy"></i> Copy PIN</button><br><a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20' + pin + '%20for%20User%20ID%3A%20' + userId + '" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;"><i class="fab fa-whatsapp"></i> Send PIN via WhatsApp</a>';
 });
 
-// ====== COPY FUNCTIONS ======
 window.copyPin = function(pin) { copyText(pin); };
 window.copyText = function(text) {
     if (navigator.clipboard) {
@@ -869,19 +912,18 @@ function fallbackCopy(text) {
     alert('Copied: ' + text);
 }
 
-// ====== REFRESH ======
 document.getElementById('refreshImagesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshVideosBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshUsersBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshServicesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshPaymentsBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 
-// ====== INIT ======
 checkSession();
 
 console.log('✅ Admin Panel Version ' + ADMIN_VERSION + ' Ready!');
 console.log('🔑 Default login: admin / admin123');
 console.log('💳 Approve/Decline Upfront Payments');
+console.log('📹 Video upload: Max 20MB with progress tracking');
 </script>
 
 </body>
