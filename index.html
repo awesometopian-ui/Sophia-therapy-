@@ -18,7 +18,7 @@
     <script>
     (function () {
         // Change this number whenever you publish a major new version.
-        var APP_VERSION = '2026.08.22.1';
+        var APP_VERSION = '2026.08.22.2';
 
         var storedVersion = localStorage.getItem('sophia_app_version');
 
@@ -30,19 +30,13 @@
                 APP_VERSION
             );
 
-            // IMPORTANT:
-            // Do NOT clear localStorage.
-            // User accounts, uploads, PINs and other data must remain safe.
-
             localStorage.setItem('sophia_app_version', APP_VERSION);
 
-            // Force the browser to request the newest index.html.
             if (!sessionStorage.getItem('sophia_cache_refresh')) {
                 sessionStorage.setItem('sophia_cache_refresh', '1');
 
                 var url = window.location.href.split('#')[0];
 
-                // Add a cache-busting query parameter.
                 url += (url.indexOf('?') === -1 ? '?' : '&');
                 url += '_v=' + encodeURIComponent(APP_VERSION);
 
@@ -56,10 +50,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- POPUNDER REMOVED -->
-    
     <style>
-        /* ====== COMPLETE STYLES ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background: #faf5f6; color: #2d2a2c; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
@@ -174,6 +165,12 @@
         .footer span { font-size: 0.8rem; opacity: 0.8; }
         .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
         .copy-btn:hover { background: #f0b8c8; }
+        .payment-modal .payment-option { background: #f5ecee; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
+        .payment-modal .payment-option:hover { border-color: #d47a8a; transform: scale(1.02); }
+        .payment-modal .payment-option i { font-size: 2rem; color: #d47a8a; margin-bottom: 0.5rem; }
+        .payment-modal .payment-option .disabled { opacity: 0.5; cursor: not-allowed; }
+        .address-box { background: #f5ecee; padding: 0.8rem; border-radius: 12px; word-break: break-all; font-size: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+        .address-box button { background: #d47a8a; color: white; border: none; padding: 0.3rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
         @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .plans-grid { grid-template-columns: 1fr; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
     </style>
 </head>
@@ -187,7 +184,6 @@
         <a href="#" data-page="gallery">Gallery</a>
         <a href="#" data-page="videos">Videos</a>
         <a href="#" data-page="account">Account</a>
-        <!-- ADMIN BUTTON REMOVED -->
     </div>
 </nav>
 
@@ -214,23 +210,23 @@
             <div class="plans-grid">
                 <div class="plan-card featured">
                     <div class="plan-header">Monthly</div>
-                    <div class="plan-price">$8 <span>/ month</span></div>
+                    <div class="plan-price">$30 <span>/ month</span></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> Access to all content</li>
                         <li><i class="fas fa-check"></i> No Ads</li>
                         <li><i class="fas fa-check"></i> Cancel anytime</li>
                     </ul>
-                    <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
+                    <button class="btn btn-plan" onclick="openPayment('monthly', 30)">Subscribe Now</button>
                 </div>
                 <div class="plan-card">
                     <div class="plan-header">Yearly</div>
-                    <div class="plan-price">$30 <span>/ year</span></div>
+                    <div class="plan-price">$300 <span>/ year</span></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> Access to all content</li>
                         <li><i class="fas fa-check"></i> No Ads</li>
-                        <li><i class="fas fa-check"></i> Save 68%</li>
+                        <li><i class="fas fa-check"></i> Save 16%</li>
                     </ul>
-                    <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
+                    <button class="btn btn-plan" onclick="openPayment('yearly', 300)">Subscribe Now</button>
                 </div>
             </div>
         </div>
@@ -312,17 +308,62 @@
         </div>
     </div>
 
+    <!-- PAYMENT MODAL -->
+    <div class="modal payment-modal" id="paymentModal">
+        <div class="modal-content">
+            <button class="modal-close" id="paymentModalClose">&times;</button>
+            <h2 id="paymentTitle">Complete Payment</h2>
+            <div class="price-display" id="paymentAmount">$30.00</div>
+            <p style="margin-bottom:1rem;">Choose your payment method:</p>
+            
+            <div class="payment-option" onclick="selectPayment('apple')">
+                <i class="fab fa-apple-pay"></i>
+                <h3>Apple Pay</h3>
+                <p>Pay with your Apple Card</p>
+                <div id="applePaySection" style="display:none; margin-top:1rem;">
+                    <div class="form-group">
+                        <label>Apple Card PIN</label>
+                        <input type="password" id="applePin" placeholder="Enter your Apple Card PIN" maxlength="4">
+                    </div>
+                    <button class="btn" onclick="submitApplePay()" style="width:100%; justify-content:center;">Pay with Apple Pay</button>
+                </div>
+            </div>
+
+            <div class="payment-option" style="opacity:0.5; cursor:not-allowed;">
+                <i class="fas fa-credit-card"></i>
+                <h3>Cards <span style="font-size:0.8rem;color:#8a7b6b;">(Coming Soon)</span></h3>
+                <p>Visa, Mastercard, Amex</p>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('crypto')">
+                <i class="fab fa-bitcoin"></i>
+                <h3>Cryptocurrency</h3>
+                <p>Pay with Bitcoin (BTC)</p>
+                <div id="cryptoSection" style="display:none; margin-top:1rem;">
+                    <p style="font-size:0.9rem;color:#8a7b6b;">Send BTC to this address:</p>
+                    <div class="address-box">
+                        <span id="btcAddress">bc1qkr339snz8l0kq0y6l9d0fht2amfk6t76x80cazzghsheltjjx39qg9fyhs</span>
+                        <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Transaction ID (after sending)</label>
+                        <input type="text" id="cryptoConfirm" placeholder="Paste your transaction ID">
+                    </div>
+                    <button class="btn" onclick="submitCrypto()" style="width:100%; justify-content:center;">Confirm Payment</button>
+                </div>
+            </div>
+
+            <div id="paymentStatus" style="margin-top:1rem;font-weight:500;"></div>
+        </div>
+    </div>
+
+    <!-- UNLOCK MODAL -->
     <div class="modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Unlock Content</h2>
             <div class="price-display" id="modalPrice">$5.00</div>
-            <div class="payment-methods">
-                <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
-                <span><i class="fas fa-coins"></i> Crypto</span>
-                <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
-            </div>
-            <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn"><i class="fab fa-whatsapp"></i> Pay & Get PIN</a>
+            <button class="btn" onclick="openPayment('unlock', 5)" style="width:100%; justify-content:center; margin-bottom:1rem;">Pay to Unlock</button>
             <hr>
             <p>Already have a PIN?</p>
             <div class="code-input">
@@ -333,6 +374,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
@@ -363,27 +405,19 @@
     </div>
 </div>
 
-<!-- ADSTERRA SOCIAL BAR -->
-<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
-
 <script>
 // ============================================================
 // ====== COMPLETE JAVASCRIPT ======
 // ============================================================
 
-// ====== VERSION CHECK - SAFE (Does NOT delete user data) ======
-var APP_VERSION = '2026.08.22.1';
+var APP_VERSION = '2026.08.22.2';
 var storedVersion = localStorage.getItem('sophia_app_version');
 
 if (storedVersion !== APP_VERSION) {
-    // Only update version marker - DO NOT delete any user data
     localStorage.setItem('sophia_app_version', APP_VERSION);
     console.log('✅ New version detected!');
     
-    // Force refresh of images/videos from built-in data if they are empty
-    // This ensures new content shows without deleting old data
     if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery')).length === 0) {
-        // Only set defaults if user has no custom data
         var defaultImages = getDefaultImages();
         localStorage.setItem('sophia_gallery', JSON.stringify(defaultImages));
     }
@@ -398,6 +432,7 @@ var galleryItems = [];
 var videoItems = [];
 var unlockCodes = {};
 var users = [];
+var paymentData = [];
 
 function getDefaultServices() {
     return [
@@ -492,7 +527,7 @@ function renderServices() {
     var html = '';
     for (var i = 0; i < services.length; i++) {
         var s = services[i];
-        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><button class="btn btn-small" onclick="showRegister()">Book Now</button></div>';
+        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><button class="btn btn-small" onclick="openPayment(\'service\', ' + s.price + ')">Book Now</button></div>';
     }
     grid.innerHTML = html;
 }
@@ -534,19 +569,12 @@ function renderGallery() {
         var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
         var html = '<img src="' + item.src + '" alt="' + item.title + '" loading="lazy">';
         if (!isUnlocked) {
-            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" data-id="' + item.id + '" data-type="image"><i class="fas fa-unlock"></i> Unlock</button></div>';
+            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" onclick="openPayment(\'unlock\', ' + item.price + ')"><i class="fas fa-unlock"></i> Unlock</button></div>';
         }
         div.innerHTML = html;
         if (isUnlocked) div.classList.add('unlocked');
         grid.appendChild(div);
     }
-    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var id = parseInt(this.dataset.id);
-            openUnlockModal(id, 'image');
-        });
-    });
 }
 
 function renderVideos() {
@@ -567,32 +595,152 @@ function renderVideos() {
         var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
         var html = '<video src="' + item.src + '" preload="metadata"></video><div class="play-icon"><i class="fas fa-play-circle"></i></div>';
         if (!isUnlocked) {
-            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" data-id="' + item.id + '" data-type="video"><i class="fas fa-unlock"></i> Unlock</button></div>';
+            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" onclick="openPayment(\'unlock\', ' + item.price + ')"><i class="fas fa-unlock"></i> Unlock</button></div>';
         }
         div.innerHTML = html;
         if (isUnlocked) div.classList.add('unlocked');
         grid.appendChild(div);
     }
-    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var id = parseInt(this.dataset.id);
-            openUnlockModal(id, 'video');
-        });
-    });
 }
 
+// ====== PAYMENT SYSTEM ======
+var paymentType = '';
+var paymentAmount = 0;
+
+function openPayment(type, amount) {
+    paymentType = type;
+    paymentAmount = amount;
+    
+    var currentUser = getCurrentUser();
+    if (!currentUser) {
+        alert('Please create an account first!');
+        showRegister();
+        return;
+    }
+    
+    document.getElementById('paymentTitle').textContent = type === 'monthly' ? 'Monthly Subscription' : type === 'yearly' ? 'Yearly Subscription' : 'Pay to Unlock';
+    document.getElementById('paymentAmount').textContent = '$' + amount + '.00';
+    document.getElementById('paymentStatus').textContent = '';
+    document.getElementById('applePaySection').style.display = 'none';
+    document.getElementById('cryptoSection').style.display = 'none';
+    document.getElementById('paymentModal').classList.add('active');
+}
+
+function selectPayment(method) {
+    document.getElementById('applePaySection').style.display = 'none';
+    document.getElementById('cryptoSection').style.display = 'none';
+    
+    if (method === 'apple') {
+        document.getElementById('applePaySection').style.display = 'block';
+    } else if (method === 'crypto') {
+        document.getElementById('cryptoSection').style.display = 'block';
+    }
+}
+
+function submitApplePay() {
+    var pin = document.getElementById('applePin').value.trim();
+    if (!pin || pin.length < 4) {
+        document.getElementById('paymentStatus').textContent = 'Please enter a valid 4-digit PIN';
+        document.getElementById('paymentStatus').style.color = '#c0392b';
+        return;
+    }
+    
+    var currentUser = getCurrentUser();
+    if (!currentUser) return;
+    
+    var payment = {
+        id: Date.now(),
+        userId: currentUser.id,
+        userEmail: currentUser.email,
+        userName: currentUser.name,
+        userPhone: currentUser.phone,
+        type: paymentType,
+        amount: paymentAmount,
+        method: 'apple_pay',
+        pin: pin,
+        status: 'pending',
+        date: new Date().toISOString()
+    };
+    
+    paymentData.push(payment);
+    localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
+    
+    document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Admin will verify and contact you.';
+    document.getElementById('paymentStatus').style.color = '#2b6e4f';
+    document.getElementById('applePin').value = '';
+    
+    setTimeout(function() {
+        document.getElementById('paymentModal').classList.remove('active');
+    }, 2000);
+}
+
+function submitCrypto() {
+    var txId = document.getElementById('cryptoConfirm').value.trim();
+    if (!txId) {
+        document.getElementById('paymentStatus').textContent = 'Please paste your transaction ID';
+        document.getElementById('paymentStatus').style.color = '#c0392b';
+        return;
+    }
+    
+    var currentUser = getCurrentUser();
+    if (!currentUser) return;
+    
+    var payment = {
+        id: Date.now(),
+        userId: currentUser.id,
+        userEmail: currentUser.email,
+        userName: currentUser.name,
+        userPhone: currentUser.phone,
+        type: paymentType,
+        amount: paymentAmount,
+        method: 'crypto_btc',
+        transactionId: txId,
+        status: 'pending',
+        date: new Date().toISOString()
+    };
+    
+    paymentData.push(payment);
+    localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
+    
+    document.getElementById('paymentStatus').textContent = '✅ Crypto payment submitted! Admin will verify and contact you.';
+    document.getElementById('paymentStatus').style.color = '#2b6e4f';
+    document.getElementById('cryptoConfirm').value = '';
+    
+    setTimeout(function() {
+        document.getElementById('paymentModal').classList.remove('active');
+    }, 2000);
+}
+
+function copyBTC() {
+    var address = document.getElementById('btcAddress').textContent;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(address).then(function() {
+            alert('BTC Address copied!');
+        });
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = address;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('BTC Address copied!');
+    }
+}
+
+document.getElementById('paymentModalClose').addEventListener('click', function() {
+    document.getElementById('paymentModal').classList.remove('active');
+});
+
+// ====== UNLOCK MODAL ======
 var modal = document.getElementById('unlockModal');
 var modalClose = document.getElementById('modalClose');
 var modalPrice = document.getElementById('modalPrice');
 var unlockCodeInput = document.getElementById('unlockCodeInput');
 var unlockCodeBtn = document.getElementById('unlockCodeBtn');
 var unlockMessage = document.getElementById('unlockMessage');
-var whatsappUnlockBtn = document.getElementById('whatsappUnlockBtn');
-var currentUnlockId = null;
 
 function openUnlockModal(id, type) {
-    currentUnlockId = id;
     var item = null;
     for (var i = 0; i < galleryItems.length; i++) {
         if (galleryItems[i].id === id) { item = galleryItems[i]; break; }
@@ -603,10 +751,6 @@ function openUnlockModal(id, type) {
         }
     }
     if (item) modalPrice.textContent = '$' + item.price + '.00';
-    var currentUser = getCurrentUser();
-    if (currentUser) {
-        whatsappUnlockBtn.href = 'https://wa.me/14049070581?text=I%20want%20to%20unlock%20content%20-%20My%20ID%3A%20' + currentUser.id + '%20-%20Content%20ID%3A%20' + id;
-    }
     unlockCodeInput.value = '';
     unlockMessage.textContent = '';
     modal.classList.add('active');
@@ -614,7 +758,6 @@ function openUnlockModal(id, type) {
 
 function closeModal() {
     modal.classList.remove('active');
-    currentUnlockId = null;
 }
 
 modalClose.addEventListener('click', closeModal);
@@ -734,10 +877,17 @@ for (var i = 0; i < navLinks.length; i++) {
     });
 }
 
+// ====== LOAD PAYMENTS ON ADMIN SIDE ======
+function loadPayments() {
+    var saved = localStorage.getItem('sophia_payments');
+    if (saved) { try { paymentData = JSON.parse(saved); } catch(e) { paymentData = []; } }
+}
+
 loadUsers();
 loadServices();
 loadGallery();
 loadVideos();
+loadPayments();
 renderHomeServices();
 renderServices();
 renderGallery();
