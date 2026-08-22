@@ -2,131 +2,519 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Admin · Sophia Therapy</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <meta name="cache-control" content="no-cache, no-store, must-revalidate">
-    <meta name="pragma" content="no-cache">
-    <meta name="expires" content="0">
-
-    <script>
-    (function () {
-        var ADMIN_VERSION = '2026.08.23.8';
-        var storedVersion = localStorage.getItem('sophia_admin_version');
-        if (storedVersion !== ADMIN_VERSION) {
-            localStorage.setItem('sophia_admin_version', ADMIN_VERSION);
-            if (!sessionStorage.getItem('sophia_admin_cache_refresh')) {
-                sessionStorage.setItem('sophia_admin_cache_refresh', '1');
-                var url = window.location.href.split('#')[0];
-                url += (url.indexOf('?') === -1 ? '?' : '&');
-                url += '_v=' + encodeURIComponent(ADMIN_VERSION);
-                window.location.replace(url);
-            } else {
-                sessionStorage.removeItem('sophia_admin_cache_refresh');
-            }
-        }
-    })();
-    </script>
-    
+    <!-- ====== FONT AWESOME ====== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
+    <!-- ====== GOOGLE FONTS FOR LOGO ====== -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- ====== FAVICON ====== -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+    
     <style>
+        /* ====== LOADER ANIMATION ====== */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #FFF8FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #D47A8A;
+            border-right-color: #7A3A4A;
+            border-bottom-color: #D47A8A;
+            animation: spin 1.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+        .loader-ring:nth-child(2) {
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            border-top-color: #7A3A4A;
+            border-right-color: #D47A8A;
+            border-bottom-color: #7A3A4A;
+            animation-duration: 1.8s;
+            animation-direction: reverse;
+        }
+        .loader-ring:nth-child(3) {
+            width: 75%;
+            height: 75%;
+            top: 12.5%;
+            left: 12.5%;
+            border-top-color: #D99A2B;
+            border-right-color: #D47A8A;
+            border-bottom-color: #D99A2B;
+            animation-duration: 2.4s;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loader-logo {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .loader-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+        }
+        .loader-logo .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .loader-logo .loader-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.2rem;
+            color: #7A3A4A;
+            letter-spacing: 0.5px;
+        }
+        .loader-logo .loader-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.45rem;
+            color: #795F66;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
+        .loader-dots {
+            display: flex;
+            gap: 6px;
+            margin-top: 0.5rem;
+        }
+        .loader-dots span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #D47A8A;
+            animation: pulse 1.4s ease-in-out infinite both;
+        }
+        .loader-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loader-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .loader-dots span:nth-child(3) { animation-delay: 0s; }
+        @keyframes pulse {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* ====== ADMIN STYLES ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background: #faf5f6; color: #2d2a2c; }
-        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        body { background: #FFF8FA; color: #2F2024; }
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
         
-        .admin-login { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
-        .login-box { background: white; border-radius: 30px; padding: 3rem 2.5rem; max-width: 400px; width: 100%; border: 2px solid #d47a8a; text-align: center; }
-        .login-box h2 { color: #8b3a4a; margin-bottom: 0.5rem; }
-        .login-box .sub { color: #a06a7a; margin-bottom: 1.5rem; }
+        /* ====== LOGO ====== */
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .logo-sophia {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.4rem;
+            color: #7A3A4A;
+            letter-spacing: 0.5px;
+        }
+        .logo-sophia::first-letter {
+            font-size: 1.8rem;
+            color: #D47A8A;
+        }
+        .logo-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.55rem;
+            font-weight: 400;
+            color: #795F66;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
+        .logo-sub::before {
+            content: "✦ ";
+            color: #D47A8A;
+            font-size: 0.5rem;
+        }
+        .logo-sub::after {
+            content: " ✦";
+            color: #D47A8A;
+            font-size: 0.5rem;
+        }
+        
+        /* ====== LOGIN ====== */
+        .admin-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+        }
+        .login-box {
+            background: #FFFFFF;
+            border-radius: 30px;
+            padding: 3rem 2.5rem;
+            max-width: 400px;
+            width: 100%;
+            border: 2px solid #D47A8A;
+            text-align: center;
+        }
+        .login-box h2 { color: #7A3A4A; margin-bottom: 0.5rem; }
+        .login-box .sub { color: #795F66; margin-bottom: 1.5rem; }
         .login-box .form-group { margin-bottom: 1rem; text-align: left; }
-        .login-box .form-group label { display: block; font-weight: 500; color: #8b3a4a; margin-bottom: 0.3rem; }
-        .login-box .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #f0b8c8; border-radius: 30px; font-size: 1rem; }
-        .login-box .form-group input:focus { border-color: #d47a8a; outline: none; }
-        .login-box .btn-login { width: 100%; background: #d47a8a; color: white; border: none; padding: 0.8rem; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
+        .login-box .form-group label { display: block; font-weight: 500; color: #7A3A4A; margin-bottom: 0.3rem; }
+        .login-box .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #E8CDD3;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+        .login-box .form-group input:focus { border-color: #D47A8A; outline: none; }
+        .login-box .btn-login {
+            width: 100%;
+            background: #D47A8A;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
         .login-box .btn-login:hover { background: #c06a7a; }
-        .login-error { color: #c0392b; margin-top: 0.5rem; font-weight: 500; }
-        .login-box .lock-icon { font-size: 3rem; color: #d47a8a; margin-bottom: 0.5rem; }
-        .secret-badge { background: #f0e8ea; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.75rem; color: #8b3a4a; display: inline-block; margin-bottom: 1rem; letter-spacing: 1px; }
+        .login-error { color: #C0392B; margin-top: 0.5rem; font-weight: 500; }
+        .login-box .lock-icon { font-size: 3rem; color: #D47A8A; margin-bottom: 0.5rem; }
+        .secret-badge {
+            background: #F8E8EC;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #7A3A4A;
+            display: inline-block;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
         
+        /* ====== ADMIN PANEL ====== */
         .admin-panel { display: none; }
         .admin-panel.active { display: block; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid #f8d0d8; padding-bottom: 1rem; }
-        .admin-header h1 { font-size: 2rem; font-weight: 300; color: #8b3a4a; }
-        .admin-header h1 span { color: #d47a8a; }
-        .admin-header .logout-btn { background: #8b3a4a; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .admin-header .logout-btn:hover { background: #6a2a3a; }
-        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-        .stat-card { background: white; padding: 1rem; border-radius: 16px; text-align: center; border: 1px solid #f8d0d8; }
-        .stat-card .number { font-size: 2rem; font-weight: 600; color: #d47a8a; }
-        .stat-card .label { color: #6b5d4f; font-size: 0.85rem; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
-        .upload-section { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f8d0d8; }
-        .upload-section h3 { margin-bottom: 1rem; color: #8b3a4a; }
-        .upload-area { border: 3px dashed #f0b8c8; border-radius: 16px; padding: 2rem; text-align: center; cursor: pointer; transition: 0.3s; }
-        .upload-area:hover { border-color: #d47a8a; background: #fff5f7; }
-        .upload-area i { font-size: 3rem; color: #d47a8a; }
-        .upload-area input { display: none; }
-        .form-group { margin: 1rem 0; }
-        .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; color: #8b3a4a; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.6rem; border-radius: 30px; border: 2px solid #f8d0d8; font-size: 1rem; }
-        .form-group textarea { border-radius: 16px; min-height: 80px; resize: vertical; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #d47a8a; outline: none; }
-        .btn-primary { background: #d47a8a; color: white; border: none; padding: 0.7rem 2rem; border-radius: 60px; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .btn-primary:hover { background: #c06a7a; }
-        .btn-success { background: #2b6e4f; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .btn-success:hover { background: #1f573d; }
-        .btn-danger { background: #c0392b; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .btn-danger:hover { background: #a93226; }
-        .btn-warning { background: #f39c12; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .btn-warning:hover { background: #d68910; }
-        .image-list, .video-list, .service-list-admin, .payment-list { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
-        .image-item, .video-item, .service-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; }
-        .image-item img, .video-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-        .service-item .service-icon { font-size: 1.8rem; color: #d47a8a; width: 40px; text-align: center; }
-        .image-item .info, .video-item .info, .service-item .info, .payment-item .info { flex: 1; }
-        .image-item .info .title, .video-item .info .title, .service-item .info .name, .payment-item .info .name { font-weight: 500; color: #8b3a4a; }
-        .image-item .info .details, .video-item .info .details, .service-item .info .desc, .payment-item .info .details { font-size: 0.85rem; color: #6b5d4f; }
-        .image-item .info .pin, .video-item .info .pin { background: #d47a8a; color: white; padding: 0.1rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.2rem; }
-        .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
-        .copy-btn:hover { background: #f0b8c8; }
-        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .tab-btn { padding: 0.5rem 1.5rem; border-radius: 30px; border: 2px solid #f8d0d8; background: white; cursor: pointer; color: #8b3a4a; font-weight: 500; }
-        .tab-btn.active { background: #d47a8a; color: white; border-color: #d47a8a; }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 2px solid #E8CDD3;
+            padding-bottom: 1rem;
+        }
+        .admin-header .logout-btn {
+            background: #7A3A4A;
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .admin-header .logout-btn:hover { background: #542631; }
+        
+        /* ====== STATS ====== */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: #FFFFFF;
+            padding: 1rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #E8CDD3;
+        }
+        .stat-card .number { font-size: 2rem; font-weight: 600; color: #D47A8A; }
+        .stat-card .label { color: #795F66; font-size: 0.85rem; }
+        
+        /* ====== TABS ====== */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            border: 2px solid #E8CDD3;
+            background: white;
+            cursor: pointer;
+            color: #7A3A4A;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            background: #D47A8A;
+            color: white;
+            border-color: #D47A8A;
+        }
+        .tab-btn:hover:not(.active) { background: #F8E8EC; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .users-list { margin-top: 1rem; max-height: 400px; overflow-y: auto; }
-        .user-item { display: flex; justify-content: space-between; align-items: center; background: #fff5f7; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.5rem; }
-        .user-item .user-info { flex: 1; }
-        .user-item .user-info .name { font-weight: 500; color: #8b3a4a; }
-        .user-item .user-info .id { font-size: 0.85rem; color: #6b5d4f; }
+        
+        /* ====== ADMIN GRID ====== */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .upload-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid #E8CDD3;
+        }
+        .upload-section h3 { margin-bottom: 1rem; color: #7A3A4A; }
+        .upload-area {
+            border: 3px dashed #E8CDD3;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #D47A8A;
+            background: #FFF5F7;
+        }
+        .upload-area i { font-size: 3rem; color: #D47A8A; }
+        .upload-area input { display: none; }
+        
+        .form-group { margin: 1rem 0; }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: #7A3A4A;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            border: 2px solid #E8CDD3;
+            font-size: 1rem;
+        }
+        .form-group textarea { border-radius: 16px; min-height: 80px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #D47A8A;
+            outline: none;
+        }
+        
+        /* ====== BUTTONS ====== */
+        .btn-primary {
+            background: #D47A8A;
+            color: white;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .btn-primary:hover { background: #c06a7a; }
+        .btn-success {
+            background: #2B6E4F;
+            color: white;
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .btn-success:hover { background: #1f573d; }
+        .btn-danger {
+            background: #C0392B;
+            color: white;
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .btn-danger:hover { background: #a93226; }
+        .btn-warning {
+            background: #D99A2B;
+            color: white;
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .btn-warning:hover { background: #c6891e; }
+        
+        /* ====== LISTS ====== */
+        .image-list, .video-list, .service-list-admin, .payment-list, .users-list {
+            margin-top: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .image-item, .video-item, .service-item, .payment-item, .user-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #FFF5F7;
+            padding: 0.8rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .image-item img, .video-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .service-item .service-icon { font-size: 1.8rem; color: #D47A8A; width: 40px; text-align: center; }
+        .image-item .info, .video-item .info, .service-item .info, .payment-item .info, .user-item .info { flex: 1; }
+        .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #7A3A4A; }
+        .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #795F66; }
+        .image-item .info .pin, .video-item .info .pin {
+            background: #D47A8A;
+            color: white;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+        .payment-item .status-pending { background: #D99A2B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
+        .payment-item .status-approved { background: #2B6E4F; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
+        .payment-item .status-declined { background: #C0392B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
         .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; }
-        .user-item .user-status.active { background: #2b6e4f; color: white; }
-        .user-item .user-status.inactive { background: #c0392b; color: white; }
-        .user-item .user-status.pending { background: #f39c12; color: white; }
-        .instructions-box { background: #fff5f7; border-radius: 16px; padding: 1.5rem; margin-top: 1rem; border: 1px solid #f8d0d8; }
-        .instructions-box h4 { color: #8b3a4a; }
+        .user-item .user-status.active { background: #2B6E4F; color: white; }
+        .user-item .user-status.inactive { background: #C0392B; color: white; }
+        
+        .copy-btn {
+            background: #F8E8EC;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            color: #7A3A4A;
+        }
+        .copy-btn:hover { background: #E8CDD3; }
+        
+        .instructions-box {
+            background: #F8E8EC;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid #E8CDD3;
+        }
+        .instructions-box h4 { color: #7A3A4A; }
         .instructions-box ol { padding-left: 1.5rem; color: #3d352c; }
-        #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
-        .ad-container { background: #f5ecee; border-radius: 16px; padding: 0.8rem; margin: 1rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
-        .payment-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; flex-wrap: wrap; }
-        .payment-item .status-pending { background: #f39c12; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        .payment-item .status-approved { background: #2b6e4f; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        .payment-item .status-declined { background: #c0392b; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        @media (max-width: 700px) { .admin-grid { grid-template-columns: 1fr; } .login-box { padding: 2rem 1.5rem; } .admin-stats { grid-template-columns: repeat(2, 1fr); } }
+        #generateResult {
+            background: #F8E8EC;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .admin-stats { grid-template-columns: repeat(2, 1fr); }
+            .tabs { gap: 0.3rem; }
+            .tab-btn { font-size: 0.8rem; padding: 0.3rem 1rem; }
+            .login-box { padding: 2rem 1.5rem; }
+            .upload-section { padding: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .admin-stats { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .stat-card .number { font-size: 1.4rem; }
+            .image-item, .video-item, .service-item, .payment-item, .user-item { flex-direction: column; text-align: center; }
+            .image-item img, .video-item img { width: 80px; height: 80px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- ====== LOADER ====== -->
+<div id="loader-wrapper">
+    <div class="loader-circle">
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30 10 C35 10 42 15 44 22 C46 29 42 35 38 40 C34 45 28 48 25 45 C22 42 20 35 22 28 C24 21 30 10 30 10Z" fill="#D47A8A" opacity="0.3"/>
+                    <path d="M30 12 C34 12 40 16 42 22 C44 28 40 33 37 37 C34 41 29 43 27 41 C25 39 23 33 25 27 C27 21 30 12 30 12Z" fill="#D47A8A" opacity="0.5"/>
+                    <path d="M30 15 C33 15 38 18 40 23 C42 28 38 32 36 35 C34 38 30 39 29 38 C28 37 26 32 28 27 C30 22 30 15 30 15Z" fill="#D47A8A"/>
+                    <path d="M35 10 C38 8 42 10 44 14 C46 18 44 24 40 28 L35 25 C37 21 38 16 35 10Z" fill="#7A3A4A" opacity="0.3"/>
+                    <path d="M25 10 C22 8 18 10 16 14 C14 18 16 24 20 28 L25 25 C23 21 22 16 25 10Z" fill="#7A3A4A" opacity="0.3"/>
+                    <circle cx="30" cy="24" r="2" fill="#D47A8A"/>
+                    <path d="M28 22 L30 20 L32 22 L30 24 L28 22Z" fill="#7A3A4A"/>
+                </svg>
+            </div>
+            <div class="loader-name">Sophia</div>
+            <div class="loader-sub">Admin Panel</div>
+            <div class="loader-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="admin-container">
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-top"></div></div>
-
+    <!-- ====== LOGIN SCREEN ====== -->
     <div class="admin-login" id="loginScreen">
         <div class="login-box">
             <div class="lock-icon"><i class="fas fa-lock"></i></div>
@@ -143,28 +531,47 @@
             </div>
             <button class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
             <div class="login-error" id="loginError"></div>
-            <p style="margin-top:1rem;font-size:0.8rem;color:#8a7b6b;">Default: admin / admin123</p>
+            <p style="margin-top:1rem;font-size:0.8rem;color:#795F66;">Default: admin / admin123</p>
         </div>
     </div>
 
+    <!-- ====== ADMIN PANEL ====== -->
     <div class="admin-panel" id="adminPanel">
         <div class="admin-header">
-            <h1>Admin <span>·</span> Sophia Therapy</h1>
+            <div class="nav-brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 10 C35 10 42 15 44 22 C46 29 42 35 38 40 C34 45 28 48 25 45 C22 42 20 35 22 28 C24 21 30 10 30 10Z" fill="#D47A8A" opacity="0.3"/>
+                        <path d="M30 12 C34 12 40 16 42 22 C44 28 40 33 37 37 C34 41 29 43 27 41 C25 39 23 33 25 27 C27 21 30 12 30 12Z" fill="#D47A8A" opacity="0.5"/>
+                        <path d="M30 15 C33 15 38 18 40 23 C42 28 38 32 36 35 C34 38 30 39 29 38 C28 37 26 32 28 27 C30 22 30 15 30 15Z" fill="#D47A8A"/>
+                        <path d="M35 10 C38 8 42 10 44 14 C46 18 44 24 40 28 L35 25 C37 21 38 16 35 10Z" fill="#7A3A4A" opacity="0.3"/>
+                        <path d="M25 10 C22 8 18 10 16 14 C14 18 16 24 20 28 L25 25 C23 21 22 16 25 10Z" fill="#7A3A4A" opacity="0.3"/>
+                        <circle cx="30" cy="24" r="2" fill="#D47A8A"/>
+                        <path d="M28 22 L30 20 L32 22 L30 24 L28 22Z" fill="#7A3A4A"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-sophia">Sophia</span>
+                    <span class="logo-sub">Admin Panel</span>
+                </div>
+            </div>
             <div>
-                <a href="index.html" class="btn-primary" style="text-decoration:none;padding:0.5rem 1.5rem;font-size:0.9rem;"><i class="fas fa-eye"></i> View Site</a>
+                <a href="index.html" class="btn-primary" style="text-decoration:none;padding:0.4rem 1.5rem;font-size:0.85rem;"><i class="fas fa-eye"></i> View Site</a>
                 <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
 
+        <!-- STATS -->
         <div class="admin-stats" id="statsContainer">
             <div class="stat-card"><div class="number" id="totalUsers">0</div><div class="label">Users</div></div>
             <div class="stat-card"><div class="number" id="totalServices">0</div><div class="label">Services</div></div>
             <div class="stat-card"><div class="number" id="totalImages">0</div><div class="label">Images</div></div>
             <div class="stat-card"><div class="number" id="totalVideos">0</div><div class="label">Videos</div></div>
             <div class="stat-card"><div class="number" id="totalPayments">0</div><div class="label">Payments</div></div>
-            <div class="stat-card"><div class="number" id="activeSubs">0</div><div class="label">Active Subs</div></div>
+            <div class="stat-card"><div class="number" id="activeSubs">0</div><div class="label">Active</div></div>
         </div>
 
+        <!-- TABS -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="payments">Payments</button>
             <button class="tab-btn" data-tab="images">Images</button>
@@ -174,19 +581,17 @@
             <button class="tab-btn" data-tab="generate">Generate PIN</button>
         </div>
 
-        <!-- PAYMENTS TAB -->
+        <!-- ====== PAYMENTS TAB ====== -->
         <div class="tab-content active" id="tab-payments">
             <div class="upload-section">
                 <h3><i class="fas fa-credit-card"></i> Payment Requests</h3>
-                <p style="color:#8a7b6b;margin-bottom:0.5rem;">Approve or decline upfront payments. Approved users get WhatsApp booking link.</p>
-                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-                    <button class="btn-primary" id="refreshPaymentsBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
-                </div>
+                <p style="color:#795F66;margin-bottom:0.5rem;">Approve or decline upfront payments. Approved users get WhatsApp booking link.</p>
+                <button class="btn-primary" id="refreshPaymentsBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                 <div class="payment-list" id="paymentList"></div>
             </div>
         </div>
 
-        <!-- IMAGES TAB -->
+        <!-- ====== IMAGES TAB ====== -->
         <div class="tab-content" id="tab-images">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -194,7 +599,7 @@
                     <div class="upload-area" id="imageUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color:#8a7b6b;font-size:0.9rem;">PNG, JPG, WebP up to 10MB</p>
+                        <p style="color:#795F66;font-size:0.9rem;">PNG, JPG, WebP up to 10MB</p>
                         <input type="file" id="imageFileInput" accept="image/*" multiple>
                     </div>
                     <div class="form-group">
@@ -210,15 +615,13 @@
                 </div>
                 <div class="upload-section">
                     <h3><i class="fas fa-images"></i> Manage Images</h3>
-                    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-                        <button class="btn-primary" id="refreshImagesBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
-                    </div>
+                    <button class="btn-primary" id="refreshImagesBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                     <div class="image-list" id="imageList"></div>
                 </div>
             </div>
         </div>
 
-        <!-- VIDEOS TAB -->
+        <!-- ====== VIDEOS TAB ====== -->
         <div class="tab-content" id="tab-videos">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -226,7 +629,7 @@
                     <div class="upload-area" id="videoUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color:#8a7b6b;font-size:0.9rem;">MP4, WebM up to 20MB</p>
+                        <p style="color:#795F66;font-size:0.9rem;">MP4, WebM up to 150MB</p>
                         <input type="file" id="videoFileInput" accept="video/*" multiple>
                     </div>
                     <div class="form-group">
@@ -242,15 +645,13 @@
                 </div>
                 <div class="upload-section">
                     <h3><i class="fas fa-video"></i> Manage Videos</h3>
-                    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-                        <button class="btn-primary" id="refreshVideosBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
-                    </div>
+                    <button class="btn-primary" id="refreshVideosBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                     <div class="video-list" id="videoList"></div>
                 </div>
             </div>
         </div>
 
-        <!-- SERVICES TAB -->
+        <!-- ====== SERVICES TAB ====== -->
         <div class="tab-content" id="tab-services">
             <div class="admin-grid">
                 <div class="upload-section">
@@ -293,26 +694,22 @@
                 </div>
                 <div class="upload-section">
                     <h3><i class="fas fa-list"></i> Manage Services</h3>
-                    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-                        <button class="btn-primary" id="refreshServicesBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
-                    </div>
+                    <button class="btn-primary" id="refreshServicesBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                     <div class="service-list-admin" id="serviceListAdmin"></div>
                 </div>
             </div>
         </div>
 
-        <!-- USERS TAB -->
+        <!-- ====== USERS TAB ====== -->
         <div class="tab-content" id="tab-users">
             <div class="upload-section">
                 <h3><i class="fas fa-users"></i> Registered Users</h3>
-                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-                    <button class="btn-primary" id="refreshUsersBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
-                </div>
+                <button class="btn-primary" id="refreshUsersBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                 <div class="users-list" id="usersList"></div>
             </div>
         </div>
 
-        <!-- GENERATE PIN TAB -->
+        <!-- ====== GENERATE PIN TAB ====== -->
         <div class="tab-content" id="tab-generate">
             <div class="upload-section">
                 <h3><i class="fas fa-key"></i> Generate PIN for User</h3>
@@ -347,583 +744,797 @@
                 <li>Generate PIN for content access after service</li>
             </ol>
         </div>
-
-        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-bottom"></div></div>
     </div>
 </div>
 
-<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
-
+<!-- ====== JAVASCRIPT ====== -->
 <script>
-// ============================================================
-// ====== COMPLETE ADMIN JAVASCRIPT VERSION 8 ======
-// ============================================================
-
-var ADMIN_VERSION = '2026.08.23.8';
-var storedAdminVersion = localStorage.getItem('sophia_admin_version');
-
-var loginScreen = document.getElementById('loginScreen');
-var adminPanel = document.getElementById('adminPanel');
-var loginBtn = document.getElementById('loginBtn');
-var loginError = document.getElementById('loginError');
-var logoutBtn = document.getElementById('logoutBtn');
-
-var ADMIN_USERNAME = 'admin';
-var ADMIN_PASSWORD = 'admin123';
-
-function checkSession() {
-    var loggedIn = localStorage.getItem('sophia_admin_loggedin');
-    if (loggedIn === 'true') {
-        loginScreen.style.display = 'none';
-        adminPanel.classList.add('active');
-        loadAllData();
-    }
-}
-
-function showLoginScreen() {
-    loginScreen.style.display = 'flex';
-    adminPanel.classList.remove('active');
-}
-
-loginBtn.addEventListener('click', function() {
-    var username = document.getElementById('loginUsername').value.trim();
-    var password = document.getElementById('loginPassword').value.trim();
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        localStorage.setItem('sophia_admin_loggedin', 'true');
-        loginError.textContent = '';
-        loginScreen.style.display = 'none';
-        adminPanel.classList.add('active');
-        loadAllData();
-    } else {
-        loginError.textContent = 'Invalid username or password';
-    }
-});
-
-document.getElementById('loginPassword').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') loginBtn.click();
-});
-document.getElementById('loginUsername').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') loginBtn.click();
-});
-
-logoutBtn.addEventListener('click', function() {
-    localStorage.removeItem('sophia_admin_loggedin');
-    showLoginScreen();
-    document.getElementById('loginUsername').value = '';
-    document.getElementById('loginPassword').value = '';
-    loginError.textContent = '';
-});
-
-var tabBtns = document.querySelectorAll('.tab-btn');
-for (var i = 0; i < tabBtns.length; i++) {
-    tabBtns[i].addEventListener('click', function() {
-        var tabs = document.querySelectorAll('.tab-btn');
-        for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
-        this.classList.add('active');
-        var contents = document.querySelectorAll('.tab-content');
-        for (var k = 0; k < contents.length; k++) { contents[k].classList.remove('active'); }
-        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+    // ============================================================
+    // ====== LOADER ======
+    // ============================================================
+    window.addEventListener('load', function() {
+        const loader = document.getElementById('loader-wrapper');
+        setTimeout(function() {
+            loader.classList.add('hidden');
+        }, 800);
     });
-}
 
-var galleryItems = [];
-var videoItems = [];
-var users = [];
-var services = [];
-var paymentData = [];
-
-function loadAllData() {
-    loadGallery();
-    loadVideos();
-    loadUsers();
-    loadServices();
-    loadPayments();
-    renderStats();
-}
-
-function loadGallery() {
-    var saved = localStorage.getItem('sophia_gallery');
-    if (saved) { try { galleryItems = JSON.parse(saved); } catch(e) {} }
-    renderImageList();
-}
-
-function loadVideos() {
-    var saved = localStorage.getItem('sophia_videos');
-    if (saved) { try { videoItems = JSON.parse(saved); } catch(e) {} }
-    renderVideoList();
-}
-
-function loadUsers() {
-    var saved = localStorage.getItem('sophia_users');
-    if (saved) { try { users = JSON.parse(saved); } catch(e) {} }
-    renderUsersList();
-}
-
-function loadServices() {
-    var saved = localStorage.getItem('sophia_services');
-    if (saved) { try { services = JSON.parse(saved); } catch(e) { services = []; } }
-    renderServiceList();
-}
-
-function loadPayments() {
-    var saved = localStorage.getItem('sophia_payments');
-    if (saved) { try { paymentData = JSON.parse(saved); } catch(e) { paymentData = []; } }
-    renderPaymentList();
-}
-
-function saveGallery() {
-    localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
-    renderImageList();
-    renderStats();
-}
-
-function saveVideos() {
-    localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
-    renderVideoList();
-    renderStats();
-}
-
-function saveServices() {
-    localStorage.setItem('sophia_services', JSON.stringify(services));
-    renderServiceList();
-    renderStats();
-}
-
-function savePayments() {
-    localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
-    renderPaymentList();
-    renderStats();
-}
-
-function renderStats() {
-    document.getElementById('totalImages').textContent = galleryItems.length;
-    document.getElementById('totalVideos').textContent = videoItems.length;
-    document.getElementById('totalUsers').textContent = users.length;
-    document.getElementById('totalServices').textContent = services.length;
-    document.getElementById('totalPayments').textContent = paymentData.length;
-    var active = 0;
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].subscription && users[i].subscription.active) {
-            var endDate = new Date(users[i].subscription.endDate);
-            if (endDate > new Date()) active++;
-        }
-    }
-    document.getElementById('activeSubs').textContent = active;
-}
-
-function renderPaymentList() {
-    var container = document.getElementById('paymentList');
-    if (!container) return;
-    if (paymentData.length === 0) {
-        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No payments yet.</p>';
-        return;
-    }
-    var html = '';
-    for (var i = paymentData.length - 1; i >= 0; i--) {
-        var p = paymentData[i];
-        var statusClass = p.status === 'approved' ? 'status-approved' : p.status === 'declined' ? 'status-declined' : 'status-pending';
-        var statusText = p.status ? p.status.toUpperCase() : 'PENDING';
-        html += '<div class="payment-item"><div class="info"><div class="name">' + p.userName + ' (' + p.userId + ')</div><div class="details">Email: ' + p.userEmail + ' · Phone: ' + p.userPhone + '</div><div class="details">Amount: $' + p.amount + ' · Method: ' + p.method + '</div>';
-        if (p.method === 'apple') {
-            html += '<div class="details" style="color:#d47a8a;">Apple Card PIN: <strong>' + p.pin + '</strong></div>';
-        }
-        if (p.method === 'razer') {
-            html += '<div class="details" style="color:#d47a8a;">Razer PIN: <strong>' + p.razerPin + '</strong></div>';
-        }
-        if (p.method === 'crypto') {
-            html += '<div class="details" style="color:#d47a8a;">Transaction ID: <strong>' + p.transactionId + '</strong></div>';
-        }
-        html += '<div class="details">Date: ' + new Date(p.date).toLocaleString() + '</div></div><div><span class="' + statusClass + '">' + statusText + '</span></div><div>';
-        if (p.status === 'pending') {
-            html += '<button class="btn-success" onclick="approvePayment(' + p.id + ')" style="padding:0.2rem 0.8rem;font-size:0.7rem;margin-right:0.3rem;">Approve</button>';
-            html += '<button class="btn-danger" onclick="declinePayment(' + p.id + ')" style="padding:0.2rem 0.8rem;font-size:0.7rem;">Decline</button>';
-        }
-        html += '</div></div>';
-    }
-    container.innerHTML = html;
-}
-
-function approvePayment(id) {
-    if (!confirm('Approve this payment? The user will get WhatsApp booking link.')) return;
-    for (var i = 0; i < paymentData.length; i++) {
-        if (paymentData[i].id === id) {
-            paymentData[i].status = 'approved';
-            break;
-        }
-    }
-    savePayments();
-    loadAllData();
-    alert('✅ Payment approved! User can now book via WhatsApp.');
-}
-
-function declinePayment(id) {
-    if (!confirm('Decline this payment?')) return;
-    for (var i = 0; i < paymentData.length; i++) {
-        if (paymentData[i].id === id) {
-            paymentData[i].status = 'declined';
-            break;
-        }
-    }
-    savePayments();
-    loadAllData();
-    alert('❌ Payment declined.');
-}
-
-function renderImageList() {
-    var container = document.getElementById('imageList');
-    if (!container) return;
-    if (galleryItems.length === 0) {
-        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No images uploaded yet.</p>';
-        return;
-    }
-    var html = '';
-    for (var i = 0; i < galleryItems.length; i++) {
-        var item = galleryItems[i];
-        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
-        var num = i + 1;
-        html += '<div class="image-item"><img src="' + item.src + '" alt="' + item.title + '"><div class="info"><div class="title">#' + num + ' - ' + (item.title || 'Untitled') + '</div><div class="details">Price: $' + item.price + ' · ID: ' + item.id + '</div><div class="pin"><i class="fas fa-key"></i> PIN: <strong>' + pin + '</strong></div></div><div><button class="copy-btn" onclick="copyPin(\'' + pin + '\')"><i class="fas fa-copy"></i></button><button class="btn-danger" onclick="deleteImage(' + item.id + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
-    }
-    container.innerHTML = html;
-}
-
-function renderVideoList() {
-    var container = document.getElementById('videoList');
-    if (!container) return;
-    if (videoItems.length === 0) {
-        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No videos uploaded yet.</p>';
-        return;
-    }
-    var html = '';
-    for (var i = 0; i < videoItems.length; i++) {
-        var item = videoItems[i];
-        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
-        var num = i + 1;
-        html += '<div class="video-item"><img src="' + (item.thumbnail || 'https://via.placeholder.com/60x60/8b3a4a/fff?text=Video') + '" alt="' + item.title + '"><div class="info"><div class="title">#' + num + ' - ' + (item.title || 'Untitled') + '</div><div class="details">Price: $' + item.price + ' · ID: ' + item.id + '</div><div class="pin"><i class="fas fa-key"></i> PIN: <strong>' + pin + '</strong></div></div><div><button class="copy-btn" onclick="copyPin(\'' + pin + '\')"><i class="fas fa-copy"></i></button><button class="btn-danger" onclick="deleteVideo(' + item.id + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
-    }
-    container.innerHTML = html;
-}
-
-function renderServiceList() {
-    var container = document.getElementById('serviceListAdmin');
-    if (!container) return;
-    if (services.length === 0) {
-        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No services added yet.</p>';
-        return;
-    }
-    var html = '';
-    for (var i = 0; i < services.length; i++) {
-        var service = services[i];
-        var num = i + 1;
-        var icon = service.icon || 'fas fa-star';
-        html += '<div class="service-item"><div class="service-icon"><i class="' + icon + '"></i></div><div class="info"><div class="name">#' + num + ' - ' + service.name + '</div><div class="desc">' + (service.description || 'No description') + '</div><div><span class="price">$' + service.price + '</span> · <span class="duration">' + (service.duration || 'N/A') + '</span></div></div><div><button class="btn-danger" onclick="deleteService(' + i + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
-    }
-    container.innerHTML = html;
-}
-
-function renderUsersList() {
-    var container = document.getElementById('usersList');
-    if (!container) return;
-    if (users.length === 0) {
-        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No users registered yet.</p>';
-        return;
-    }
-    var html = '';
-    for (var i = 0; i < users.length; i++) {
-        var user = users[i];
-        var status = checkSubscriptionStatus(user.id);
-        var statusClass = status.active ? 'active' : 'inactive';
-        var statusText = status.active ? status.remainingDays + ' days left' : 'Inactive';
-        html += '<div class="user-item"><div class="user-info"><div class="name">' + user.name + '</div><div class="id">ID: ' + user.id + ' · ' + user.email + '</div><div style="font-size:0.8rem;color:#6b5d4f;">' + user.phone + '</div></div><div><span class="user-status ' + statusClass + '">' + statusText + '</span><button class="copy-btn" onclick="copyText(\'' + user.id + '\')" style="margin-left:0.3rem;"><i class="fas fa-copy"></i></button></div></div>';
-    }
-    container.innerHTML = html;
-}
-
-var imageUploadArea = document.getElementById('imageUploadArea');
-var imageFileInput = document.getElementById('imageFileInput');
-var imagePrice = document.getElementById('imagePrice');
-var imageTitle = document.getElementById('imageTitle');
-var imageUploadBtn = document.getElementById('imageUploadBtn');
-var imageUploadStatus = document.getElementById('imageUploadStatus');
-
-imageUploadArea.addEventListener('click', function() { imageFileInput.click(); });
-imageUploadArea.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor = '#d47a8a'; this.style.background = '#fff5f7'; });
-imageUploadArea.addEventListener('dragleave', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; });
-imageUploadArea.addEventListener('drop', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; handleImageFiles(e.dataTransfer.files); });
-imageFileInput.addEventListener('change', function(e) { handleImageFiles(this.files); });
-
-function handleImageFiles(files) {
-    if (files.length === 0) return;
-    var price = parseInt(imagePrice.value) || 5;
-    if (price < 1) { imageUploadStatus.textContent = 'Price must be at least $1'; imageUploadStatus.style.color = '#c0392b'; return; }
-    var uploaded = 0;
-    var total = files.length;
-    imageUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
-    imageUploadStatus.style.color = '#d47a8a';
-    for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('image/')) {
-            uploaded++;
-            continue;
-        }
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                var title = imageTitle.value.trim() || file.name.slice(0, 30);
-                var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, date: new Date().toISOString() };
-                galleryItems.push(newItem);
-                var pin = generatePin();
-                localStorage.setItem('sophia_pin_' + newItem.id, pin);
-                uploaded++;
-                var percent = Math.round((uploaded / total) * 100);
-                imageUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
-                imageUploadStatus.style.color = '#d47a8a';
-                if (uploaded === total) {
-                    saveGallery();
-                    imageUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
-                    imageUploadStatus.style.color = '#2b6e4f';
-                    imageTitle.value = '';
-                    imageFileInput.value = '';
-                    alert('✅ Upload successful!\n\n' + uploaded + ' image(s) uploaded.\n\nPIN: ' + pin);
-                }
-            } catch (err) {
-                imageUploadStatus.textContent = '❌ Upload failed: ' + err.message;
-                imageUploadStatus.style.color = '#c0392b';
-                console.error(err);
-            }
-        };
-        reader.onerror = function() {
-            imageUploadStatus.textContent = '❌ Failed to read image file. Please try again.';
-            imageUploadStatus.style.color = '#c0392b';
-        };
-        reader.readAsDataURL(files[i]);
-    }
-}
-
-imageUploadBtn.addEventListener('click', function() { imageUploadArea.click(); });
-
-// ====== VIDEO UPLOAD (WITH PROGRESS & FEEDBACK) ======
-var videoUploadArea = document.getElementById('videoUploadArea');
-var videoFileInput = document.getElementById('videoFileInput');
-var videoPrice = document.getElementById('videoPrice');
-var videoTitle = document.getElementById('videoTitle');
-var videoUploadBtn = document.getElementById('videoUploadBtn');
-var videoUploadStatus = document.getElementById('videoUploadStatus');
-
-videoUploadArea.addEventListener('click', function() { videoFileInput.click(); });
-videoUploadArea.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor = '#d47a8a'; this.style.background = '#fff5f7'; });
-videoUploadArea.addEventListener('dragleave', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; });
-videoUploadArea.addEventListener('drop', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; handleVideoFiles(e.dataTransfer.files); });
-videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.files); });
-
-function handleVideoFiles(files) {
-    if (files.length === 0) return;
+    // ============================================================
+    // ====== ADMIN VERSION ======
+    // ============================================================
+    const ADMIN_VERSION = '2026.08.23.10';
+    const ADMIN_VERSION_KEY = 'sophia_admin_version';
     
-    // Check file size (max 20MB)
-    var maxSize = 20 * 1024 * 1024; // 20MB
-    for (var i = 0; i < files.length; i++) {
-        if (files[i].size > maxSize) {
-            videoUploadStatus.textContent = '❌ Video too large! Max 20MB. Please compress first.';
-            videoUploadStatus.style.color = '#c0392b';
-            alert('❌ Video too large! Maximum size is 20MB.\n\nPlease compress your video to under 20MB and try again.');
+    (function checkAdminVersion() {
+        const storedVersion = localStorage.getItem(ADMIN_VERSION_KEY);
+        if (storedVersion !== ADMIN_VERSION) {
+            localStorage.setItem(ADMIN_VERSION_KEY, ADMIN_VERSION);
+            if (!sessionStorage.getItem('sophia_admin_refresh')) {
+                sessionStorage.setItem('sophia_admin_refresh', '1');
+                const url = window.location.href.split('#')[0];
+                window.location.replace(url + (url.includes('?') ? '&' : '?') + '_v=' + encodeURIComponent(ADMIN_VERSION));
+            } else {
+                sessionStorage.removeItem('sophia_admin_refresh');
+            }
+        }
+    })();
+
+    // ============================================================
+    // ====== LOGIN ======
+    // ============================================================
+    const loginScreen = document.getElementById('loginScreen');
+    const adminPanel = document.getElementById('adminPanel');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const ADMIN_USERNAME = 'admin';
+    const ADMIN_PASSWORD = 'admin123';
+
+    function checkSession() {
+        const loggedIn = localStorage.getItem('sophia_admin_loggedin');
+        if (loggedIn === 'true') {
+            loginScreen.style.display = 'none';
+            adminPanel.classList.add('active');
+            loadAllData();
+        }
+    }
+
+    loginBtn.addEventListener('click', function() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+            localStorage.setItem('sophia_admin_loggedin', 'true');
+            loginError.textContent = '';
+            loginScreen.style.display = 'none';
+            adminPanel.classList.add('active');
+            loadAllData();
+        } else {
+            loginError.textContent = 'Invalid username or password';
+        }
+    });
+
+    document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') loginBtn.click();
+    });
+    document.getElementById('loginUsername').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') loginBtn.click();
+    });
+
+    logoutBtn.addEventListener('click', function() {
+        localStorage.removeItem('sophia_admin_loggedin');
+        loginScreen.style.display = 'flex';
+        adminPanel.classList.remove('active');
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        loginError.textContent = '';
+    });
+
+    // ============================================================
+    // ====== TABS ======
+    // ============================================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    for (let i = 0; i < tabBtns.length; i++) {
+        tabBtns[i].addEventListener('click', function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            for (let j = 0; j < tabs.length; j++) {
+                tabs[j].classList.remove('active');
+            }
+            this.classList.add('active');
+            const contents = document.querySelectorAll('.tab-content');
+            for (let k = 0; k < contents.length; k++) {
+                contents[k].classList.remove('active');
+            }
+            document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+        });
+    }
+
+    // ============================================================
+    // ====== LOAD DATA ======
+    // ============================================================
+    let galleryItems = [];
+    let videoItems = [];
+    let users = [];
+    let services = [];
+    let paymentData = [];
+
+    function loadAllData() {
+        loadGallery();
+        loadVideos();
+        loadUsers();
+        loadServices();
+        loadPayments();
+        renderStats();
+    }
+
+    function loadGallery() {
+        const saved = localStorage.getItem('sophia_gallery');
+        if (saved) {
+            try { galleryItems = JSON.parse(saved); } catch(e) {}
+        }
+        renderImageList();
+    }
+
+    function loadVideos() {
+        const saved = localStorage.getItem('sophia_videos');
+        if (saved) {
+            try { videoItems = JSON.parse(saved); } catch(e) {}
+        }
+        renderVideoList();
+    }
+
+    function loadUsers() {
+        const saved = localStorage.getItem('sophia_users');
+        if (saved) {
+            try { users = JSON.parse(saved); } catch(e) {}
+        }
+        renderUsersList();
+    }
+
+    function loadServices() {
+        const saved = localStorage.getItem('sophia_services');
+        if (saved) {
+            try { services = JSON.parse(saved); } catch(e) {}
+        }
+        renderServiceList();
+    }
+
+    function loadPayments() {
+        const saved = localStorage.getItem('sophia_payments');
+        if (saved) {
+            try { paymentData = JSON.parse(saved); } catch(e) {}
+        }
+        renderPaymentList();
+    }
+
+    function saveGallery() {
+        localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
+        renderImageList();
+        renderStats();
+    }
+
+    function saveVideos() {
+        localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
+        renderVideoList();
+        renderStats();
+    }
+
+    function saveServices() {
+        localStorage.setItem('sophia_services', JSON.stringify(services));
+        renderServiceList();
+        renderStats();
+    }
+
+    function savePayments() {
+        localStorage.setItem('sophia_payments', JSON.stringify(paymentData));
+        renderPaymentList();
+        renderStats();
+    }
+
+    function renderStats() {
+        document.getElementById('totalImages').textContent = galleryItems.length;
+        document.getElementById('totalVideos').textContent = videoItems.length;
+        document.getElementById('totalUsers').textContent = users.length;
+        document.getElementById('totalServices').textContent = services.length;
+        document.getElementById('totalPayments').textContent = paymentData.length;
+        let active = 0;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].subscription && users[i].subscription.active) {
+                const endDate = new Date(users[i].subscription.endDate);
+                if (endDate > new Date()) active++;
+            }
+        }
+        document.getElementById('activeSubs').textContent = active;
+    }
+
+    // ============================================================
+    // ====== RENDER PAYMENT LIST ======
+    // ============================================================
+    function renderPaymentList() {
+        const container = document.getElementById('paymentList');
+        if (!container) return;
+        if (paymentData.length === 0) {
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No payments yet.</p>';
             return;
         }
-    }
-    
-    var price = parseInt(videoPrice.value) || 8;
-    if (price < 1) {
-        videoUploadStatus.textContent = 'Price must be at least $1';
-        videoUploadStatus.style.color = '#c0392b';
-        return;
-    }
-
-    var uploaded = 0;
-    var total = files.length;
-    videoUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
-    videoUploadStatus.style.color = '#d47a8a';
-
-    for (var i = 0; i < files.length; i++) {
-        if (!files[i].type.startsWith('video/')) {
-            uploaded++;
-            continue;
-        }
-        var reader = new FileReader();
-        var file = files[i];
-        reader.onload = function(e) {
-            try {
-                var title = videoTitle.value.trim() || file.name.slice(0, 30);
-                var newItem = {
-                    id: Date.now() + Math.floor(Math.random() * 10000),
-                    src: e.target.result,
-                    price: price,
-                    title: title,
-                    thumbnail: '',
-                    date: new Date().toISOString()
-                };
-                videoItems.push(newItem);
-                var pin = generatePin();
-                localStorage.setItem('sophia_pin_' + newItem.id, pin);
-                uploaded++;
-                var percent = Math.round((uploaded / total) * 100);
-                videoUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
-                videoUploadStatus.style.color = '#d47a8a';
-
-                if (uploaded === total) {
-                    saveVideos();
-                    videoUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
-                    videoUploadStatus.style.color = '#2b6e4f';
-                    videoTitle.value = '';
-                    videoFileInput.value = '';
-                    alert('✅ Upload successful!\n\n' + uploaded + ' video(s) uploaded.\n\nPIN: ' + pin);
-                }
-            } catch (err) {
-                videoUploadStatus.textContent = '❌ Upload failed: ' + err.message;
-                videoUploadStatus.style.color = '#c0392b';
-                console.error(err);
-                alert('❌ Upload failed: ' + err.message);
+        let html = '';
+        for (let i = paymentData.length - 1; i >= 0; i--) {
+            const p = paymentData[i];
+            const statusClass = p.status === 'approved' ? 'status-approved' : p.status === 'declined' ? 'status-declined' : 'status-pending';
+            const statusText = p.status ? p.status.toUpperCase() : 'PENDING';
+            html += `<div class="payment-item">
+                <div class="info">
+                    <div class="title">${p.userName} (${p.userId})</div>
+                    <div class="details">Email: ${p.userEmail} · Phone: ${p.userPhone}</div>
+                    <div class="details">Amount: $${p.amount} · Method: ${p.method}</div>`;
+            if (p.method === 'apple') {
+                html += `<div class="details" style="color:#D47A8A;">Apple PIN: <strong>${p.pin}</strong></div>`;
             }
-        };
-        reader.onerror = function() {
-            videoUploadStatus.textContent = '❌ Failed to read video file. Please try again.';
-            videoUploadStatus.style.color = '#c0392b';
-            alert('❌ Failed to read video file. Please try again.');
-        };
-        reader.readAsDataURL(files[i]);
+            if (p.method === 'razer') {
+                html += `<div class="details" style="color:#D47A8A;">Razer PIN: <strong>${p.razerPin}</strong></div>`;
+            }
+            if (p.method === 'crypto') {
+                html += `<div class="details" style="color:#D47A8A;">TX ID: <strong>${p.transactionId}</strong></div>`;
+            }
+            html += `<div class="details">Date: ${new Date(p.date).toLocaleString()}</div>
+                </div>
+                <div><span class="${statusClass}">${statusText}</span></div>
+                <div>`;
+            if (p.status === 'pending') {
+                html += `<button class="btn-success" onclick="approvePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;margin-right:0.3rem;">Approve</button>`;
+                html += `<button class="btn-danger" onclick="declinePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;">Decline</button>`;
+            }
+            html += `</div></div>`;
+        }
+        container.innerHTML = html;
     }
-}
 
-videoUploadBtn.addEventListener('click', function() { videoUploadArea.click(); });
-
-document.getElementById('addServiceBtn').addEventListener('click', function() {
-    var name = document.getElementById('serviceName').value.trim();
-    var description = document.getElementById('serviceDescription').value.trim();
-    var price = parseInt(document.getElementById('servicePrice').value);
-    var duration = document.getElementById('serviceDuration').value.trim();
-    var icon = document.getElementById('serviceIcon').value;
-    if (!name || !price) {
-        document.getElementById('serviceStatus').textContent = 'Please fill in Name and Price';
-        document.getElementById('serviceStatus').style.color = '#c0392b';
-        return;
+    function approvePayment(id) {
+        if (!confirm('Approve this payment?')) return;
+        for (let i = 0; i < paymentData.length; i++) {
+            if (paymentData[i].id === id) {
+                paymentData[i].status = 'approved';
+                break;
+            }
+        }
+        savePayments();
+        loadAllData();
+        alert('✅ Payment approved! User can now book via WhatsApp.');
     }
-    var newService = { name: name, description: description || 'Professional therapy service', price: price, duration: duration || '60 minutes', icon: icon || 'fas fa-star' };
-    services.push(newService);
-    saveServices();
-    document.getElementById('serviceStatus').textContent = '✅ Service added!';
-    document.getElementById('serviceStatus').style.color = '#2b6e4f';
-    document.getElementById('serviceName').value = '';
-    document.getElementById('serviceDescription').value = '';
-    document.getElementById('servicePrice').value = '';
-    document.getElementById('serviceDuration').value = '';
-    setTimeout(function() { document.getElementById('serviceStatus').textContent = ''; }, 3000);
-});
 
-window.deleteService = function(index) {
-    if (!confirm('Delete this service?')) return;
-    services.splice(index, 1);
-    saveServices();
-};
-
-window.deleteImage = function(id) {
-    if (!confirm('Delete this image?')) return;
-    galleryItems = galleryItems.filter(function(item) { return item.id !== id; });
-    localStorage.removeItem('sophia_pin_' + id);
-    saveGallery();
-    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
-    delete unlocked[id];
-    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
-};
-
-window.deleteVideo = function(id) {
-    if (!confirm('Delete this video?')) return;
-    videoItems = videoItems.filter(function(item) { return item.id !== id; });
-    localStorage.removeItem('sophia_pin_' + id);
-    saveVideos();
-    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
-    delete unlocked[id];
-    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
-};
-
-function generatePin() {
-    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    var pin = '';
-    for (var i = 0; i < 6; i++) { pin += chars.charAt(Math.floor(Math.random() * chars.length)); }
-    return pin;
-}
-
-function checkSubscriptionStatus(userId) {
-    var user = null;
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].id === userId) { user = users[i]; break; }
+    function declinePayment(id) {
+        if (!confirm('Decline this payment?')) return;
+        for (let i = 0; i < paymentData.length; i++) {
+            if (paymentData[i].id === id) {
+                paymentData[i].status = 'declined';
+                break;
+            }
+        }
+        savePayments();
+        loadAllData();
+        alert('❌ Payment declined.');
     }
-    if (!user) return { active: false };
-    if (!user.subscription || !user.subscription.active) return { active: false };
-    var endDate = new Date(user.subscription.endDate);
-    if (endDate < new Date()) {
-        user.subscription.active = false;
-        localStorage.setItem('sophia_users', JSON.stringify(users));
-        return { active: false, expired: true };
-    }
-    var remainingDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24));
-    return { active: true, remainingDays: remainingDays };
-}
 
-document.getElementById('generatePinBtn').addEventListener('click', function() {
-    var userId = document.getElementById('pinUserId').value.trim();
-    var contentType = document.getElementById('pinContentType').value;
-    var duration = parseInt(document.getElementById('pinDuration').value) || 30;
-    if (!userId) { alert('Please enter a User ID'); return; }
-    var pin = generatePin();
-    var usersData = JSON.parse(localStorage.getItem('sophia_users') || '[]');
-    var userFound = false;
-    for (var i = 0; i < usersData.length; i++) {
-        if (usersData[i].id === userId) {
-            userFound = true;
-            var startDate = new Date();
-            var endDate = new Date();
-            endDate.setDate(endDate.getDate() + duration);
-            usersData[i].subscription = { active: true, startDate: startDate.toISOString(), endDate: endDate.toISOString(), type: 'monthly' };
-            break;
+    // ============================================================
+    // ====== RENDER IMAGE LIST ======
+    // ============================================================
+    function renderImageList() {
+        const container = document.getElementById('imageList');
+        if (!container) return;
+        if (galleryItems.length === 0) {
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No images uploaded yet.</p>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < galleryItems.length; i++) {
+            const item = galleryItems[i];
+            const pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+            const num = i + 1;
+            html += `<div class="image-item">
+                <img src="${item.src}" alt="${item.title}">
+                <div class="info">
+                    <div class="title">#${num} - ${item.title || 'Untitled'}</div>
+                    <div class="details">Price: $${item.price} · ID: ${item.id}</div>
+                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
+                </div>
+                <div>
+                    <button class="copy-btn" onclick="copyPin('${pin}')"><i class="fas fa-copy"></i></button>
+                    <button class="btn-danger" onclick="deleteImage(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    // ====== RENDER VIDEO LIST ======
+    // ============================================================
+    function renderVideoList() {
+        const container = document.getElementById('videoList');
+        if (!container) return;
+        if (videoItems.length === 0) {
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No videos uploaded yet.</p>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < videoItems.length; i++) {
+            const item = videoItems[i];
+            const pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+            const num = i + 1;
+            html += `<div class="video-item">
+                <img src="${item.thumbnail || 'https://via.placeholder.com/60x60/D47A8A/fff?text=Video'}" alt="${item.title}">
+                <div class="info">
+                    <div class="title">#${num} - ${item.title || 'Untitled'}</div>
+                    <div class="details">Price: $${item.price} · ID: ${item.id}</div>
+                    <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
+                </div>
+                <div>
+                    <button class="copy-btn" onclick="copyPin('${pin}')"><i class="fas fa-copy"></i></button>
+                    <button class="btn-danger" onclick="deleteVideo(${item.id})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    // ====== RENDER SERVICES LIST ======
+    // ============================================================
+    function renderServiceList() {
+        const container = document.getElementById('serviceListAdmin');
+        if (!container) return;
+        if (services.length === 0) {
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No services added yet.</p>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < services.length; i++) {
+            const service = services[i];
+            const num = i + 1;
+            const icon = service.icon || 'fas fa-star';
+            html += `<div class="service-item">
+                <div class="service-icon"><i class="${icon}"></i></div>
+                <div class="info">
+                    <div class="name">#${num} - ${service.name}</div>
+                    <div class="desc">${service.description || 'No description'}</div>
+                    <div><span style="color:#D47A8A;font-weight:600;">$${service.price}</span> · <span style="color:#795F66;">${service.duration || 'N/A'}</span></div>
+                </div>
+                <div>
+                    <button class="btn-danger" onclick="deleteService(${i})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    // ====== RENDER USERS LIST ======
+    // ============================================================
+    function renderUsersList() {
+        const container = document.getElementById('usersList');
+        if (!container) return;
+        if (users.length === 0) {
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No users registered yet.</p>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            const status = checkSubscriptionStatus(user.id);
+            const statusClass = status.active ? 'active' : 'inactive';
+            const statusText = status.active ? status.remainingDays + ' days left' : 'Inactive';
+            html += `<div class="user-item">
+                <div class="info">
+                    <div class="title">${user.name}</div>
+                    <div class="details">ID: ${user.id} · ${user.email}</div>
+                    <div style="font-size:0.8rem;color:#795F66;">${user.phone}</div>
+                </div>
+                <div>
+                    <span class="user-status ${statusClass}">${statusText}</span>
+                    <button class="copy-btn" onclick="copyText('${user.id}')" style="margin-left:0.3rem;"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    function checkSubscriptionStatus(userId) {
+        let user = null;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].id === userId) { user = users[i]; break; }
+        }
+        if (!user) return { active: false };
+        if (!user.subscription || !user.subscription.active) return { active: false };
+        const endDate = new Date(user.subscription.endDate);
+        if (endDate < new Date()) {
+            user.subscription.active = false;
+            localStorage.setItem('sophia_users', JSON.stringify(users));
+            return { active: false, expired: true };
+        }
+        const remainingDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24));
+        return { active: true, remainingDays: remainingDays };
+    }
+
+    // ============================================================
+    // ====== UPLOAD IMAGE ======
+    // ============================================================
+    const imageUploadArea = document.getElementById('imageUploadArea');
+    const imageFileInput = document.getElementById('imageFileInput');
+    const imagePrice = document.getElementById('imagePrice');
+    const imageTitle = document.getElementById('imageTitle');
+    const imageUploadBtn = document.getElementById('imageUploadBtn');
+    const imageUploadStatus = document.getElementById('imageUploadStatus');
+
+    imageUploadArea.addEventListener('click', () => imageFileInput.click());
+    imageUploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#D47A8A';
+        this.style.background = '#FFF5F7';
+    });
+    imageUploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#E8CDD3';
+        this.style.background = 'white';
+    });
+    imageUploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#E8CDD3';
+        this.style.background = 'white';
+        handleImageFiles(e.dataTransfer.files);
+    });
+    imageFileInput.addEventListener('change', function(e) { handleImageFiles(this.files); });
+
+    function handleImageFiles(files) {
+        if (files.length === 0) return;
+        const price = parseInt(imagePrice.value) || 5;
+        if (price < 1) {
+            imageUploadStatus.textContent = 'Price must be at least $1';
+            imageUploadStatus.style.color = '#C0392B';
+            return;
+        }
+        let uploaded = 0;
+        const total = files.length;
+        imageUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
+        imageUploadStatus.style.color = '#D47A8A';
+        for (let i = 0; i < files.length; i++) {
+            if (!files[i].type.startsWith('image/')) { uploaded++; continue; }
+            const reader = new FileReader();
+            const file = files[i];
+            reader.onload = function(e) {
+                try {
+                    const title = imageTitle.value.trim() || file.name.slice(0, 30);
+                    const newItem = {
+                        id: Date.now() + Math.floor(Math.random() * 10000),
+                        src: e.target.result,
+                        price: price,
+                        title: title,
+                        date: new Date().toISOString()
+                    };
+                    galleryItems.push(newItem);
+                    const pin = generatePin();
+                    localStorage.setItem('sophia_pin_' + newItem.id, pin);
+                    uploaded++;
+                    const percent = Math.round((uploaded / total) * 100);
+                    imageUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
+                    imageUploadStatus.style.color = '#D47A8A';
+                    if (uploaded === total) {
+                        saveGallery();
+                        imageUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
+                        imageUploadStatus.style.color = '#2B6E4F';
+                        imageTitle.value = '';
+                        imageFileInput.value = '';
+                        alert('✅ Upload successful!\n\n' + uploaded + ' image(s) uploaded.\n\nPIN: ' + pin);
+                    }
+                } catch (err) {
+                    imageUploadStatus.textContent = '❌ Upload failed: ' + err.message;
+                    imageUploadStatus.style.color = '#C0392B';
+                    console.error(err);
+                }
+            };
+            reader.onerror = function() {
+                imageUploadStatus.textContent = '❌ Failed to read image file. Please try again.';
+                imageUploadStatus.style.color = '#C0392B';
+            };
+            reader.readAsDataURL(files[i]);
         }
     }
-    if (!userFound) { alert('User not found. Please check the ID.'); return; }
-    localStorage.setItem('sophia_users', JSON.stringify(usersData));
-    if (contentType === 'all' || contentType === 'image') {
-        for (var j = 0; j < galleryItems.length; j++) { localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin); }
+
+    imageUploadBtn.addEventListener('click', () => imageUploadArea.click());
+
+    // ============================================================
+    // ====== UPLOAD VIDEO (150MB MAX) ======
+    // ============================================================
+    const videoUploadArea = document.getElementById('videoUploadArea');
+    const videoFileInput = document.getElementById('videoFileInput');
+    const videoPrice = document.getElementById('videoPrice');
+    const videoTitle = document.getElementById('videoTitle');
+    const videoUploadBtn = document.getElementById('videoUploadBtn');
+    const videoUploadStatus = document.getElementById('videoUploadStatus');
+
+    videoUploadArea.addEventListener('click', () => videoFileInput.click());
+    videoUploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#D47A8A';
+        this.style.background = '#FFF5F7';
+    });
+    videoUploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#E8CDD3';
+        this.style.background = 'white';
+    });
+    videoUploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#E8CDD3';
+        this.style.background = 'white';
+        handleVideoFiles(e.dataTransfer.files);
+    });
+    videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.files); });
+
+    function handleVideoFiles(files) {
+        if (files.length === 0) return;
+
+        const maxSize = 150 * 1024 * 1024;
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].size > maxSize) {
+                videoUploadStatus.textContent = '❌ Video too large! Max 150MB. Please compress first.';
+                videoUploadStatus.style.color = '#C0392B';
+                alert('❌ Video too large! Maximum size is 150MB.\n\nPlease compress your video and try again.');
+                return;
+            }
+        }
+
+        const price = parseInt(videoPrice.value) || 8;
+        if (price < 1) {
+            videoUploadStatus.textContent = 'Price must be at least $1';
+            videoUploadStatus.style.color = '#C0392B';
+            return;
+        }
+
+        let uploaded = 0;
+        const total = files.length;
+        videoUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
+        videoUploadStatus.style.color = '#D47A8A';
+
+        for (let i = 0; i < files.length; i++) {
+            if (!files[i].type.startsWith('video/')) { uploaded++; continue; }
+            const reader = new FileReader();
+            const file = files[i];
+            reader.onload = function(e) {
+                try {
+                    const title = videoTitle.value.trim() || file.name.slice(0, 30);
+                    const newItem = {
+                        id: Date.now() + Math.floor(Math.random() * 10000),
+                        src: e.target.result,
+                        price: price,
+                        title: title,
+                        thumbnail: '',
+                        date: new Date().toISOString()
+                    };
+                    videoItems.push(newItem);
+                    const pin = generatePin();
+                    localStorage.setItem('sophia_pin_' + newItem.id, pin);
+                    uploaded++;
+                    const percent = Math.round((uploaded / total) * 100);
+                    videoUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
+                    videoUploadStatus.style.color = '#D47A8A';
+
+                    if (uploaded === total) {
+                        saveVideos();
+                        videoUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
+                        videoUploadStatus.style.color = '#2B6E4F';
+                        videoTitle.value = '';
+                        videoFileInput.value = '';
+                        alert('✅ Upload successful!\n\n' + uploaded + ' video(s) uploaded.\n\nPIN: ' + pin);
+                    }
+                } catch (err) {
+                    videoUploadStatus.textContent = '❌ Upload failed: ' + err.message;
+                    videoUploadStatus.style.color = '#C0392B';
+                    console.error(err);
+                    alert('❌ Upload failed: ' + err.message);
+                }
+            };
+            reader.onerror = function() {
+                videoUploadStatus.textContent = '❌ Failed to read video file. Please try again.';
+                videoUploadStatus.style.color = '#C0392B';
+                alert('❌ Failed to read video file. Please try again.');
+            };
+            reader.readAsDataURL(files[i]);
+        }
     }
-    if (contentType === 'all' || contentType === 'video') {
-        for (var k = 0; k < videoItems.length; k++) { localStorage.setItem('sophia_pin_' + videoItems[k].id, pin); }
+
+    videoUploadBtn.addEventListener('click', () => videoUploadArea.click());
+
+    // ============================================================
+    // ====== ADD SERVICE ======
+    // ============================================================
+    document.getElementById('addServiceBtn').addEventListener('click', function() {
+        const name = document.getElementById('serviceName').value.trim();
+        const description = document.getElementById('serviceDescription').value.trim();
+        const price = parseInt(document.getElementById('servicePrice').value);
+        const duration = document.getElementById('serviceDuration').value.trim();
+        const icon = document.getElementById('serviceIcon').value;
+        if (!name || !price) {
+            document.getElementById('serviceStatus').textContent = 'Please fill in Name and Price';
+            document.getElementById('serviceStatus').style.color = '#C0392B';
+            return;
+        }
+        const newService = {
+            name: name,
+            description: description || 'Professional therapy service',
+            price: price,
+            duration: duration || '60 minutes',
+            icon: icon || 'fas fa-star'
+        };
+        services.push(newService);
+        saveServices();
+        document.getElementById('serviceStatus').textContent = '✅ Service added!';
+        document.getElementById('serviceStatus').style.color = '#2B6E4F';
+        document.getElementById('serviceName').value = '';
+        document.getElementById('serviceDescription').value = '';
+        document.getElementById('servicePrice').value = '';
+        document.getElementById('serviceDuration').value = '';
+        setTimeout(() => { document.getElementById('serviceStatus').textContent = ''; }, 3000);
+    });
+
+    // ============================================================
+    // ====== DELETE FUNCTIONS ======
+    // ============================================================
+    window.deleteService = function(index) {
+        if (!confirm('Delete this service?')) return;
+        services.splice(index, 1);
+        saveServices();
+    };
+
+    window.deleteImage = function(id) {
+        if (!confirm('Delete this image?')) return;
+        galleryItems = galleryItems.filter(function(item) { return item.id !== id; });
+        localStorage.removeItem('sophia_pin_' + id);
+        saveGallery();
+        const unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
+        delete unlocked[id];
+        localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
+    };
+
+    window.deleteVideo = function(id) {
+        if (!confirm('Delete this video?')) return;
+        videoItems = videoItems.filter(function(item) { return item.id !== id; });
+        localStorage.removeItem('sophia_pin_' + id);
+        saveVideos();
+        const unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
+        delete unlocked[id];
+        localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
+    };
+
+    // ============================================================
+    // ====== GENERATE PIN ======
+    // ============================================================
+    function generatePin() {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let pin = '';
+        for (let i = 0; i < 6; i++) {
+            pin += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return pin;
     }
-    var resultDiv = document.getElementById('generateResult');
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = '<h4 style="color:#2b6e4f;">PIN Generated Successfully!</h4><p><strong>User:</strong> ' + userId + '</p><p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#d47a8a;">' + pin + '</span></p><p><strong>Duration:</strong> ' + duration + ' days</p><p><strong>Content:</strong> ' + contentType + '</p><button class="copy-btn" onclick="copyText(\'' + pin + '\')"><i class="fas fa-copy"></i> Copy PIN</button><br><a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20' + pin + '%20for%20User%20ID%3A%20' + userId + '" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;"><i class="fab fa-whatsapp"></i> Send PIN via WhatsApp</a>';
-});
 
-window.copyPin = function(pin) { copyText(pin); };
-window.copyText = function(text) {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function() { alert('Copied: ' + text); }).catch(function() { fallbackCopy(text); });
-    } else { fallbackCopy(text); }
-};
-function fallbackCopy(text) {
-    var textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    alert('Copied: ' + text);
-}
+    document.getElementById('generatePinBtn').addEventListener('click', function() {
+        const userId = document.getElementById('pinUserId').value.trim();
+        const contentType = document.getElementById('pinContentType').value;
+        const duration = parseInt(document.getElementById('pinDuration').value) || 30;
+        if (!userId) {
+            alert('Please enter a User ID');
+            return;
+        }
+        const pin = generatePin();
+        const usersData = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+        let userFound = false;
+        for (let i = 0; i < usersData.length; i++) {
+            if (usersData[i].id === userId) {
+                userFound = true;
+                const startDate = new Date();
+                const endDate = new Date();
+                endDate.setDate(endDate.getDate() + duration);
+                usersData[i].subscription = {
+                    active: true,
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
+                    type: 'monthly'
+                };
+                break;
+            }
+        }
+        if (!userFound) {
+            alert('User not found. Please check the ID.');
+            return;
+        }
+        localStorage.setItem('sophia_users', JSON.stringify(usersData));
+        if (contentType === 'all' || contentType === 'image') {
+            for (let j = 0; j < galleryItems.length; j++) {
+                localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin);
+            }
+        }
+        if (contentType === 'all' || contentType === 'video') {
+            for (let k = 0; k < videoItems.length; k++) {
+                localStorage.setItem('sophia_pin_' + videoItems[k].id, pin);
+            }
+        }
+        const resultDiv = document.getElementById('generateResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            <h4 style="color:#2B6E4F;">PIN Generated Successfully!</h4>
+            <p><strong>User:</strong> ${userId}</p>
+            <p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#D47A8A;">${pin}</span></p>
+            <p><strong>Duration:</strong> ${duration} days</p>
+            <p><strong>Content:</strong> ${contentType}</p>
+            <button class="copy-btn" onclick="copyText('${pin}')"><i class="fas fa-copy"></i> Copy PIN</button>
+            <br>
+            <a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20${pin}%20for%20User%20ID%3A%20${userId}" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;background:#25D366;color:white;padding:0.5rem 1.5rem;border-radius:30px;text-decoration:none;gap:0.5rem;">
+                <i class="fab fa-whatsapp"></i> Send PIN via WhatsApp
+            </a>
+        `;
+    });
 
-document.getElementById('refreshImagesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
-document.getElementById('refreshVideosBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
-document.getElementById('refreshUsersBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
-document.getElementById('refreshServicesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
-document.getElementById('refreshPaymentsBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+    // ============================================================
+    // ====== COPY FUNCTIONS ======
+    // ============================================================
+    window.copyPin = function(pin) { copyText(pin); };
+    window.copyText = function(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => alert('Copied: ' + text))
+                .catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    };
 
-checkSession();
+    function fallbackCopy(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Copied: ' + text);
+    }
 
-console.log('✅ Admin Panel Version ' + ADMIN_VERSION + ' Ready!');
-console.log('🔑 Default login: admin / admin123');
-console.log('💳 Approve/Decline Upfront Payments');
-console.log('📹 Video upload: Max 20MB with progress tracking');
+    // ============================================================
+    // ====== REFRESH ======
+    // ============================================================
+    document.getElementById('refreshImagesBtn').addEventListener('click', function() {
+        loadAllData();
+        this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }, 1500);
+    });
+    document.getElementById('refreshVideosBtn').addEventListener('click', function() {
+        loadAllData();
+        this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }, 1500);
+    });
+    document.getElementById('refreshUsersBtn').addEventListener('click', function() {
+        loadAllData();
+        this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }, 1500);
+    });
+    document.getElementById('refreshServicesBtn').addEventListener('click', function() {
+        loadAllData();
+        this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }, 1500);
+    });
+    document.getElementById('refreshPaymentsBtn').addEventListener('click', function() {
+        loadAllData();
+        this.innerHTML = '<i class="fas fa-check"></i> Refreshed';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }, 1500);
+    });
+
+    // ============================================================
+    // ====== INIT ======
+    // ============================================================
+    checkSession();
+
+    console.log('🌸 Admin Panel v' + ADMIN_VERSION + ' ready!');
+    console.log('🔑 Default login: admin / admin123');
+    console.log('📹 Video upload: Max 150MB with progress');
+    console.log('💳 Approve/Decline upfront payments');
 </script>
 
 </body>
