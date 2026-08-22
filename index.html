@@ -2,162 +2,723 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Sophia Message & Therapy</title>
     
+    <!-- ====== META CACHE CONTROL ====== -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <meta name="cache-control" content="no-cache, no-store, must-revalidate">
-    <meta name="pragma" content="no-cache">
-    <meta name="expires" content="0">
-
-    <script>
-    (function () {
-        var APP_VERSION = '2026.08.23.8';
-        var storedVersion = localStorage.getItem('sophia_app_version');
-        if (storedVersion !== APP_VERSION) {
-            localStorage.setItem('sophia_app_version', APP_VERSION);
-            if (!sessionStorage.getItem('sophia_cache_refresh')) {
-                sessionStorage.setItem('sophia_cache_refresh', '1');
-                var url = window.location.href.split('#')[0];
-                url += (url.indexOf('?') === -1 ? '?' : '&');
-                url += '_v=' + encodeURIComponent(APP_VERSION);
-                window.location.replace(url);
-            } else {
-                sessionStorage.removeItem('sophia_cache_refresh');
-            }
-        }
-    })();
-    </script>
-    
+    <!-- ====== FONT AWESOME ====== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
+    <!-- ====== ADSTERRA ADS (YOU PROVIDE CODE HERE) ====== -->
+    <!-- PLACE YOUR ADSTERRA CODE HERE -->
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background: #faf5f6; color: #2d2a2c; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 2px solid #f0e0e4; flex-wrap: wrap; gap: 1rem; }
-        .nav-brand { font-size: 1.6rem; font-weight: 400; color: #7a3a4a; }
-        .nav-brand span { color: #c07a8a; font-weight: 300; }
-        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .nav-links a { color: #7a3a4a; text-decoration: none; font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 30px; transition: 0.2s; font-size: 0.95rem; }
-        .nav-links a:hover, .nav-links a.active { background: #d47a8a; color: white; }
-        .nav-links a i { margin-right: 6px; }
-        .page { display: none; animation: fadeIn 0.4s ease; }
+        /* ====== RESET & BASE ====== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            background: #FFF8FA;
+            color: #2F2024;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: inherit; }
+        img { max-width: 100%; display: block; }
+        
+        /* ====== CONTAINER ====== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        
+        /* ====== NAVBAR ====== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid #E8CDD3;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            background: #FFFFFF;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(122, 58, 74, 0.06);
+        }
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #7A3A4A;
+            letter-spacing: 0.5px;
+        }
+        .nav-brand span { color: #D47A8A; font-weight: 300; }
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #7A3A4A;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: #D47A8A;
+            color: #FFFFFF;
+        }
+        .nav-links a i { margin-right: 4px; }
+        
+        /* ====== PAGES ====== */
+        .page { display: none; animation: fadeUp 0.4s ease; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .hero { text-align: center; padding: 2.5rem 0 1.8rem; }
-        .hero h1 { font-size: 2.8rem; font-weight: 400; color: #7a3a4a; letter-spacing: 1px; }
-        .hero h1 span { font-weight: 300; color: #c07a8a; }
-        .hero .tagline { font-size: 1.05rem; color: #7a3a4a; background: #f5e8ec; display: inline-block; padding: 0.4rem 2rem; border-radius: 40px; margin-top: 0.5rem; }
-        .badge-us { background: #d47a8a; color: white; font-size: 0.75rem; padding: 0.25rem 1rem; border-radius: 30px; display: inline-block; margin-left: 0.5rem; font-weight: 500; }
-        .hero-info { margin-top: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; }
-        .hero-info span { color: #7a3a4a; font-size: 0.95rem; }
-        .hero-info span i { margin-right: 6px; color: #d47a8a; }
-        .ad-container { background: #f5ecee; border-radius: 16px; padding: 1rem; margin: 1.5rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 90px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
-        .section-title { font-size: 1.8rem; font-weight: 300; border-left: 5px solid #d47a8a; padding-left: 1rem; margin: 2.5rem 0 1.5rem; color: #7a3a4a; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .card { background: white; border-radius: 24px; padding: 1.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #f0e0e4; transition: 0.3s; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(212,122,138,0.12); }
-        .card i { font-size: 2rem; color: #d47a8a; margin-bottom: 0.5rem; }
-        .card h3 { font-weight: 500; font-size: 1.3rem; margin-bottom: 0.5rem; color: #7a3a4a; }
-        .service-list { list-style: none; margin: 1rem 0 0.5rem; }
-        .service-list li { padding: 0.3rem 0; border-bottom: 1px dashed #f0e0e4; display: flex; align-items: center; gap: 0.5rem; color: #3d3538; }
-        .service-list i { font-size: 0.85rem; color: #d47a8a; width: 1.2rem; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
-        .service-card { background: white; border-radius: 20px; padding: 1.8rem; text-align: center; border: 1px solid #f0e0e4; transition: 0.3s; }
-        .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(212,122,138,0.12); }
-        .service-icon { font-size: 2.5rem; color: #d47a8a; margin-bottom: 0.5rem; }
-        .service-card h3 { color: #7a3a4a; font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .service-card p { color: #5d4d50; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .service-price { font-size: 1.6rem; font-weight: 600; color: #d47a8a; margin: 0.5rem 0; }
-        .service-duration { font-size: 0.85rem; color: #8a7b6b; margin-bottom: 0.8rem; }
-        .upfront-badge { display: inline-block; background: #2b6e4f; color: white; padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.75rem; margin-top: 0.3rem; }
-        .btn-small { padding: 0.4rem 1.5rem; font-size: 0.9rem; }
-        .gallery-grid, .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
-        .gallery-item, .video-item { position: relative; border-radius: 16px; overflow: hidden; background: #f5ecee; aspect-ratio: 1; border: 3px solid transparent; transition: 0.3s; cursor: pointer; }
-        .gallery-item:hover, .video-item:hover { transform: scale(1.02); border-color: #d47a8a; }
-        .gallery-item img, .video-item video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
-        .video-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); pointer-events: none; }
-        .gallery-item .zoom-icon { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 0.3rem 0.6rem; border-radius: 30px; font-size: 0.8rem; pointer-events: none; }
-        .account-card { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f0e0e4; max-width: 600px; margin: 0 auto; }
-        .account-card .user-id { background: #f5ecee; padding: 0.8rem; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 500; color: #7a3a4a; margin: 1rem 0; }
-        .account-card .status { padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; font-weight: 500; }
-        .account-card .status.active { background: #2b6e4f; color: white; }
-        .account-card .status.inactive { background: #c0392b; color: white; }
-        .account-card .timer { font-size: 2rem; font-weight: 600; color: #d47a8a; text-align: center; padding: 1rem; background: #fff5f7; border-radius: 16px; margin: 1rem 0; }
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ====== HERO ====== */
+        .hero {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 400;
+            color: #7A3A4A;
+            letter-spacing: 0.5px;
+        }
+        .hero h1 span { color: #D47A8A; font-weight: 300; }
+        .hero .tagline {
+            font-size: 1.05rem;
+            color: #7A3A4A;
+            background: #F8E8EC;
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            border-radius: 40px;
+            margin-top: 0.5rem;
+        }
+        .badge-us {
+            background: #D47A8A;
+            color: #FFFFFF;
+            font-size: 0.7rem;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .hero-info {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.5rem;
+        }
+        .hero-info span {
+            color: #7A3A4A;
+            font-size: 0.9rem;
+        }
+        .hero-info span i {
+            margin-right: 6px;
+            color: #D47A8A;
+        }
+        .hero-cta {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        
+        /* ====== BUTTONS ====== */
+        .btn {
+            background: #D47A8A;
+            border: none;
+            color: #FFFFFF;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #c06a7a;
+            transform: scale(1.01);
+            box-shadow: 0 4px 16px rgba(212, 122, 138, 0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #D47A8A;
+            color: #7A3A4A;
+        }
+        .btn-outline:hover {
+            background: #D47A8A;
+            color: #FFFFFF;
+        }
+        .btn-whatsapp {
+            background: #25D366;
+        }
+        .btn-whatsapp:hover {
+            background: #1da851;
+        }
+        .btn-small {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECTION TITLES ====== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            border-left: 5px solid #D47A8A;
+            padding-left: 1rem;
+            margin: 2.5rem 0 1.5rem;
+            color: #7A3A4A;
+        }
+        
+        /* ====== GRID ====== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* ====== CARDS ====== */
+        .card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E8CDD3;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(212, 122, 138, 0.10);
+        }
+        .card i {
+            font-size: 2rem;
+            color: #D47A8A;
+            margin-bottom: 0.5rem;
+        }
+        .card h3 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #7A3A4A;
+        }
+        .card p { color: #5d4d50; font-size: 0.95rem; }
+        
+        /* ====== SERVICE LIST (Home) ====== */
+        .service-list {
+            list-style: none;
+            margin: 1rem 0 0.5rem;
+        }
+        .service-list li {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #E8CDD3;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2F2024;
+            font-size: 0.95rem;
+        }
+        .service-list i {
+            font-size: 0.85rem;
+            color: #D47A8A;
+            width: 1.2rem;
+            margin-bottom: 0;
+        }
+        
+        /* ====== SERVICE CARDS ====== */
+        .service-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 1.8rem;
+            text-align: center;
+            border: 1px solid #E8CDD3;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(212, 122, 138, 0.10);
+        }
+        .service-icon {
+            font-size: 2.5rem;
+            color: #D47A8A;
+            margin-bottom: 0.5rem;
+        }
+        .service-card h3 { color: #7A3A4A; font-size: 1.2rem; }
+        .service-card p { color: #5d4d50; font-size: 0.9rem; margin: 0.3rem 0; }
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #D47A8A;
+            margin: 0.3rem 0;
+        }
+        .service-duration {
+            font-size: 0.85rem;
+            color: #795F66;
+            margin-bottom: 0.5rem;
+        }
+        .upfront-badge {
+            display: inline-block;
+            background: #2B6E4F;
+            color: #FFFFFF;
+            padding: 0.15rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin: 0.3rem 0;
+            font-weight: 500;
+        }
+        
+        /* ====== GALLERY ====== */
+        .gallery-grid, .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .gallery-item, .video-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #F8E8EC;
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover, .video-item:hover {
+            transform: scale(1.02);
+            border-color: #D47A8A;
+        }
+        .gallery-item img, .video-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-item .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #FFFFFF;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            pointer-events: none;
+            opacity: 0.9;
+        }
+        .gallery-item .zoom-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.5);
+            color: #FFFFFF;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
+        .empty-state {
+            color: #795F66;
+            text-align: center;
+            padding: 2.5rem;
+            font-size: 1.1rem;
+            background: #F8E8EC;
+            border-radius: 16px;
+        }
+        
+        /* ====== MODAL / VIEWER ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
         .modal.active { display: flex; }
-        .modal-content { background: transparent; border-radius: 0; padding: 0; max-width: 95vw; max-height: 95vh; width: auto; text-align: center; position: relative; animation: fadeIn 0.3s ease; }
-        .modal-close { position: absolute; top: -40px; right: 0; font-size: 2.5rem; cursor: pointer; color: white; background: none; border: none; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .modal-content {
+            background: transparent;
+            max-width: 95vw;
+            max-height: 95vh;
+            width: auto;
+            position: relative;
+            animation: fadeUp 0.3s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2.2rem;
+            color: #FFFFFF;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
         .modal-close:hover { color: #ddd; }
-        .modal-content img { max-width: 95vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .modal-content video { max-width: 95vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); background: #000; }
-        .modal-content .modal-title { color: white; margin-top: 0.5rem; font-size: 1.2rem; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        .pin-modal .modal-content { background: white; border-radius: 30px; padding: 2.5rem; max-width: 450px; width: 90%; border: 2px solid #f0e0e4; }
-        .pin-modal .modal-close { position: absolute; top: 12px; right: 18px; font-size: 1.8rem; cursor: pointer; color: #c07a8a; background: none; border: none; }
-        .pin-modal .modal-close:hover { color: #7a3a4a; }
-        .pin-modal .modal-content h2 { color: #7a3a4a; margin-bottom: 0.5rem; }
-        .code-input { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
-        .code-input input { padding: 0.6rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; width: 150px; text-align: center; letter-spacing: 4px; }
-        .code-input input:focus { border-color: #d47a8a; outline: none; }
-        .code-input button { background: #d47a8a; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 30px; cursor: pointer; font-weight: 500; }
+        .modal-content img {
+            max-width: 95vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-content video {
+            max-width: 95vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-title {
+            color: #FFFFFF;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        /* ====== PIN MODAL ====== */
+        .pin-modal .modal-content {
+            background: #FFFFFF;
+            border-radius: 30px;
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            border: 2px solid #E8CDD3;
+        }
+        .pin-modal .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 1.6rem;
+            color: #795F66;
+            text-shadow: none;
+        }
+        .pin-modal .modal-close:hover { color: #7A3A4A; }
+        .pin-modal h2 { color: #7A3A4A; margin-bottom: 0.3rem; }
+        .code-input {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .code-input input {
+            padding: 0.6rem 1rem;
+            border: 2px solid #E8CDD3;
+            border-radius: 30px;
+            font-size: 1rem;
+            width: 160px;
+            text-align: center;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+        .code-input input:focus {
+            border-color: #D47A8A;
+            outline: none;
+        }
+        .code-input button {
+            background: #D47A8A;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
         .code-input button:hover { background: #c06a7a; }
-        #unlockMessage { margin-top: 0.5rem; font-weight: 500; }
-        .form-group { margin: 1rem 0; text-align: left; }
-        .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; color: #7a3a4a; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; }
-        .form-group textarea { border-radius: 16px; min-height: 80px; resize: vertical; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #d47a8a; outline: none; }
-        .btn { background: #d47a8a; border: none; color: white; padding: 0.7rem 2rem; border-radius: 60px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; transition: 0.2s; font-weight: 500; }
-        .btn:hover { background: #c06a7a; transform: scale(1.01); }
-        .btn-whatsapp { background: #25D366; }
-        .btn-whatsapp:hover { background: #1da851; }
-        .btn-success { background: #2b6e4f; }
-        .btn-success:hover { background: #1f573d; }
-        .btn-danger { background: #c0392b; }
-        .btn-danger:hover { background: #a93226; }
-        .contact-block { background: #f5ecee; border-radius: 60px; padding: 0.7rem 1.5rem; display: inline-flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
-        .contact-block a { color: #7a3a4a; text-decoration: none; font-weight: 500; }
-        .contact-block a:hover { text-decoration: underline; }
-        .payment-icons { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 1rem 0 0.2rem; font-size: 0.95rem; }
-        .payment-icons i { font-size: 1.1rem; width: auto; color: #d47a8a; }
-        .home-delivery { background: #f5ecee; border-radius: 50px; padding: 0.2rem 1.2rem; font-weight: 400; color: #7a3a4a; display: inline-block; margin-top: 0.8rem; }
-        .gallery-desc { margin-bottom: 1rem; color: #7a3a4a; }
-        .booking-section { margin: 1.2rem 0; }
-        .booking-box { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; background: #f5ecee; padding: 1.2rem 1.8rem; border-radius: 60px; }
-        .booking-box i { font-size: 1.4rem; color: #d47a8a; }
-        .booking-box span { font-weight: 500; margin-left: 8px; color: #7a3a4a; }
-        .booking-notes { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.8rem 2rem; }
-        .booking-notes span { font-size: 0.9rem; color: #7a3a4a; background: #f5ecee; padding: 0.5rem 1.2rem; border-radius: 40px; }
-        .footer { text-align: center; font-size: 0.9rem; color: #7a3a4a; margin-top: 2rem; border-top: 1px solid #f0e0e4; padding-top: 1.5rem; }
-        .footer span { font-size: 0.8rem; opacity: 0.8; }
-        .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
-        .copy-btn:hover { background: #f0b8c8; }
-        .payment-option { background: #f5ecee; border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
-        .payment-option:hover { border-color: #d47a8a; }
-        .payment-option i { font-size: 1.8rem; color: #d47a8a; margin-right: 0.5rem; }
-        .address-box { background: #f5ecee; padding: 0.8rem; border-radius: 12px; word-break: break-all; font-size: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-        .address-box button { background: #d47a8a; color: white; border: none; padding: 0.3rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
-        .pin-input-group { display: flex; align-items: center; gap: 0.5rem; }
+        .pin-message { margin-top: 0.5rem; font-weight: 500; }
+        
+        /* ====== REGISTER MODAL ====== */
+        .form-group {
+            margin: 1rem 0;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: #7A3A4A;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #E8CDD3;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #D47A8A;
+            outline: none;
+        }
+        
+        /* ====== ACCOUNT CARD ====== */
+        .account-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid #E8CDD3;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .account-card .user-id {
+            background: #F8E8EC;
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #7A3A4A;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .copy-btn {
+            background: #F8E8EC;
+            border: none;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            color: #7A3A4A;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #E8CDD3; }
+        
+        /* ====== PAYMENT OPTIONS ====== */
+        .payment-option {
+            background: #F8E8EC;
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .payment-option:hover {
+            border-color: #D47A8A;
+            background: #fff5f7;
+        }
+        .payment-option i {
+            font-size: 1.6rem;
+            color: #D47A8A;
+            margin-right: 0.5rem;
+        }
+        .payment-option span { font-weight: 500; color: #7A3A4A; }
+        .payment-section { display: none; margin-top: 0.8rem; }
+        .payment-section.show { display: block; }
+        
+        /* ====== ADDRESS BOX ====== */
+        .address-box {
+            background: #F8E8EC;
+            padding: 0.8rem;
+            border-radius: 12px;
+            word-break: break-all;
+            font-size: 0.8rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .address-box button {
+            background: #D47A8A;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        /* ====== PIN INPUT GROUP ====== */
+        .pin-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         .pin-input-group input { flex: 1; }
-        .pin-input-group button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #7a3a4a; padding: 0.5rem; }
-        .pin-input-group button:hover { color: #d47a8a; }
-        .payment-status { margin-top: 0.5rem; font-weight: 500; padding: 0.5rem; border-radius: 8px; }
+        .pin-input-group button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #7A3A4A;
+            padding: 0.5rem;
+        }
+        .pin-input-group button:hover { color: #D47A8A; }
+        
+        /* ====== PAYMENT STATUS ====== */
+        .payment-status {
+            margin-top: 0.5rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
         .payment-status.pending { background: #fff3cd; color: #856404; }
         .payment-status.approved { background: #d4edda; color: #155724; }
         .payment-status.declined { background: #f8d7da; color: #721c24; }
-        .whatsapp-book-btn { background: #25D366; color: white; border: none; padding: 0.7rem 2rem; border-radius: 60px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; transition: 0.2s; font-weight: 500; margin-top: 0.5rem; }
-        .whatsapp-book-btn:hover { background: #1da851; transform: scale(1.01); }
-        .whatsapp-book-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
-        @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } .modal-close { top: -30px; font-size: 2rem; } }
+        
+        /* ====== WHATSAPP BOOK ====== */
+        .whatsapp-book-btn {
+            background: #25D366;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        .whatsapp-book-btn:hover {
+            background: #1da851;
+            transform: scale(1.01);
+        }
+        
+        /* ====== CONTACT BLOCK ====== */
+        .contact-block {
+            background: #F8E8EC;
+            border-radius: 60px;
+            padding: 0.7rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .contact-block a {
+            color: #7A3A4A;
+            font-weight: 500;
+        }
+        .contact-block a:hover { text-decoration: underline; }
+        
+        /* ====== PAYMENT ICONS ====== */
+        .payment-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin: 0.8rem 0;
+        }
+        .payment-icons i { font-size: 1.1rem; color: #D47A8A; }
+        
+        /* ====== BOOKING BOX ====== */
+        .booking-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: #F8E8EC;
+            padding: 1.2rem 1.8rem;
+            border-radius: 60px;
+            margin: 1.2rem 0;
+        }
+        .booking-box i { font-size: 1.4rem; color: #D47A8A; }
+        .booking-box span { font-weight: 500; margin-left: 8px; color: #7A3A4A; }
+        .booking-notes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .booking-notes span {
+            font-size: 0.85rem;
+            color: #7A3A4A;
+            background: #F8E8EC;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7A3A4A;
+            margin-top: 2.5rem;
+            border-top: 1px solid #E8CDD3;
+            padding-top: 1.5rem;
+        }
+        .footer span { font-size: 0.8rem; opacity: 0.8; }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                padding: 0.8rem 0;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 0.4rem;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .hero h1 { font-size: 2rem; }
+            .grid-2 { grid-template-columns: 1fr; gap: 1rem; }
+            .section-title { font-size: 1.4rem; }
+            .booking-box { flex-direction: column; text-align: center; gap: 1rem; }
+            .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; }
+            .modal-content { max-width: 98vw; }
+            .modal-content img, .modal-content video { max-width: 98vw; max-height: 75vh; }
+            .card { padding: 1.2rem; }
+            .service-card { padding: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.6rem; }
+            .hero .tagline { font-size: 0.9rem; padding: 0.2rem 1rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+            .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; }
+            .modal-close { top: -30px; font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
+<!-- ====== NAVBAR ====== -->
 <nav class="navbar">
     <div class="nav-brand">Sophia <span>Therapy</span></div>
     <div class="nav-links">
@@ -171,19 +732,22 @@
 
 <div class="container">
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-top"></div></div>
-
+    <!-- ====== HOME PAGE ====== -->
     <div id="page-home" class="page active">
         <div class="hero">
             <h1>Sophia <span>Message & Therapy</span></h1>
             <div>
                 <span class="tagline">Gentle · Deep · Restorative</span>
-                <span class="badge-us">18+ Only</span>
+                <span class="badge-us">US Resident Only</span>
             </div>
             <div class="hero-info">
                 <span><i class="fas fa-calendar-check"></i> Online Booking</span>
-                <span><i class="fas fa-home"></i> Home Delivery</span>
+                <span><i class="fas fa-home"></i> Home Delivery / In-House</span>
                 <span><i class="fas fa-phone-alt"></i> +1 (404) 907-0581</span>
+            </div>
+            <div class="hero-cta">
+                <a href="#" class="btn" data-page="services">Explore Services</a>
+                <a href="#" class="btn btn-outline" data-page="book">Book Now</a>
             </div>
         </div>
 
@@ -193,6 +757,7 @@
                 <h3>Our Services</h3>
                 <p style="margin-bottom:0.5rem;color:#5d4d50;">Book a session. Pay 40% upfront to confirm.</p>
                 <ul class="service-list" id="homeServiceList"></ul>
+                <a href="#" class="btn btn-small" data-page="services" style="margin-top:0.5rem;">View All Services</a>
             </div>
             <div class="card">
                 <i class="fas fa-credit-card"></i>
@@ -203,7 +768,7 @@
                     <span><i class="fas fa-coins"></i> Crypto</span>
                     <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
                 </div>
-                <p><i class="fas fa-lock"></i> Pay 40% upfront to confirm booking</p>
+                <p><i class="fas fa-lock"></i> 40% upfront to confirm booking</p>
                 <div class="contact-block">
                     <i class="fab fa-whatsapp"></i>
                     <a href="https://wa.me/14049070581" target="_blank">WhatsApp Manager</a>
@@ -211,77 +776,76 @@
                     <i class="fas fa-sms"></i>
                     <a href="sms:+14049070581">Text Message</a>
                 </div>
-                <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery Available</div>
+                <div style="margin-top:0.8rem;background:#F8E8EC;padding:0.3rem 1.2rem;border-radius:50px;display:inline-block;font-size:0.9rem;color:#7A3A4A;">
+                    <i class="fas fa-truck-fast"></i> Home Delivery Available
+                </div>
             </div>
         </div>
 
-        <div class="booking-section">
-            <div class="booking-box">
-                <div><i class="fas fa-calendar-circle-plus"></i><span>Book a Service · 40% Upfront</span></div>
-                <a href="#" class="btn" data-page="book">Book Now</a>
-            </div>
-            <div class="booking-notes">
-                <span><i class="fas fa-circle-check"></i> 40% Upfront to Confirm</span>
-                <span><i class="fas fa-calendar-day"></i> Choose Date via WhatsApp</span>
-                <span><i class="fas fa-location-dot"></i> In-House or Home Delivery</span>
-            </div>
+        <div class="booking-box">
+            <div><i class="fas fa-calendar-circle-plus"></i><span>Book a Service · 40% Upfront</span></div>
+            <a href="#" class="btn" data-page="book">Book Now</a>
+        </div>
+        <div class="booking-notes">
+            <span><i class="fas fa-circle-check"></i> 40% Upfront to Confirm</span>
+            <span><i class="fas fa-calendar-day"></i> Choose Date via WhatsApp</span>
+            <span><i class="fas fa-location-dot"></i> In-House or Home Delivery</span>
         </div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-incontent"></div></div>
-
+    <!-- ====== SERVICES PAGE ====== -->
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
-        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
-        <div class="services-grid" id="servicesGrid"></div>
+        <p style="color:#795F66;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
+        <div class="grid-3" id="servicesGrid"></div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-middle"></div></div>
-
+    <!-- ====== GALLERY PAGE ====== -->
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
-        <p class="gallery-desc">Click any image to view full size.</p>
+        <p style="color:#795F66;margin-bottom:1rem;">Click any image to view full size.</p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-gallery-top"></div></div>
-
+    <!-- ====== VIDEOS PAGE ====== -->
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
-        <p class="gallery-desc">Click any video to watch full screen.</p>
+        <p style="color:#795F66;margin-bottom:1rem;">Click any video to watch full screen.</p>
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-videos-top"></div></div>
-
+    <!-- ====== ACCOUNT PAGE ====== -->
     <div id="page-account" class="page">
         <h2 class="section-title">My Account</h2>
         <div id="accountContent"></div>
     </div>
 
+    <!-- ====== BOOK PAGE ====== -->
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
-        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
+        <p style="color:#795F66;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-hand-sparkles"></i>
                 <h3>Choose Your Service</h3>
                 <ul class="service-list" id="bookServiceList"></ul>
                 <div style="margin-top:1rem;">
-                    <label style="font-weight:500;">Your Upfront Payment (40% min):</label>
-                    <input type="number" id="upfrontAmount" placeholder="Enter amount (40% min)" min="0" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #f0e0e4;margin-top:0.3rem;">
-                    <p style="font-size:0.8rem;color:#8a7b6b;margin-top:0.3rem;">Minimum 40% of service price</p>
+                    <label style="font-weight:500;color:#7A3A4A;">Your Upfront Payment (40% min):</label>
+                    <input type="number" id="upfrontAmount" placeholder="Enter amount (40% min)" min="0" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #E8CDD3;margin-top:0.3rem;">
+                    <p style="font-size:0.8rem;color:#795F66;margin-top:0.3rem;">Minimum 40% of service price</p>
                 </div>
             </div>
             <div class="card">
                 <i class="fas fa-credit-card"></i>
                 <h3>Pay Upfront</h3>
                 <p>Choose payment method:</p>
+
+                <!-- APPLE PAY -->
                 <div class="payment-option" onclick="togglePayment('apple')">
                     <i class="fab fa-apple-pay"></i>
                     <span>Apple Pay</span>
-                    <div id="applePaySection" style="display:none;margin-top:0.5rem;width:100%;">
-                        <div class="form-group" style="margin:0.3rem 0;">
+                    <div id="applePaySection" class="payment-section">
+                        <div class="form-group" style="margin:0.5rem 0;">
                             <label>Apple Card PIN (16 digits)</label>
                             <div class="pin-input-group">
                                 <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
@@ -291,45 +855,52 @@
                         <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;">Pay with Apple Pay</button>
                     </div>
                 </div>
+
+                <!-- RAZER GOLD -->
                 <div class="payment-option" onclick="togglePayment('razer')">
                     <i class="fas fa-gamepad"></i>
                     <span>Razer Gold</span>
-                    <div id="razerSection" style="display:none;margin-top:0.5rem;width:100%;">
-                        <div class="form-group" style="margin:0.3rem 0;">
+                    <div id="razerSection" class="payment-section">
+                        <div class="form-group" style="margin:0.5rem 0;">
                             <label>Razer Gold PIN</label>
                             <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
                         </div>
                         <button class="btn" onclick="submitPayment('razer')" style="width:100%;justify-content:center;">Pay with Razer Gold</button>
                     </div>
                 </div>
+
+                <!-- CRYPTO -->
                 <div class="payment-option" onclick="togglePayment('crypto')">
                     <i class="fab fa-bitcoin"></i>
                     <span>Cryptocurrency (BTC)</span>
-                    <div id="cryptoSection" style="display:none;margin-top:0.5rem;width:100%;">
-                        <p style="font-size:0.85rem;color:#8a7b6b;">Send BTC to:</p>
+                    <div id="cryptoSection" class="payment-section">
+                        <p style="font-size:0.85rem;color:#795F66;">Send BTC to:</p>
                         <div class="address-box">
                             <span id="btcAddress">bc1qkr339snz8l0kq0y6l9d0fht2amfk6t76x80cazzghsheltjjx39qg9fyhs</span>
                             <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
                         </div>
-                        <div class="form-group" style="margin:0.3rem 0;">
+                        <div class="form-group" style="margin:0.5rem 0;">
                             <label>Transaction ID</label>
                             <input type="text" id="cryptoConfirm" placeholder="Paste transaction ID">
                         </div>
                         <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;">Confirm Payment</button>
                     </div>
                 </div>
+
                 <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
-                <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#e8f5ee;border-radius:16px;text-align:center;">
-                    <p style="color:#2b6e4f;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
+
+                <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#d4edda;border-radius:16px;text-align:center;">
+                    <p style="color:#2B6E4F;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
                     <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
-                    <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn"><i class="fab fa-whatsapp"></i> Book via WhatsApp</a>
+                    <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn">
+                        <i class="fab fa-whatsapp"></i> Book via WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-book-top"></div></div>
-
+    <!-- ====== VIEWER MODAL ====== -->
     <div class="modal" id="viewerModal">
         <div class="modal-content">
             <button class="modal-close" id="viewerClose">&times;</button>
@@ -338,23 +909,31 @@
         </div>
     </div>
 
+    <!-- ====== UNLOCK MODAL (PIN) ====== -->
     <div class="modal pin-modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Enter PIN</h2>
-            <p style="color:#8a7b6b;margin-bottom:0.5rem;">Enter your PIN to unlock content</p>
+            <p style="color:#795F66;">Enter your PIN to unlock content</p>
             <div class="code-input">
                 <input type="text" id="unlockCodeInput" placeholder="Enter PIN" maxlength="10">
                 <button id="unlockCodeBtn">Unlock</button>
             </div>
-            <div id="unlockMessage"></div>
+            <div id="unlockMessage" class="pin-message"></div>
+            <hr style="margin:1rem 0;border-color:#E8CDD3;">
+            <p style="font-size:0.85rem;color:#795F66;">Contact WhatsApp for PIN</p>
+            <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp btn-small" style="margin-top:0.3rem;">
+                <i class="fab fa-whatsapp"></i> Get PIN
+            </a>
         </div>
     </div>
 
+    <!-- ====== REGISTER MODAL ====== -->
     <div class="modal pin-modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
             <h2>Create Account</h2>
+            <p style="color:#795F66;">Get your unique ID to access premium content</p>
             <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" id="regName" placeholder="Enter your full name">
@@ -367,13 +946,12 @@
                 <label>Phone</label>
                 <input type="tel" id="regPhone" placeholder="Enter your phone number">
             </div>
-            <button class="btn" id="registerBtn" style="width:100%; justify-content:center;">Register</button>
+            <button class="btn" id="registerBtn" style="width:100%;justify-content:center;">Register</button>
             <div id="registerMessage" style="margin-top:0.5rem;font-weight:500;"></div>
         </div>
     </div>
 
-    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-bottom"></div></div>
-
+    <!-- ====== FOOTER ====== -->
     <div class="footer">
         <i class="fas fa-flag-usa"></i> US Residents Only · Sophia Therapy
         <br>
@@ -381,307 +959,573 @@
     </div>
 </div>
 
-<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
-
+<!-- ====== JAVASCRIPT ====== -->
 <script>
-// ============================================================
-// ====== COMPLETE JAVASCRIPT VERSION 8 ======
-// ============================================================
-
-var APP_VERSION = '2026.08.23.8';
-var storedVersion = localStorage.getItem('sophia_app_version');
-
-if (storedVersion !== APP_VERSION) {
-    localStorage.setItem('sophia_app_version', APP_VERSION);
-    console.log('✅ Version 8 detected!');
-}
-
-var services = [];
-var galleryItems = [];
-var videoItems = [];
-var users = [];
-var payments = [];
-var currentBooking = null;
-
-function getDefaultServices() {
-    return [
-        { id: 1, name: 'Elite Wellness Rituals', description: 'Premium 80-minute Ayurvedic massage with hot stones and organic essential oil wraps.', price: 800, duration: '80 minutes', icon: 'fas fa-gem' },
-        { id: 2, name: 'Amangiri Spa Experience', description: 'Signature Ayurvedic massage with hot stone therapy. Full-day spa access.', price: 800, duration: '80 minutes', icon: 'fas fa-sun' },
-        { id: 3, name: 'Standard Therapeutic Studio', description: '60-90 minute deep tissue or Swedish massage. Trigger-point therapy.', price: 150, duration: '60-90 minutes', icon: 'fas fa-hand-holding-heart' },
-        { id: 4, name: 'SoJo Spa Club Experience', description: '60-minute Swedish massage with access to infinity pools and volcanic baths.', price: 150, duration: '60 minutes', icon: 'fas fa-water' }
-    ];
-}
-
-function getDefaultImages() { return []; }
-function getDefaultVideos() { return []; }
-
-function loadServices() {
-    var saved = localStorage.getItem('sophia_services');
-    if (saved) { try { services = JSON.parse(saved); } catch(e) { services = getDefaultServices(); } }
-    else { services = getDefaultServices(); localStorage.setItem('sophia_services', JSON.stringify(services)); }
-}
-
-function loadGallery() {
-    var saved = localStorage.getItem('sophia_gallery');
-    if (saved) { try { galleryItems = JSON.parse(saved); } catch(e) { galleryItems = []; } }
-    else { galleryItems = []; localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems)); }
-}
-
-function loadVideos() {
-    var saved = localStorage.getItem('sophia_videos');
-    if (saved) { try { videoItems = JSON.parse(saved); } catch(e) { videoItems = []; } }
-    else { videoItems = []; localStorage.setItem('sophia_videos', JSON.stringify(videoItems)); }
-}
-
-function loadUsers() {
-    var saved = localStorage.getItem('sophia_users');
-    if (saved) { try { users = JSON.parse(saved); } catch(e) { users = []; } }
-}
-
-function loadPayments() {
-    var saved = localStorage.getItem('sophia_payments');
-    if (saved) { try { payments = JSON.parse(saved); } catch(e) { payments = []; } }
-}
-
-function getCurrentUser() {
-    var saved = localStorage.getItem('sophia_current_user');
-    if (saved) { try { return JSON.parse(saved); } catch(e) { return null; } }
-    return null;
-}
-
-function saveUsers() { localStorage.setItem('sophia_users', JSON.stringify(users)); }
-function savePayments() { localStorage.setItem('sophia_payments', JSON.stringify(payments)); }
-
-function registerUser(name, email, phone) {
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].email === email) { return { success: false, message: 'Email already registered' }; }
-    }
-    var userId = 'ST' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    var newUser = { id: userId, name: name, email: email, phone: phone, registered: new Date().toISOString() };
-    users.push(newUser);
-    saveUsers();
-    localStorage.setItem('sophia_current_user', JSON.stringify(newUser));
-    return { success: true, user: newUser };
-}
-
-function logoutUser() { localStorage.removeItem('sophia_current_user'); }
-
-function renderServices() {
-    var grid = document.getElementById('servicesGrid');
-    if (!grid) return;
-    loadServices();
-    var html = '';
-    for (var i = 0; i < services.length; i++) {
-        var s = services[i];
-        var upfrontMin = Math.ceil(s.price * 0.4);
-        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><span class="upfront-badge">40% Upfront: $' + upfrontMin + '</span><br><button class="btn btn-small" onclick="bookService(' + s.id + ', ' + s.price + ')" style="margin-top:0.5rem;">Book Now</button></div>';
-    }
-    grid.innerHTML = html;
-}
-
-function renderHomeServices() {
-    var c = document.getElementById('homeServiceList');
-    if (!c) return;
-    loadServices();
-    var html = '';
-    for (var i = 0; i < services.length; i++) {
-        html += '<li><i class="' + services[i].icon + '"></i> ' + services[i].name + ' – $' + services[i].price + '</li>';
-    }
-    c.innerHTML = html;
-    var b = document.getElementById('bookServiceList');
-    if (b) {
-        var h = '';
-        for (var i = 0; i < services.length; i++) {
-            h += '<li><i class="' + services[i].icon + '"></i> ' + services[i].name + ' – $' + services[i].price + '</li>';
+    // ============================================================
+    // ====== VERSION SYSTEM ======
+    // ============================================================
+    const APP_VERSION = '2026.08.23.9';
+    const APP_KEY = 'sophia_app_version';
+    
+    (function checkVersion() {
+        const storedVersion = localStorage.getItem(APP_KEY);
+        if (storedVersion !== APP_VERSION) {
+            console.log('🔄 Version update detected:', storedVersion, '→', APP_VERSION);
+            
+            // Handle migration of application data if needed
+            // Only migrate app-specific keys, never clear all localStorage
+            
+            // Update gallery if empty
+            if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery') || '[]').length === 0) {
+                localStorage.setItem('sophia_gallery', JSON.stringify([]));
+            }
+            if (!localStorage.getItem('sophia_videos') || JSON.parse(localStorage.getItem('sophia_videos') || '[]').length === 0) {
+                localStorage.setItem('sophia_videos', JSON.stringify([]));
+            }
+            if (!localStorage.getItem('sophia_services') || JSON.parse(localStorage.getItem('sophia_services') || '[]').length === 0) {
+                localStorage.setItem('sophia_services', JSON.stringify(getDefaultServices()));
+            }
+            
+            localStorage.setItem(APP_KEY, APP_VERSION);
+            
+            // Force fresh load without infinite loop
+            if (!sessionStorage.getItem('sophia_refresh_done')) {
+                sessionStorage.setItem('sophia_refresh_done', '1');
+                const url = window.location.href.split('#')[0];
+                window.location.replace(url + (url.includes('?') ? '&' : '?') + '_v=' + encodeURIComponent(APP_VERSION));
+            } else {
+                sessionStorage.removeItem('sophia_refresh_done');
+            }
         }
-        b.innerHTML = h;
+    })();
+
+    // ============================================================
+    // ====== DATA ======
+    // ============================================================
+    let services = [];
+    let galleryItems = [];
+    let videoItems = [];
+    let users = [];
+    let payments = [];
+    let unlockCodes = {};
+    let currentUser = null;
+    let currentBooking = null;
+
+    // ============================================================
+    // ====== DEFAULT SERVICES ======
+    // ============================================================
+    function getDefaultServices() {
+        return [
+            { id: 1, name: 'Elite Wellness Rituals', description: 'Premium 80-minute Ayurvedic massage with hot stones and organic essential oil wraps.', price: 800, duration: '80 minutes', icon: 'fas fa-gem' },
+            { id: 2, name: 'Amangiri Spa Experience', description: 'Signature Ayurvedic massage with hot stone therapy. Full-day spa access.', price: 800, duration: '80 minutes', icon: 'fas fa-sun' },
+            { id: 3, name: 'Standard Therapeutic Studio', description: '60-90 minute deep tissue or Swedish massage. Trigger-point therapy.', price: 150, duration: '60-90 minutes', icon: 'fas fa-hand-holding-heart' },
+            { id: 4, name: 'SoJo Spa Club Experience', description: '60-minute Swedish massage with access to infinity pools and volcanic baths.', price: 150, duration: '60 minutes', icon: 'fas fa-water' }
+        ];
     }
-}
 
-function renderGallery() {
-    var grid = document.getElementById('galleryGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    loadGallery();
-    if (galleryItems.length === 0) {
-        grid.innerHTML = '<p style="color:#8a7b6b;text-align:center;padding:2rem;">No images uploaded yet.</p>';
-        return;
+    // ============================================================
+    // ====== LOAD / SAVE FUNCTIONS ======
+    // ============================================================
+    function loadServices() {
+        const saved = localStorage.getItem('sophia_services');
+        if (saved) {
+            try { services = JSON.parse(saved); } catch(e) { services = getDefaultServices(); }
+        } else {
+            services = getDefaultServices();
+            localStorage.setItem('sophia_services', JSON.stringify(services));
+        }
     }
-    for (var i = 0; i < galleryItems.length; i++) {
-        var item = galleryItems[i];
-        var div = document.createElement('div');
-        div.className = 'gallery-item';
-        div.innerHTML = '<img src="' + item.src + '" alt="' + item.title + '" loading="lazy" onclick="openViewer(\'image\', \'' + item.src + '\', \'' + item.title + '\')"><div class="zoom-icon"><i class="fas fa-search-plus"></i></div>';
-        grid.appendChild(div);
+
+    function loadGallery() {
+        const saved = localStorage.getItem('sophia_gallery');
+        if (saved) {
+            try { galleryItems = JSON.parse(saved); } catch(e) { galleryItems = []; }
+        } else {
+            galleryItems = [];
+            localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
+        }
     }
-}
 
-function renderVideos() {
-    var grid = document.getElementById('videoGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    loadVideos();
-    if (videoItems.length === 0) {
-        grid.innerHTML = '<p style="color:#8a7b6b;text-align:center;padding:2rem;">No videos uploaded yet.</p>';
-        return;
+    function loadVideos() {
+        const saved = localStorage.getItem('sophia_videos');
+        if (saved) {
+            try { videoItems = JSON.parse(saved); } catch(e) { videoItems = []; }
+        } else {
+            videoItems = [];
+            localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
+        }
     }
-    for (var i = 0; i < videoItems.length; i++) {
-        var item = videoItems[i];
-        var div = document.createElement('div');
-        div.className = 'video-item';
-        div.innerHTML = '<video src="' + item.src + '" preload="metadata" onclick="openViewer(\'video\', \'' + item.src + '\', \'' + item.title + '\')"></video><div class="play-icon"><i class="fas fa-play-circle" onclick="openViewer(\'video\', \'' + item.src + '\', \'' + item.title + '\')"></i></div>';
-        grid.appendChild(div);
+
+    function loadUsers() {
+        const saved = localStorage.getItem('sophia_users');
+        if (saved) {
+            try { users = JSON.parse(saved); } catch(e) { users = []; }
+        }
     }
-}
 
-var viewerModal = document.getElementById('viewerModal');
-var viewerClose = document.getElementById('viewerClose');
-var viewerContent = document.getElementById('viewerContent');
-var viewerTitle = document.getElementById('viewerTitle');
-
-function openViewer(type, src, title) {
-    if (type === 'image') {
-        viewerContent.innerHTML = '<img src="' + src + '" alt="' + title + '">';
-    } else if (type === 'video') {
-        viewerContent.innerHTML = '<video src="' + src + '" controls autoplay></video>';
+    function loadPayments() {
+        const saved = localStorage.getItem('sophia_payments');
+        if (saved) {
+            try { payments = JSON.parse(saved); } catch(e) { payments = []; }
+        }
     }
-    viewerTitle.textContent = title || '';
-    viewerModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
 
-function closeViewer() {
-    viewerModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    var video = viewerContent.querySelector('video');
-    if (video) { video.pause(); }
-    viewerContent.innerHTML = '';
-}
-
-viewerClose.addEventListener('click', closeViewer);
-viewerModal.addEventListener('click', function(e) { if (e.target === this) closeViewer(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeViewer(); });
-
-function loadAccountPage() {
-    var container = document.getElementById('accountContent');
-    var currentUser = getCurrentUser();
-    if (!currentUser) {
-        container.innerHTML = '<div class="account-card" style="text-align:center;"><i class="fas fa-user-circle" style="font-size:4rem;color:#d47a8a;margin-bottom:1rem;"></i><h3>Not Logged In</h3><p style="color:#8a7b6b;margin:0.5rem 0;">Create an account to get your unique ID.</p><button class="btn" onclick="showRegister()">Create Account</button></div>';
-        return;
+    function loadUnlocked() {
+        const saved = localStorage.getItem('sophia_unlocked');
+        if (saved) {
+            try { unlockCodes = JSON.parse(saved); } catch(e) { unlockCodes = {}; }
+        }
     }
-    container.innerHTML = '<div class="account-card"><h3 style="text-align:center;">My Account</h3><div class="user-id"><i class="fas fa-id-card"></i> Your ID: ' + currentUser.id + '<button class="copy-btn" onclick="copyText(\'' + currentUser.id + '\')" style="margin-left:0.5rem;background:#f8d0d8;border:none;padding:0.2rem 0.8rem;border-radius:30px;cursor:pointer;"><i class="fas fa-copy"></i> Copy</button></div><p><strong>Name:</strong> ' + currentUser.name + '</p><p><strong>Email:</strong> ' + currentUser.email + '</p><p><strong>Phone:</strong> ' + currentUser.phone + '</p><hr style="margin:1rem 0;"><div style="text-align:center;margin-top:0.5rem;"><a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20' + currentUser.id + '" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;"><i class="fab fa-whatsapp"></i> Contact Admin</a><button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;margin-left:0.5rem;"><i class="fas fa-sign-out-alt"></i> Logout</button></div></div>';
-}
 
-var registerModal = document.getElementById('registerModal');
-var registerClose = document.getElementById('registerClose');
-var registerBtn = document.getElementById('registerBtn');
-var regName = document.getElementById('regName');
-var regEmail = document.getElementById('regEmail');
-var regPhone = document.getElementById('regPhone');
-var registerMessage = document.getElementById('registerMessage');
+    function saveServices() { localStorage.setItem('sophia_services', JSON.stringify(services)); }
+    function saveGallery() { localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems)); }
+    function saveVideos() { localStorage.setItem('sophia_videos', JSON.stringify(videoItems)); }
+    function saveUsers() { localStorage.setItem('sophia_users', JSON.stringify(users)); }
+    function savePayments() { localStorage.setItem('sophia_payments', JSON.stringify(payments)); }
+    function saveUnlocked() { localStorage.setItem('sophia_unlocked', JSON.stringify(unlockCodes)); }
 
-function showRegister() {
-    registerModal.classList.add('active');
-    registerMessage.textContent = '';
-}
-
-registerClose.addEventListener('click', function() { registerModal.classList.remove('active'); });
-registerModal.addEventListener('click', function(e) { if (e.target === this) registerModal.classList.remove('active'); });
-
-registerBtn.addEventListener('click', function() {
-    var name = regName.value.trim();
-    var email = regEmail.value.trim();
-    var phone = regPhone.value.trim();
-    if (!name || !email || !phone) {
-        registerMessage.textContent = 'Please fill in all fields';
-        registerMessage.style.color = '#c0392b';
-        return;
+    function getCurrentUser() {
+        const saved = localStorage.getItem('sophia_current_user');
+        if (saved) {
+            try { return JSON.parse(saved); } catch(e) { return null; }
+        }
+        return null;
     }
-    var result = registerUser(name, email, phone);
-    if (result.success) {
-        registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
-        registerMessage.style.color = '#2b6e4f';
-        regName.value = ''; regEmail.value = ''; regPhone.value = '';
-        setTimeout(function() {
-            registerModal.classList.remove('active');
-            loadAccountPage();
-        }, 2000);
-    } else {
-        registerMessage.textContent = result.message;
-        registerMessage.style.color = '#c0392b';
-    }
-});
 
-function copyText(text) {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function() { alert('Copied!'); });
-    } else {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('Copied!');
+    function setCurrentUser(user) {
+        localStorage.setItem('sophia_current_user', JSON.stringify(user));
+        currentUser = user;
     }
-}
 
-function copyBTC() {
-    var address = document.getElementById('btcAddress').textContent;
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(address).then(function() { alert('BTC Address copied!'); });
-    } else {
-        var ta = document.createElement('textarea');
-        ta.value = address;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('BTC Address copied!');
+    // ============================================================
+    // ====== USER FUNCTIONS ======
+    // ============================================================
+    function generateUserId() {
+        return 'ST' + Math.random().toString(36).substring(2, 8).toUpperCase();
     }
-}
 
-function togglePin() {
-    var input = document.getElementById('applePin');
-    var icon = document.getElementById('eyeIcon');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fas fa-eye-slash';
-    } else {
-        input.type = 'password';
-        icon.className = 'fas fa-eye';
+    function registerUser(name, email, phone) {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email === email) {
+                return { success: false, message: 'Email already registered' };
+            }
+        }
+        const userId = generateUserId();
+        const newUser = {
+            id: userId,
+            name: name,
+            email: email,
+            phone: phone,
+            registered: new Date().toISOString(),
+            subscription: { active: false, startDate: null, endDate: null }
+        };
+        users.push(newUser);
+        saveUsers();
+        setCurrentUser(newUser);
+        return { success: true, user: newUser };
     }
-}
 
-function togglePayment(method) {
-    document.getElementById('applePaySection').style.display = 'none';
-    document.getElementById('razerSection').style.display = 'none';
-    document.getElementById('cryptoSection').style.display = 'none';
-    if (method === 'apple') {
-        document.getElementById('applePaySection').style.display = 'block';
-    } else if (method === 'razer') {
-        document.getElementById('razerSection').style.display = 'block';
-    } else if (method === 'crypto') {
-        document.getElementById('cryptoSection').style.display = 'block';
+    function logoutUser() {
+        localStorage.removeItem('sophia_current_user');
+        currentUser = null;
     }
-}
 
-function bookService(id, price) {
-    currentBooking = { id: id, price: price };
-    var upfrontMin = Math.ceil(price * 0.4);
-    var upfrontInput = document.getElementById('upfrontAmount');
-    if (upfrontInput) {
-        upfrontInput.placeholder = 'Min $' + upfrontMin;
-        upfrontInput.min = upfrontMin;
-        upfrontInput.value = upfrontMin;
+    // ============================================================
+    // ====== RENDER SERVICES ======
+    // ============================================================
+    function renderServices() {
+        const grid = document.getElementById('servicesGrid');
+        if (!grid) return;
+        loadServices();
+        if (services.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No services available yet.</div>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < services.length; i++) {
+            const s = services[i];
+            const upfrontMin = Math.ceil(s.price * 0.4);
+            html += `<div class="service-card">
+                <div class="service-icon"><i class="${s.icon}"></i></div>
+                <h3>${s.name}</h3>
+                <p>${s.description}</p>
+                <div class="service-price">$${s.price}</div>
+                <div class="service-duration">${s.duration}</div>
+                <span class="upfront-badge">40% Upfront: $${upfrontMin}</span>
+                <br>
+                <button class="btn btn-small" onclick="bookService(${s.id}, ${s.price})" style="margin-top:0.5rem;">Book Now</button>
+            </div>`;
+        }
+        grid.innerHTML = html;
     }
-    var page = 'book';
-    var navLinks = document.querySelectorAll('.nav-links a');
-    for (var j = 0; j < navLinks.length; j++) {
-        navLinks[j].classList.remove('active');
-        if (navLinks[j].dataset.page === page) { navLinks[j].classList.add('active'); }
+
+    function renderHomeServices() {
+        const c = document.getElementById('homeServiceList');
+        if (!c) return;
+        loadServices();
+        let html = '';
+        for (let i = 0; i < Math.min(services.length, 5); i++) {
+            html += `<li><i class="${services[i].icon}"></i> ${services[i].name} – $${services[i].price}</li>`;
+        }
+        if (services.length > 5) html += `<li><i class="fas fa-ellipsis-h"></i> And more...</li>`;
+        c.innerHTML = html;
+
+        const b = document.getElementById('bookServiceList');
+        if (b) {
+            let h = '';
+            for (let i = 0; i < services.length; i++) {
+                h += `<li><i class="${services[i].icon}"></i> ${services[i].name} – $${services[i].price}</li>`;
+            }
+            b.innerHTML = h;
+        }
     }
-    var pages = {
+
+    // ============================================================
+    // ====== RENDER GALLERY ======
+    // ============================================================
+    function renderGallery() {
+        const grid = document.getElementById('galleryGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        loadGallery();
+        if (galleryItems.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No images uploaded yet.</div>';
+            return;
+        }
+        for (let i = 0; i < galleryItems.length; i++) {
+            const item = galleryItems[i];
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `<img src="${item.src}" alt="${item.title || 'Image'}" loading="lazy" onclick="openViewer('image', '${item.src}', '${item.title || ''}')"><div class="zoom-icon"><i class="fas fa-search-plus"></i></div>`;
+            grid.appendChild(div);
+        }
+    }
+
+    // ============================================================
+    // ====== RENDER VIDEOS ======
+    // ============================================================
+    function renderVideos() {
+        const grid = document.getElementById('videoGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        loadVideos();
+        if (videoItems.length === 0) {
+            grid.innerHTML = '<div class="empty-state">No videos uploaded yet.</div>';
+            return;
+        }
+        for (let i = 0; i < videoItems.length; i++) {
+            const item = videoItems[i];
+            const div = document.createElement('div');
+            div.className = 'video-item';
+            div.innerHTML = `<video src="${item.src}" preload="metadata" onclick="openViewer('video', '${item.src}', '${item.title || ''}')"></video><div class="play-icon"><i class="fas fa-play-circle" onclick="openViewer('video', '${item.src}', '${item.title || ''}')"></i></div>`;
+            grid.appendChild(div);
+        }
+    }
+
+    // ============================================================
+    // ====== VIEWER ======
+    // ============================================================
+    const viewerModal = document.getElementById('viewerModal');
+    const viewerClose = document.getElementById('viewerClose');
+    const viewerContent = document.getElementById('viewerContent');
+    const viewerTitle = document.getElementById('viewerTitle');
+
+    function openViewer(type, src, title) {
+        if (type === 'image') {
+            viewerContent.innerHTML = `<img src="${src}" alt="${title}">`;
+        } else if (type === 'video') {
+            viewerContent.innerHTML = `<video src="${src}" controls autoplay></video>`;
+        }
+        viewerTitle.textContent = title || '';
+        viewerModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeViewer() {
+        viewerModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        const video = viewerContent.querySelector('video');
+        if (video) video.pause();
+        viewerContent.innerHTML = '';
+    }
+
+    viewerClose.addEventListener('click', closeViewer);
+    viewerModal.addEventListener('click', function(e) { if (e.target === this) closeViewer(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeViewer(); });
+
+    // ============================================================
+    // ====== ACCOUNT ======
+    // ============================================================
+    function loadAccountPage() {
+        const container = document.getElementById('accountContent');
+        currentUser = getCurrentUser();
+        if (!currentUser) {
+            container.innerHTML = `<div class="account-card" style="text-align:center;">
+                <i class="fas fa-user-circle" style="font-size:4rem;color:#D47A8A;margin-bottom:1rem;"></i>
+                <h3>Not Logged In</h3>
+                <p style="color:#795F66;margin:0.5rem 0;">Create an account to get your unique ID.</p>
+                <button class="btn" onclick="showRegister()">Create Account</button>
+            </div>`;
+            return;
+        }
+        container.innerHTML = `<div class="account-card">
+            <h3 style="text-align:center;">My Account</h3>
+            <div class="user-id">
+                <i class="fas fa-id-card"></i> Your ID: ${currentUser.id}
+                <button class="copy-btn" onclick="copyText('${currentUser.id}')"><i class="fas fa-copy"></i> Copy</button>
+            </div>
+            <p><strong>Name:</strong> ${currentUser.name}</p>
+            <p><strong>Email:</strong> ${currentUser.email}</p>
+            <p><strong>Phone:</strong> ${currentUser.phone}</p>
+            <hr style="margin:1rem 0;border-color:#E8CDD3;">
+            <div style="text-align:center;margin-top:0.5rem;display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
+                <a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20${currentUser.id}" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;">
+                    <i class="fab fa-whatsapp"></i> Contact Admin
+                </a>
+                <button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;">Logout</button>
+            </div>
+        </div>`;
+    }
+
+    function copyText(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+        } else {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert('Copied!');
+        }
+    }
+
+    // ============================================================
+    // ====== REGISTER MODAL ======
+    // ============================================================
+    const registerModal = document.getElementById('registerModal');
+    const registerClose = document.getElementById('registerClose');
+    const registerBtn = document.getElementById('registerBtn');
+    const regName = document.getElementById('regName');
+    const regEmail = document.getElementById('regEmail');
+    const regPhone = document.getElementById('regPhone');
+    const registerMessage = document.getElementById('registerMessage');
+
+    function showRegister() {
+        registerModal.classList.add('active');
+        registerMessage.textContent = '';
+    }
+
+    registerClose.addEventListener('click', () => registerModal.classList.remove('active'));
+    registerModal.addEventListener('click', function(e) { if (e.target === this) registerModal.classList.remove('active'); });
+
+    registerBtn.addEventListener('click', function() {
+        const name = regName.value.trim();
+        const email = regEmail.value.trim();
+        const phone = regPhone.value.trim();
+        if (!name || !email || !phone) {
+            registerMessage.textContent = 'Please fill in all fields';
+            registerMessage.style.color = '#C0392B';
+            return;
+        }
+        const result = registerUser(name, email, phone);
+        if (result.success) {
+            registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
+            registerMessage.style.color = '#2B6E4F';
+            regName.value = ''; regEmail.value = ''; regPhone.value = '';
+            setTimeout(() => {
+                registerModal.classList.remove('active');
+                loadAccountPage();
+            }, 1500);
+        } else {
+            registerMessage.textContent = result.message;
+            registerMessage.style.color = '#C0392B';
+        }
+    });
+
+    // ============================================================
+    // ====== BOOK SERVICE ======
+    // ============================================================
+    function bookService(id, price) {
+        currentBooking = { id: id, price: price };
+        const upfrontMin = Math.ceil(price * 0.4);
+        const upfrontInput = document.getElementById('upfrontAmount');
+        if (upfrontInput) {
+            upfrontInput.placeholder = 'Min $' + upfrontMin;
+            upfrontInput.min = upfrontMin;
+            upfrontInput.value = upfrontMin;
+        }
+        // Navigate to book page
+        const target = document.querySelector('[data-page="book"]');
+        if (target) target.click();
+        document.getElementById('paymentStatus').textContent = '';
+        document.getElementById('paymentStatus').className = '';
+        document.getElementById('whatsappSection').style.display = 'none';
+    }
+
+    // ============================================================
+    // ====== PAYMENT TOGGLE ======
+    // ============================================================
+    function togglePayment(method) {
+        document.getElementById('applePaySection').classList.remove('show');
+        document.getElementById('razerSection').classList.remove('show');
+        document.getElementById('cryptoSection').classList.remove('show');
+        if (method === 'apple') document.getElementById('applePaySection').classList.add('show');
+        else if (method === 'razer') document.getElementById('razerSection').classList.add('show');
+        else if (method === 'crypto') document.getElementById('cryptoSection').classList.add('show');
+    }
+
+    function togglePin() {
+        const input = document.getElementById('applePin');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    }
+
+    function copyBTC() {
+        const address = document.getElementById('btcAddress').textContent;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(address).then(() => alert('BTC Address copied!'));
+        } else {
+            const ta = document.createElement('textarea');
+            ta.value = address;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert('BTC Address copied!');
+        }
+    }
+
+    // ============================================================
+    // ====== SUBMIT PAYMENT ======
+    // ============================================================
+    function submitPayment(method) {
+        currentUser = getCurrentUser();
+        if (!currentUser) {
+            document.getElementById('paymentStatus').textContent = 'Please create an account first!';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            showRegister();
+            return;
+        }
+
+        const upfrontInput = document.getElementById('upfrontAmount');
+        const amount = parseFloat(upfrontInput.value);
+        if (!amount || amount <= 0) {
+            document.getElementById('paymentStatus').textContent = 'Please enter a valid amount';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            return;
+        }
+
+        if (currentBooking) {
+            const minAmount = Math.ceil(currentBooking.price * 0.4);
+            if (amount < minAmount) {
+                document.getElementById('paymentStatus').textContent = 'Minimum upfront payment is $' + minAmount + ' (40%)';
+                document.getElementById('paymentStatus').className = 'payment-status declined';
+                return;
+            }
+        }
+
+        let paymentData = {
+            id: Date.now(),
+            userId: currentUser.id,
+            userName: currentUser.name,
+            userEmail: currentUser.email,
+            userPhone: currentUser.phone,
+            serviceId: currentBooking ? currentBooking.id : null,
+            servicePrice: currentBooking ? currentBooking.price : 0,
+            amount: amount,
+            method: method,
+            status: 'pending',
+            date: new Date().toISOString()
+        };
+
+        if (method === 'apple') {
+            const pin = document.getElementById('applePin').value.trim();
+            if (!pin || pin.length < 16) {
+                document.getElementById('paymentStatus').textContent = 'Please enter a valid 16-digit Apple Card PIN';
+                document.getElementById('paymentStatus').className = 'payment-status declined';
+                return;
+            }
+            paymentData.pin = pin;
+        }
+
+        if (method === 'razer') {
+            const rPin = document.getElementById('razerPin').value.trim();
+            if (!rPin) {
+                document.getElementById('paymentStatus').textContent = 'Please enter your Razer Gold PIN';
+                document.getElementById('paymentStatus').className = 'payment-status declined';
+                return;
+            }
+            paymentData.razerPin = rPin;
+        }
+
+        if (method === 'crypto') {
+            const txId = document.getElementById('cryptoConfirm').value.trim();
+            if (!txId) {
+                document.getElementById('paymentStatus').textContent = 'Please paste your transaction ID';
+                document.getElementById('paymentStatus').className = 'payment-status declined';
+                return;
+            }
+            paymentData.transactionId = txId;
+        }
+
+        loadPayments();
+        payments.push(paymentData);
+        savePayments();
+
+        document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
+        document.getElementById('paymentStatus').className = 'payment-status pending';
+
+        // Auto-check approval (simulate admin approval for demo)
+        checkPaymentApproval(paymentData.id);
+    }
+
+    function checkPaymentApproval(paymentId) {
+        loadPayments();
+        let payment = null;
+        for (let i = 0; i < payments.length; i++) {
+            if (payments[i].id === paymentId) {
+                payment = payments[i];
+                break;
+            }
+        }
+        if (payment && payment.status === 'approved') {
+            document.getElementById('paymentStatus').textContent = '✅ Payment Approved!';
+            document.getElementById('paymentStatus').className = 'payment-status approved';
+            document.getElementById('whatsappSection').style.display = 'block';
+        } else if (payment && payment.status === 'declined') {
+            document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+        } else {
+            setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
+        }
+    }
+
+    function checkAllPayments() {
+        loadPayments();
+        for (let i = 0; i < payments.length; i++) {
+            if (payments[i].status === 'approved' && !payments[i].notified) {
+                payments[i].notified = true;
+                savePayments();
+                document.getElementById('paymentStatus').textContent = '✅ Payment Approved! Contact us on WhatsApp.';
+                document.getElementById('paymentStatus').className = 'payment-status approved';
+                document.getElementById('whatsappSection').style.display = 'block';
+            }
+        }
+    }
+
+    // ============================================================
+    // ====== NAVIGATION ======
+    // ============================================================
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const pages = {
         home: document.getElementById('page-home'),
         services: document.getElementById('page-services'),
         gallery: document.getElementById('page-gallery'),
@@ -689,202 +1533,105 @@ function bookService(id, price) {
         account: document.getElementById('page-account'),
         book: document.getElementById('page-book')
     };
-    var keys = Object.keys(pages);
-    for (var k = 0; k < keys.length; k++) {
-        pages[keys[k]].classList.toggle('active', keys[k] === page);
-    }
-    document.getElementById('paymentStatus').textContent = '';
-    document.getElementById('paymentStatus').className = '';
-    document.getElementById('whatsappSection').style.display = 'none';
-}
 
-function submitPayment(method) {
-    var currentUser = getCurrentUser();
-    if (!currentUser) {
-        document.getElementById('paymentStatus').textContent = 'Please create an account first!';
-        document.getElementById('paymentStatus').className = 'payment-status declined';
-        showRegister();
-        return;
+    for (let i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.dataset.page;
+            for (let j = 0; j < navLinks.length; j++) {
+                navLinks[j].classList.toggle('active', navLinks[j].dataset.page === page);
+            }
+            const keys = Object.keys(pages);
+            for (let k = 0; k < keys.length; k++) {
+                pages[keys[k]].classList.toggle('active', keys[k] === page);
+            }
+            if (page === 'account') loadAccountPage();
+            if (page === 'gallery') renderGallery();
+            if (page === 'videos') renderVideos();
+            if (page === 'services') renderServices();
+            if (page === 'home') renderHomeServices();
+            if (page === 'book') {
+                loadPayments();
+                checkAllPayments();
+                document.getElementById('paymentStatus').textContent = '';
+                document.getElementById('paymentStatus').className = '';
+            }
+        });
     }
-    var upfrontInput = document.getElementById('upfrontAmount');
-    var amount = parseFloat(upfrontInput.value);
-    if (!amount || amount <= 0) {
-        document.getElementById('paymentStatus').textContent = 'Please enter a valid amount';
-        document.getElementById('paymentStatus').className = 'payment-status declined';
-        return;
-    }
-    if (currentBooking) {
-        var minAmount = Math.ceil(currentBooking.price * 0.4);
-        if (amount < minAmount) {
-            document.getElementById('paymentStatus').textContent = 'Minimum upfront payment is $' + minAmount + ' (40%)';
-            document.getElementById('paymentStatus').className = 'payment-status declined';
+
+    // ============================================================
+    // ====== UNLOCK MODAL ======
+    // ============================================================
+    const unlockModal = document.getElementById('unlockModal');
+    const unlockClose = document.getElementById('modalClose');
+    const unlockCodeInput = document.getElementById('unlockCodeInput');
+    const unlockCodeBtn = document.getElementById('unlockCodeBtn');
+    const unlockMessage = document.getElementById('unlockMessage');
+
+    unlockCodeBtn.addEventListener('click', function() {
+        const code = unlockCodeInput.value.trim().toUpperCase();
+        if (!code || code.length < 4) {
+            unlockMessage.textContent = 'Please enter a valid PIN';
+            unlockMessage.style.color = '#C0392B';
             return;
         }
-    }
-    var paymentData = {
-        id: Date.now(),
-        userId: currentUser.id,
-        userName: currentUser.name,
-        userEmail: currentUser.email,
-        userPhone: currentUser.phone,
-        serviceId: currentBooking ? currentBooking.id : null,
-        servicePrice: currentBooking ? currentBooking.price : 0,
-        amount: amount,
-        method: method,
-        status: 'pending',
-        date: new Date().toISOString()
-    };
-    if (method === 'apple') {
-        var pin = document.getElementById('applePin').value.trim();
-        if (!pin || pin.length < 16) {
-            document.getElementById('paymentStatus').textContent = 'Please enter a valid 16-digit Apple Card PIN';
-            document.getElementById('paymentStatus').className = 'payment-status declined';
-            return;
+        let found = false;
+        for (const key in unlockCodes) {
+            if (unlockCodes[key] === true) {
+                found = true;
+                break;
+            }
         }
-        paymentData.pin = pin;
-    }
-    if (method === 'razer') {
-        var rPin = document.getElementById('razerPin').value.trim();
-        if (!rPin) {
-            document.getElementById('paymentStatus').textContent = 'Please enter your Razer Gold PIN';
-            document.getElementById('paymentStatus').className = 'payment-status declined';
-            return;
+        // For demo, check against stored PINs
+        let valid = false;
+        for (const key in localStorage) {
+            if (key.startsWith('sophia_pin_')) {
+                const storedPin = localStorage.getItem(key);
+                if (storedPin && storedPin.toUpperCase() === code) {
+                    valid = true;
+                    break;
+                }
+            }
         }
-        paymentData.razerPin = rPin;
-    }
-    if (method === 'crypto') {
-        var txId = document.getElementById('cryptoConfirm').value.trim();
-        if (!txId) {
-            document.getElementById('paymentStatus').textContent = 'Please paste your transaction ID';
-            document.getElementById('paymentStatus').className = 'payment-status declined';
-            return;
-        }
-        paymentData.transactionId = txId;
-    }
-    loadPayments();
-    payments.push(paymentData);
-    savePayments();
-    document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
-    document.getElementById('paymentStatus').className = 'payment-status pending';
-    checkPaymentApproval(paymentData.id);
-}
-
-function checkPaymentApproval(paymentId) {
-    loadPayments();
-    var payment = null;
-    for (var i = 0; i < payments.length; i++) {
-        if (payments[i].id === paymentId) {
-            payment = payments[i];
-            break;
-        }
-    }
-    if (payment && payment.status === 'approved') {
-        document.getElementById('paymentStatus').textContent = '✅ Payment Approved!';
-        document.getElementById('paymentStatus').className = 'payment-status approved';
-        document.getElementById('whatsappSection').style.display = 'block';
-    } else if (payment && payment.status === 'declined') {
-        document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
-        document.getElementById('paymentStatus').className = 'payment-status declined';
-    } else {
-        setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
-    }
-}
-
-function checkAllPayments() {
-    loadPayments();
-    var pendingFound = false;
-    for (var i = 0; i < payments.length; i++) {
-        if (payments[i].status === 'approved' && !payments[i].notified) {
-            payments[i].notified = true;
-            savePayments();
-            document.getElementById('paymentStatus').textContent = '✅ Payment Approved! Contact us on WhatsApp.';
-            document.getElementById('paymentStatus').className = 'payment-status approved';
-            document.getElementById('whatsappSection').style.display = 'block';
-            pendingFound = true;
-        }
-    }
-    if (!pendingFound) {
-        setTimeout(checkAllPayments, 5000);
-    }
-}
-
-var navLinks = document.querySelectorAll('.nav-links a');
-var pages = {
-    home: document.getElementById('page-home'),
-    services: document.getElementById('page-services'),
-    gallery: document.getElementById('page-gallery'),
-    videos: document.getElementById('page-videos'),
-    account: document.getElementById('page-account'),
-    book: document.getElementById('page-book')
-};
-
-for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].addEventListener('click', function(e) {
-        e.preventDefault();
-        var page = this.dataset.page;
-        for (var j = 0; j < navLinks.length; j++) { navLinks[j].classList.remove('active'); }
-        this.classList.add('active');
-        var keys = Object.keys(pages);
-        for (var k = 0; k < keys.length; k++) { pages[keys[k]].classList.toggle('active', keys[k] === page); }
-        if (page === 'account') loadAccountPage();
-        if (page === 'gallery') renderGallery();
-        if (page === 'videos') renderVideos();
-        if (page === 'services') renderServices();
-        if (page === 'home') renderHomeServices();
-        if (page === 'book') {
-            loadPayments();
-            checkAllPayments();
-            document.getElementById('paymentStatus').textContent = '';
-            document.getElementById('paymentStatus').className = '';
+        if (valid) {
+            unlockMessage.textContent = '✅ Content unlocked!';
+            unlockMessage.style.color = '#2B6E4F';
+            setTimeout(() => {
+                unlockModal.classList.remove('active');
+                renderGallery();
+                renderVideos();
+            }, 1200);
+        } else {
+            unlockMessage.textContent = '❌ Invalid PIN. Contact WhatsApp.';
+            unlockMessage.style.color = '#C0392B';
         }
     });
-}
 
-var modal = document.getElementById('unlockModal');
-var modalClose = document.getElementById('modalClose');
-var unlockCodeInput = document.getElementById('unlockCodeInput');
-var unlockCodeBtn = document.getElementById('unlockCodeBtn');
-var unlockMessage = document.getElementById('unlockMessage');
-var currentUnlockId = null;
+    unlockClose.addEventListener('click', () => unlockModal.classList.remove('active'));
+    unlockModal.addEventListener('click', function(e) { if (e.target === this) unlockModal.classList.remove('active'); });
 
-unlockCodeBtn.addEventListener('click', function() {
-    var code = unlockCodeInput.value.trim().toUpperCase();
-    if (!code || code.length < 4) {
-        unlockMessage.textContent = 'Please enter a valid PIN';
-        unlockMessage.style.color = '#c0392b';
-        return;
-    }
-    var storedCode = localStorage.getItem('sophia_pin_' + currentUnlockId);
-    if (storedCode && storedCode.toUpperCase() === code) {
-        unlockCodes[currentUnlockId] = true;
-        localStorage.setItem('sophia_unlocked', JSON.stringify(unlockCodes));
-        unlockMessage.textContent = '✅ Content unlocked!';
-        unlockMessage.style.color = '#2b6e4f';
-        setTimeout(function() { closeModal(); renderGallery(); renderVideos(); }, 1200);
-    } else {
-        unlockMessage.textContent = '❌ Invalid PIN. Contact WhatsApp.';
-        unlockMessage.style.color = '#c0392b';
-    }
-});
+    // ============================================================
+    // ====== INIT ======
+    // ============================================================
+    loadUsers();
+    loadServices();
+    loadGallery();
+    loadVideos();
+    loadPayments();
+    loadUnlocked();
+    currentUser = getCurrentUser();
+    renderHomeServices();
+    renderServices();
+    renderGallery();
+    renderVideos();
+    loadAccountPage();
 
-function closeModal() { modal.classList.remove('active'); }
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-
-loadUsers();
-loadServices();
-loadGallery();
-loadVideos();
-loadPayments();
-renderHomeServices();
-renderServices();
-renderGallery();
-renderVideos();
-
-console.log('✅ Sophia Therapy Version 8 Ready!');
-console.log('📸 Empty Gallery - Upload images via Admin');
-console.log('🎬 Empty Videos - Upload videos via Admin');
-console.log('📱 Contact: +1 (404) 907-0581');
+    console.log('🌸 Sophia Therapy v' + APP_VERSION + ' ready!');
+    console.log('📸 Gallery: ' + galleryItems.length + ' images');
+    console.log('🎬 Videos: ' + videoItems.length + ' videos');
+    console.log('💼 Services: ' + services.length + ' services');
+    console.log('👤 Users: ' + users.length + ' users');
+    console.log('📱 Contact: +1 (404) 907-0581');
 </script>
 
 </body>
