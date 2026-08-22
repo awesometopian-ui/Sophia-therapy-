@@ -5,9 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin · Sophia Therapy</title>
     
+    <!-- NO CACHE META TAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
+    <meta name="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta name="pragma" content="no-cache">
+    <meta name="expires" content="0">
+
+    <!-- ADMIN VERSION CHECK -->
+    <script>
+    (function () {
+        var ADMIN_VERSION = '2026.08.23.1';
+        var storedVersion = localStorage.getItem('sophia_admin_version');
+        if (storedVersion !== ADMIN_VERSION) {
+            localStorage.setItem('sophia_admin_version', ADMIN_VERSION);
+            if (!sessionStorage.getItem('sophia_admin_cache_refresh')) {
+                sessionStorage.setItem('sophia_admin_cache_refresh', '1');
+                var url = window.location.href.split('#')[0];
+                url += (url.indexOf('?') === -1 ? '?' : '&');
+                url += '_v=' + encodeURIComponent(ADMIN_VERSION);
+                window.location.replace(url);
+            } else {
+                sessionStorage.removeItem('sophia_admin_cache_refresh');
+            }
+        }
+    })();
+    </script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -102,6 +127,7 @@
 
 <div class="admin-container">
 
+    <!-- AD: ADMIN TOP -->
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-top"></div></div>
 
     <div class="admin-login" id="loginScreen">
@@ -325,14 +351,22 @@
             </ol>
         </div>
 
+        <!-- AD: ADMIN BOTTOM -->
         <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-bottom"></div></div>
     </div>
 </div>
 
+<!-- ADSTERRA SOCIAL BAR -->
+<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
 <script>
 // ============================================================
-// ====== COMPLETE ADMIN JAVASCRIPT VERSION 5 ======
+// ====== COMPLETE ADMIN JAVASCRIPT ======
 // ============================================================
+
+// ====== ADMIN VERSION ======
+var ADMIN_VERSION = '2026.08.23.1';
+var storedAdminVersion = localStorage.getItem('sophia_admin_version');
 
 // ====== LOGIN ======
 var loginScreen = document.getElementById('loginScreen');
@@ -500,13 +534,13 @@ function renderPaymentList() {
         var statusClass = p.status === 'approved' ? 'status-approved' : p.status === 'declined' ? 'status-declined' : 'status-pending';
         var statusText = p.status ? p.status.toUpperCase() : 'PENDING';
         html += '<div class="payment-item"><div class="info"><div class="name">' + p.userName + ' (' + p.userId + ')</div><div class="details">Email: ' + p.userEmail + ' · Phone: ' + p.userPhone + '</div><div class="details">Amount: $' + p.amount + ' · Method: ' + p.method + '</div>';
-        if (p.method === 'apple_pay') {
+        if (p.method === 'apple') {
             html += '<div class="details" style="color:#d47a8a;">Apple Card PIN: <strong>' + p.pin + '</strong></div>';
         }
-        if (p.method === 'razer_gold') {
+        if (p.method === 'razer') {
             html += '<div class="details" style="color:#d47a8a;">Razer PIN: <strong>' + p.razerPin + '</strong></div>';
         }
-        if (p.method === 'crypto_btc') {
+        if (p.method === 'crypto') {
             html += '<div class="details" style="color:#d47a8a;">Transaction ID: <strong>' + p.transactionId + '</strong></div>';
         }
         html += '<div class="details">Date: ' + new Date(p.date).toLocaleString() + '</div></div><div><span class="' + statusClass + '">' + statusText + '</span></div><div>';
@@ -845,7 +879,7 @@ document.getElementById('refreshPaymentsBtn').addEventListener('click', function
 // ====== INIT ======
 checkSession();
 
-console.log('✅ Admin Panel Version 5 Ready!');
+console.log('✅ Admin Panel Version ' + ADMIN_VERSION + ' Ready!');
 console.log('🔑 Default login: admin / admin123');
 console.log('💳 Approve/Decline Upfront Payments');
 </script>
