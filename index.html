@@ -15,7 +15,7 @@
 
     <script>
     (function () {
-        var APP_VERSION = '2026.08.23.7';
+        var APP_VERSION = '2026.08.23.8';
         var storedVersion = localStorage.getItem('sophia_app_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('sophia_app_version', APP_VERSION);
@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
+        /* All styles remain exactly the same as your file */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background: #faf5f6; color: #2d2a2c; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
@@ -383,15 +384,15 @@
 
 <script>
 // ============================================================
-// ====== COMPLETE JAVASCRIPT VERSION 6.1 ======
+// ====== COMPLETE JAVASCRIPT VERSION 6.2 ======
 // ============================================================
 
-var APP_VERSION = '2026.08.23.7';
+var APP_VERSION = '2026.08.23.8';
 var storedVersion = localStorage.getItem('sophia_app_version');
 
 if (storedVersion !== APP_VERSION) {
     localStorage.setItem('sophia_app_version', APP_VERSION);
-    console.log('✅ Version 6.1 detected!');
+    console.log('✅ Version 6.2 detected!');
     
     if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery')).length === 0) {
         var defaultImages = getDefaultImages();
@@ -705,10 +706,26 @@ function bookService(id, price) {
         upfrontInput.value = upfrontMin;
     }
     
-    // Navigate to book page
-    var bookLink = document.querySelector('[data-page="book"]');
-    if (bookLink) {
-        bookLink.click();
+    // DIRECTLY NAVIGATE TO BOOK PAGE (no click simulation)
+    var page = 'book';
+    var navLinks = document.querySelectorAll('.nav-links a');
+    for (var j = 0; j < navLinks.length; j++) {
+        navLinks[j].classList.remove('active');
+        if (navLinks[j].dataset.page === page) {
+            navLinks[j].classList.add('active');
+        }
+    }
+    var pages = {
+        home: document.getElementById('page-home'),
+        services: document.getElementById('page-services'),
+        gallery: document.getElementById('page-gallery'),
+        videos: document.getElementById('page-videos'),
+        account: document.getElementById('page-account'),
+        book: document.getElementById('page-book')
+    };
+    var keys = Object.keys(pages);
+    for (var k = 0; k < keys.length; k++) {
+        pages[keys[k]].classList.toggle('active', keys[k] === page);
     }
     
     // Reset payment status
@@ -914,9 +931,9 @@ renderServices();
 renderGallery();
 renderVideos();
 
-console.log('✅ Sophia Therapy Version 6.1 Ready!');
+console.log('✅ Sophia Therapy Version 6.2 Ready!');
 console.log('🖼️ Click images to zoom | 🎬 Click videos to watch full screen');
-console.log('💳 40% Upfront Payment Required - Payment methods fixed');
+console.log('💳 40% Upfront Payment Required - Book Now button FIXED');
 console.log('📱 Contact: +1 (404) 907-0581');
 </script>
 
