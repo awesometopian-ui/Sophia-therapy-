@@ -4,32 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sophia Message & Therapy</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- NO CACHE META TAGS -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-   
-
+    <!-- ADSTERRA POPUNDER -->
+    <script src="https://pl30955346.effectivecpmnetwork.com/20/df/e5/20dfe5163634eccc1f82d9fb632ccfa6.js"></script>
+    
+    <style>
+        /* ====== COMPLETE STYLES ====== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: #faf5f6; color: #2d2a2c; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 2px solid #f0e0e4; flex-wrap: wrap; gap: 1rem; }
+        .nav-brand { font-size: 1.6rem; font-weight: 400; color: #7a3a4a; }
+        .nav-brand span { color: #c07a8a; font-weight: 300; }
+        .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-links a { color: #7a3a4a; text-decoration: none; font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 30px; transition: 0.2s; font-size: 0.95rem; }
+        .nav-links a:hover, .nav-links a.active { background: #d47a8a; color: white; }
+        .nav-links a i { margin-right: 6px; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .hero { text-align: center; padding: 2.5rem 0 1.8rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 400; color: #7a3a4a; letter-spacing: 1px; }
+        .hero h1 span { font-weight: 300; color: #c07a8a; }
+        .hero .tagline { font-size: 1.05rem; color: #7a3a4a; background: #f5e8ec; display: inline-block; padding: 0.4rem 2rem; border-radius: 40px; margin-top: 0.5rem; }
+        .badge-us { background: #d47a8a; color: white; font-size: 0.75rem; padding: 0.25rem 1rem; border-radius: 30px; display: inline-block; margin-left: 0.5rem; font-weight: 500; }
+        .hero-info { margin-top: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; }
+        .hero-info span { color: #7a3a4a; font-size: 0.95rem; }
+        .hero-info span i { margin-right: 6px; color: #d47a8a; }
+        .ad-container { background: #f5ecee; border-radius: 16px; padding: 1rem; margin: 1.5rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 90px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
+        .section-title { font-size: 1.8rem; font-weight: 300; border-left: 5px solid #d47a8a; padding-left: 1rem; margin: 2.5rem 0 1.5rem; color: #7a3a4a; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .card { background: white; border-radius: 24px; padding: 1.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #f0e0e4; transition: 0.3s; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(212,122,138,0.12); }
+        .card i { font-size: 2rem; color: #d47a8a; margin-bottom: 0.5rem; }
+        .card h3 { font-weight: 500; font-size: 1.3rem; margin-bottom: 0.5rem; color: #7a3a4a; }
+        .service-list { list-style: none; margin: 1rem 0 0.5rem; }
+        .service-list li { padding: 0.3rem 0; border-bottom: 1px dashed #f0e0e4; display: flex; align-items: center; gap: 0.5rem; color: #3d3538; }
+        .service-list i { font-size: 0.85rem; color: #d47a8a; width: 1.2rem; }
+        .plans-section { margin: 2rem 0; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 1.5rem 0; }
+        .plan-card { background: white; border-radius: 24px; padding: 2rem; text-align: center; border: 2px solid #f0e0e4; transition: 0.3s; }
+        .plan-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(212,122,138,0.15); }
+        .plan-card.featured { border-color: #d47a8a; background: #fff5f7; }
+        .plan-header { font-size: 1.2rem; font-weight: 600; color: #7a3a4a; margin-bottom: 0.5rem; }
+        .plan-price { font-size: 2.5rem; font-weight: 600; color: #d47a8a; margin: 0.5rem 0; }
+        .plan-price span { font-size: 1rem; font-weight: 300; color: #8a7b6b; }
+        .plan-features { list-style: none; margin: 1rem 0; text-align: left; }
+        .plan-features li { padding: 0.4rem 0; color: #3d3538; display: flex; align-items: center; gap: 0.5rem; }
+        .plan-features li i { color: #2b6e4f; font-size: 0.85rem; }
+        .btn-plan { width: 100%; justify-content: center; margin-top: 0.5rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .service-card { background: white; border-radius: 20px; padding: 1.8rem; text-align: center; border: 1px solid #f0e0e4; transition: 0.3s; }
+        .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(212,122,138,0.12); }
+        .service-icon { font-size: 2.5rem; color: #d47a8a; margin-bottom: 0.5rem; }
+        .service-card h3 { color: #7a3a4a; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .service-card p { color: #5d4d50; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .service-price { font-size: 1.6rem; font-weight: 600; color: #d47a8a; margin: 0.5rem 0; }
+        .service-duration { font-size: 0.85rem; color: #8a7b6b; margin-bottom: 0.8rem; }
+        .btn-small { padding: 0.4rem 1.5rem; font-size: 0.9rem; }
+        .gallery-grid, .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .gallery-item, .video-item { position: relative; border-radius: 16px; overflow: hidden; background: #f5ecee; aspect-ratio: 1; border: 3px solid transparent; transition: 0.3s; cursor: pointer; }
+        .gallery-item:hover, .video-item:hover { transform: scale(1.02); border-color: #d47a8a; }
+        .gallery-item img, .video-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); pointer-events: none; }
+        .gallery-item .lock-overlay, .video-item .lock-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(122,58,74,0.88); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; gap: 0.5rem; backdrop-filter: blur(3px); }
+        .gallery-item .lock-overlay i, .video-item .lock-overlay i { font-size: 2.5rem; color: #f0c27a; }
+        .gallery-item .lock-overlay .price-tag, .video-item .lock-overlay .price-tag { background: #d47a8a; padding: 0.3rem 1.2rem; border-radius: 30px; font-weight: 500; }
+        .gallery-item .lock-overlay .unlock-btn, .video-item .lock-overlay .unlock-btn { background: #25D366; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 30px; cursor: pointer; font-weight: 500; margin-top: 0.3rem; transition: 0.2s; }
+        .gallery-item .lock-overlay .unlock-btn:hover, .video-item .lock-overlay .unlock-btn:hover { background: #1da851; }
+        .gallery-item.unlocked, .video-item.unlocked { border-color: #2b6e4f; }
+        .gallery-item.unlocked .lock-overlay, .video-item.unlocked .lock-overlay { display: none; }
+        .account-card { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f0e0e4; max-width: 600px; margin: 0 auto; }
+        .account-card .user-id { background: #f5ecee; padding: 0.8rem; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 500; color: #7a3a4a; margin: 1rem 0; }
+        .account-card .status { padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; font-weight: 500; }
+        .account-card .status.active { background: #2b6e4f; color: white; }
+        .account-card .status.inactive { background: #c0392b; color: white; }
+        .account-card .timer { font-size: 2rem; font-weight: 600; color: #d47a8a; text-align: center; padding: 1rem; background: #fff5f7; border-radius: 16px; margin: 1rem 0; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(122,58,74,0.6); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 30px; padding: 2.5rem; max-width: 450px; width: 90%; text-align: center; position: relative; animation: fadeIn 0.3s ease; border: 2px solid #f0e0e4; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 12px; right: 18px; font-size: 1.8rem; cursor: pointer; color: #c07a8a; background: none; border: none; }
+        .modal-close:hover { color: #7a3a4a; }
+        .modal-content h2 { color: #7a3a4a; margin-bottom: 0.5rem; }
+        .modal-content .price-display { font-size: 2rem; font-weight: 500; color: #d47a8a; margin: 0.5rem 0; }
+        .modal-content .payment-methods { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 0.8rem 0; }
+        .modal-content .payment-methods span { background: #f5ecee; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.9rem; color: #7a3a4a; }
+        .modal-content .whatsapp-btn { background: #25D366; color: white; border: none; padding: 0.8rem 2rem; border-radius: 60px; font-size: 1.1rem; cursor: pointer; margin: 0.8rem 0; display: inline-flex; align-items: center; gap: 0.8rem; text-decoration: none; transition: 0.2s; }
+        .modal-content .whatsapp-btn:hover { background: #1da851; }
+        .modal-content .code-input { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
+        .modal-content .code-input input { padding: 0.6rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; width: 150px; text-align: center; letter-spacing: 4px; }
+        .modal-content .code-input input:focus { border-color: #d47a8a; outline: none; }
+        .modal-content .code-input button { background: #d47a8a; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 30px; cursor: pointer; font-weight: 500; }
+        .modal-content .code-input button:hover { background: #c06a7a; }
+        #unlockMessage { margin-top: 0.5rem; font-weight: 500; }
+        .form-group { margin: 1rem 0; text-align: left; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; color: #7a3a4a; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; }
+        .form-group textarea { border-radius: 16px; min-height: 80px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #d47a8a; outline: none; }
+        .btn { background: #d47a8a; border: none; color: white; padding: 0.7rem 2rem; border-radius: 60px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; transition: 0.2s; font-weight: 500; }
+        .btn:hover { background: #c06a7a; transform: scale(1.01); }
+        .btn-whatsapp { background: #25D366; }
+        .btn-whatsapp:hover { background: #1da851; }
+        .contact-block { background: #f5ecee; border-radius: 60px; padding: 0.7rem 1.5rem; display: inline-flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
+        .contact-block a { color: #7a3a4a; text-decoration: none; font-weight: 500; }
+        .contact-block a:hover { text-decoration: underline; }
+        .payment-icons { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 1rem 0 0.2rem; font-size: 0.95rem; }
+        .payment-icons i { font-size: 1.1rem; width: auto; color: #d47a8a; }
+        .home-delivery { background: #f5ecee; border-radius: 50px; padding: 0.2rem 1.2rem; font-weight: 400; color: #7a3a4a; display: inline-block; margin-top: 0.8rem; }
+        .gallery-desc { margin-bottom: 1rem; color: #7a3a4a; }
+        .booking-section { margin: 1.2rem 0; }
+        .booking-box { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; background: #f5ecee; padding: 1.2rem 1.8rem; border-radius: 60px; }
+        .booking-box i { font-size: 1.4rem; color: #d47a8a; }
+        .booking-box span { font-weight: 500; margin-left: 8px; color: #7a3a4a; }
+        .booking-notes { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.8rem 2rem; }
+        .booking-notes span { font-size: 0.9rem; color: #7a3a4a; background: #f5ecee; padding: 0.5rem 1.2rem; border-radius: 40px; }
+        .footer { text-align: center; font-size: 0.9rem; color: #7a3a4a; margin-top: 2rem; border-top: 1px solid #f0e0e4; padding-top: 1.5rem; }
+        .footer span { font-size: 0.8rem; opacity: 0.8; }
+        .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
+        .copy-btn:hover { background: #f0b8c8; }
+        @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .plans-grid { grid-template-columns: 1fr; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
+        /* Admin Panel Styles */
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        .admin-login { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
+        .login-box { background: white; border-radius: 30px; padding: 3rem 2.5rem; max-width: 400px; width: 100%; border: 2px solid #d47a8a; text-align: center; }
+        .login-box h2 { color: #8b3a4a; margin-bottom: 0.5rem; }
+        .login-box .sub { color: #a06a7a; margin-bottom: 1.5rem; }
+        .login-box .form-group { margin-bottom: 1rem; text-align: left; }
+        .login-box .form-group label { display: block; font-weight: 500; color: #8b3a4a; margin-bottom: 0.3rem; }
+        .login-box .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #f0b8c8; border-radius: 30px; font-size: 1rem; }
+        .login-box .form-group input:focus { border-color: #d47a8a; outline: none; }
+        .login-box .btn-login { width: 100%; background: #d47a8a; color: white; border: none; padding: 0.8rem; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
+        .login-box .btn-login:hover { background: #c06a7a; }
+        .login-error { color: #c0392b; margin-top: 0.5rem; font-weight: 500; }
+        .login-box .lock-icon { font-size: 3rem; color: #d47a8a; margin-bottom: 0.5rem; }
+        .secret-badge { background: #f0e8ea; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.75rem; color: #8b3a4a; display: inline-block; margin-bottom: 1rem; letter-spacing: 1px; }
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid #f8d0d8; padding-bottom: 1rem; }
+        .admin-header h1 { font-size: 2rem; font-weight: 300; color: #8b3a4a; }
+        .admin-header h1 span { color: #d47a8a; }
+        .admin-header .logout-btn { background: #8b3a4a; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
+        .admin-header .logout-btn:hover { background: #6a2a3a; }
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .stat-card { background: white; padding: 1rem; border-radius: 16px; text-align: center; border: 1px solid #f8d0d8; }
+        .stat-card .number { font-size: 2rem; font-weight: 600; color: #d47a8a; }
+        .stat-card .label { color: #6b5d4f; font-size: 0.85rem; }
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+        .upload-section { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f8d0d8; }
+        .upload-section h3 { margin-bottom: 1rem; color: #8b3a4a; }
+        .upload-area { border: 3px dashed #f0b8c8; border-radius: 16px; padding: 2rem; text-align: center; cursor: pointer; transition: 0.3s; }
+        .upload-area:hover { border-color: #d47a8a; background: #fff5f7; }
+        .upload-area i { font-size: 3rem; color: #d47a8a; }
+        .upload-area input { display: none; }
+        .image-list, .video-list, .service-list-admin { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
+        .image-item, .video-item, .service-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; }
+        .image-item img, .video-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .service-item .service-icon { font-size: 1.8rem; color: #d47a8a; width: 40px; text-align: center; }
+        .image-item .info, .video-item .info, .service-item .info { flex: 1; }
+        .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #8b3a4a; }
+        .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #6b5d4f; }
+        .image-item .info .pin, .video-item .info .pin { background: #d47a8a; color: white; padding: 0.1rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.2rem; }
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tab-btn { padding: 0.5rem 1.5rem; border-radius: 30px; border: 2px solid #f8d0d8; background: white; cursor: pointer; color: #8b3a4a; font-weight: 500; }
+        .tab-btn.active { background: #d47a8a; color: white; border-color: #d47a8a; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .users-list { margin-top: 1rem; max-height: 400px; overflow-y: auto; }
+        .user-item { display: flex; justify-content: space-between; align-items: center; background: #fff5f7; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.5rem; }
+        .user-item .user-info { flex: 1; }
+        .user-item .user-info .name { font-weight: 500; color: #8b3a4a; }
+        .user-item .user-info .id { font-size: 0.85rem; color: #6b5d4f; }
+        .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; }
+        .user-item .user-status.active { background: #2b6e4f; color: white; }
+        .user-item .user-status.inactive { background: #c0392b; color: white; }
+        #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
+    </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-brand">Sophia <span>Therapy</span></div>
-    <div class="nav-links">
-        <a href="#" class="active" data-page="home">Home</a>
-        <a href="#" data-page="services">Services</a>
-        <a href="#" data-page="gallery">Gallery</a>
-        <a href="#" data-page="videos">Videos</a>
-        <a href="#" data-page="account">Account</a>
-    </div>
-</nav>s="container">
+<!-- ====== MAIN WEBSITE ====== -->
+<div class="container">
+    <nav class="navbar">
+        <div class="nav-brand">Sophia <span>Therapy</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="active" data-page="home">Home</a>
+            <a href="index.html" data-page="services">Services</a>
+            <a href="index.html" data-page="gallery">Gallery</a>
+            <a href="index.html" data-page="videos">Videos</a>
+            <a href="index.html" data-page="account">Account</a>
+            <a href="admin.html" target="_blank"><i class="fas fa-user-cog"></i> Admin</a>
+        </div>
+    </nav>
 
-    <!-- AD: TOP -->
-    <div class="ad-container" id="ad-top">
-        <span class="ad-label">Sponsored</span>
-        <div id="monetag-top"></div>
-    </div>
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-top"></div></div>
 
-    <!-- HOME PAGE -->
     <div id="page-home" class="page active">
         <div class="hero">
             <h1>Sophia <span>Message & Therapy</span></h1>
@@ -39,20 +216,9 @@
             </div>
             <div class="hero-info">
                 <span><i class="fas fa-calendar-check"></i> Online Booking</span>
-                <span><i class="fas fa-home"></i> Home Delivery / In-House</span>
+                <span><i class="fas fa-home"></i> Home Delivery</span>
                 <span><i class="fas fa-phone-alt"></i> +1 (404) 907-0581</span>
             </div>
-        </div>
-
-        <!-- ADULT DISCLAIMER -->
-        <div class="adult-disclaimer" style="background:#f5ecee;padding:1rem;border-radius:16px;text-align:center;border:2px solid #d47a8a;margin-bottom:1rem;">
-            <p style="color:#8b3a4a;font-weight:600;">
-                <i class="fas fa-exclamation-triangle"></i> 
-                This website contains adult content (18+). By continuing, you confirm you are 18+.
-            </p>
-            <button onclick="this.parentElement.style.display='none'" style="background:#d47a8a;color:white;border:none;padding:0.3rem 1.5rem;border-radius:30px;cursor:pointer;margin-top:0.3rem;">
-                I Confirm I'm 18+
-            </button>
         </div>
 
         <div class="plans-section">
@@ -63,9 +229,8 @@
                     <div class="plan-price">$8 <span>/ month</span></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> Access to all content</li>
-                        <li><i class="fas fa-check"></i> New content weekly</li>
+                        <li><i class="fas fa-check"></i> No Ads</li>
                         <li><i class="fas fa-check"></i> Cancel anytime</li>
-                        <li><i class="fas fa-check"></i> <strong>No Ads</strong></li>
                     </ul>
                     <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
                 </div>
@@ -74,19 +239,12 @@
                     <div class="plan-price">$30 <span>/ year</span></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> Access to all content</li>
-                        <li><i class="fas fa-check"></i> New content weekly</li>
+                        <li><i class="fas fa-check"></i> No Ads</li>
                         <li><i class="fas fa-check"></i> Save 68%</li>
-                        <li><i class="fas fa-check"></i> <strong>No Ads</strong></li>
                     </ul>
                     <button class="btn btn-plan" onclick="showRegister()">Subscribe Now</button>
                 </div>
             </div>
-        </div>
-
-        <!-- AD: IN-CONTENT -->
-        <div class="ad-container" id="ad-incontent">
-            <span class="ad-label">Sponsored</span>
-            <div id="monetag-in-content"></div>
         </div>
 
         <div class="grid-2">
@@ -100,10 +258,10 @@
                 <h3>Payment Methods</h3>
                 <div class="payment-icons">
                     <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
-                    <span><i class="fas fa-coins"></i> Cryptocurrency</span>
+                    <span><i class="fas fa-coins"></i> Crypto</span>
                     <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
                 </div>
-                <p><i class="fas fa-lock"></i> Secure Payment · Upfront Required</p>
+                <p><i class="fas fa-lock"></i> Secure Payment</p>
                 <div class="contact-block">
                     <i class="fab fa-whatsapp"></i>
                     <a href="https://wa.me/14049070581" target="_blank">WhatsApp Manager</a>
@@ -111,59 +269,44 @@
                     <i class="fas fa-sms"></i>
                     <a href="sms:+14049070581">Text Message</a>
                 </div>
-                <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery · In-House</div>
+                <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery</div>
             </div>
-        </div>
-
-        <!-- AD: MIDDLE -->
-        <div class="ad-container" id="ad-middle">
-            <span class="ad-label">Sponsored</span>
-            <div id="monetag-middle"></div>
         </div>
 
         <div class="booking-section">
             <div class="booking-box">
-                <div>
-                    <i class="fas fa-calendar-circle-plus"></i>
-                    <span>Online Booking · US Residents Only</span>
-                </div>
+                <div><i class="fas fa-calendar-circle-plus"></i><span>Online Booking · US Residents Only</span></div>
                 <a href="#" class="btn" data-page="book">Book Now</a>
             </div>
             <div class="booking-notes">
-                <span><i class="fas fa-circle-check"></i> Pay Upfront to Confirm</span>
+                <span><i class="fas fa-circle-check"></i> Pay Upfront</span>
                 <span><i class="fas fa-calendar-day"></i> Choose Date via WhatsApp</span>
-                <span><i class="fas fa-location-dot"></i> In-House or Home Delivery</span>
             </div>
         </div>
     </div>
 
-    <!-- SERVICES PAGE -->
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 
-    <!-- GALLERY PAGE -->
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
         <p class="gallery-desc">Subscribe to unlock all content.</p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- VIDEOS PAGE -->
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
         <p class="gallery-desc">Subscribe to unlock all videos.</p>
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
-    <!-- ACCOUNT PAGE -->
     <div id="page-account" class="page">
         <h2 class="section-title">My Account</h2>
         <div id="accountContent"></div>
     </div>
 
-    <!-- BOOK PAGE -->
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
         <div class="grid-2">
@@ -175,34 +318,23 @@
             <div class="card">
                 <i class="fas fa-phone"></i>
                 <h3>Book via WhatsApp</h3>
-                <p>Contact us directly to book your session:</p>
-                <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp +1 (404) 907-0581
-                </a>
-                <p><i class="fas fa-sms"></i> Or text: <strong>+1 (404) 907-0581</strong></p>
-                <div class="book-info">
-                    <p><i class="fas fa-lock"></i> <strong>Pay Upfront</strong> · Apple Pay · Crypto · Bitcoin</p>
-                    <p>US Residents Only · Home Delivery Available</p>
-                </div>
+                <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp">WhatsApp +1 (404) 907-0581</a>
+                <p><i class="fas fa-sms"></i> Text: <strong>+1 (404) 907-0581</strong></p>
             </div>
         </div>
     </div>
 
-    <!-- UNLOCK MODAL -->
     <div class="modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Unlock Content</h2>
             <div class="price-display" id="modalPrice">$5.00</div>
-            <p>Pay via WhatsApp to get your unlock PIN</p>
             <div class="payment-methods">
                 <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
                 <span><i class="fas fa-coins"></i> Crypto</span>
                 <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
             </div>
-            <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn">
-                <i class="fab fa-whatsapp"></i> Pay & Get PIN
-            </a>
+            <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-btn" id="whatsappUnlockBtn"><i class="fab fa-whatsapp"></i> Pay & Get PIN</a>
             <hr>
             <p>Already have a PIN?</p>
             <div class="code-input">
@@ -213,12 +345,10 @@
         </div>
     </div>
 
-    <!-- REGISTER MODAL -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
             <h2>Create Account</h2>
-            <p>Get your unique ID to access premium content</p>
             <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" id="regName" placeholder="Enter your full name">
@@ -228,36 +358,384 @@
                 <input type="email" id="regEmail" placeholder="Enter your email">
             </div>
             <div class="form-group">
-                <label>Phone Number</label>
+                <label>Phone</label>
                 <input type="tel" id="regPhone" placeholder="Enter your phone number">
             </div>
             <button class="btn" id="registerBtn" style="width:100%; justify-content:center;">Register</button>
             <div id="registerMessage" style="margin-top:0.5rem;font-weight:500;"></div>
-            <p style="margin-top:1rem;font-size:0.85rem;color:#8a7b6b;">
-                <i class="fas fa-info-circle"></i> Your unique ID will be generated and sent to you
-            </p>
         </div>
     </div>
 
-    <!-- AD: BOTTOM -->
-    <div class="ad-container" id="ad-bottom">
-        <span class="ad-label">Sponsored</span>
-        <div id="monetag-bottom"></div>
-    </div>
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-bottom"></div></div>
 
-    <!-- FOOTER -->
     <div class="footer">
-        <i class="fas fa-flag-usa"></i> US Residents Only · Sophia Message & Therapy
+        <i class="fas fa-flag-usa"></i> US Residents Only · Sophia Therapy
         <br>
-        <span>&copy; 2026 · Online Booking · Home Delivery · <i class="fab fa-whatsapp"></i> +1 (404) 907-0581</span>
+        <span>&copy; 2026 · <i class="fab fa-whatsapp"></i> +1 (404) 907-0581</span>
     </div>
 </div>
 
-<script src="auth.js"></script>
-<script src="script.js"></script>
-
-<!-- ADSTERRA SOCIAL BAR -->
+<!-- ====== ADSTERRA SOCIAL BAR ====== -->
 <script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
+<script>
+// ============================================================
+// ====== COMPLETE JAVASCRIPT FOR MAIN SITE ======
+// ============================================================
+
+var services = [];
+var galleryItems = [];
+var videoItems = [];
+var unlockCodes = {};
+var users = [];
+
+function getDefaultServices() {
+    return [
+        { id: 1, name: 'Elite Wellness Rituals', description: 'Premium 80-minute Ayurvedic massage with hot stones and organic essential oil wraps.', price: 800, duration: '80 minutes', icon: 'fas fa-gem' },
+        { id: 2, name: 'Amangiri Spa Experience', description: 'Signature Ayurvedic massage with hot stone therapy. Full-day spa access.', price: 800, duration: '80 minutes', icon: 'fas fa-sun' },
+        { id: 3, name: 'Standard Therapeutic Studio', description: '60-90 minute deep tissue or Swedish massage. Trigger-point therapy.', price: 150, duration: '60-90 minutes', icon: 'fas fa-hand-holding-heart' },
+        { id: 4, name: 'SoJo Spa Club Experience', description: '60-minute Swedish massage with access to infinity pools and volcanic baths.', price: 150, duration: '60 minutes', icon: 'fas fa-water' }
+    ];
+}
+
+function getDefaultImages() {
+    return [
+        { id: 1, src: 'https://picsum.photos/400/400?random=1', price: 5, title: 'Relaxation Session' },
+        { id: 2, src: 'https://picsum.photos/400/400?random=2', price: 8, title: 'Deep Tissue Massage' },
+        { id: 3, src: 'https://picsum.photos/400/400?random=3', price: 6, title: 'Aromatherapy' },
+        { id: 4, src: 'https://picsum.photos/400/400?random=4', price: 10, title: 'Craniosacral Therapy' },
+        { id: 5, src: 'https://picsum.photos/400/400?random=5', price: 7, title: 'Energy Balance' },
+        { id: 6, src: 'https://picsum.photos/400/400?random=6', price: 5, title: 'Hot Stone Massage' },
+        { id: 7, src: 'https://picsum.photos/400/400?random=7', price: 9, title: 'Swedish Massage' },
+        { id: 8, src: 'https://picsum.photos/400/400?random=8', price: 6, title: 'Reflexology' },
+        { id: 9, src: 'https://picsum.photos/400/400?random=9', price: 7, title: 'Thai Massage' },
+        { id: 10, src: 'https://picsum.photos/400/400?random=10', price: 8, title: 'Lymphatic Drainage' }
+    ];
+}
+
+function getDefaultVideos() {
+    return [
+        { id: 1, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 8, title: 'Massage Tutorial' },
+        { id: 2, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 6, title: 'Relaxation Guide' },
+        { id: 3, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 10, title: 'Advanced Techniques' },
+        { id: 4, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 7, title: 'Wellness Routine' }
+    ];
+}
+
+function loadServices() { services = getDefaultServices(); }
+function loadGallery() { galleryItems = getDefaultImages(); }
+function loadVideos() { videoItems = getDefaultVideos(); }
+
+function loadUsers() {
+    var saved = localStorage.getItem('sophia_users');
+    if (saved) { try { users = JSON.parse(saved); } catch(e) { users = []; } }
+}
+
+function getCurrentUser() {
+    var saved = localStorage.getItem('sophia_current_user');
+    if (saved) { try { return JSON.parse(saved); } catch(e) { return null; } }
+    return null;
+}
+
+function saveUsers() { localStorage.setItem('sophia_users', JSON.stringify(users)); }
+
+function registerUser(name, email, phone) {
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email) { return { success: false, message: 'Email already registered' }; }
+    }
+    var userId = 'ST' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    var newUser = {
+        id: userId, name: name, email: email, phone: phone,
+        registered: new Date().toISOString(),
+        subscription: { active: false, startDate: null, endDate: null },
+        unlockedContent: { images: [], videos: [] }
+    };
+    users.push(newUser);
+    saveUsers();
+    localStorage.setItem('sophia_current_user', JSON.stringify(newUser));
+    return { success: true, user: newUser };
+}
+
+function logoutUser() { localStorage.removeItem('sophia_current_user'); }
+
+function checkSubscriptionStatus(userId) {
+    var user = null;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) { user = users[i]; break; }
+    }
+    if (!user) return { active: false };
+    if (!user.subscription || !user.subscription.active) return { active: false };
+    var endDate = new Date(user.subscription.endDate);
+    if (endDate < new Date()) {
+        user.subscription.active = false;
+        saveUsers();
+        return { active: false, expired: true };
+    }
+    var remainingDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24));
+    return { active: true, remainingDays: remainingDays, endDate: endDate.toISOString() };
+}
+
+function renderServices() {
+    var grid = document.getElementById('servicesGrid');
+    if (!grid) return;
+    loadServices();
+    var html = '';
+    for (var i = 0; i < services.length; i++) {
+        var s = services[i];
+        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><button class="btn btn-small" onclick="showRegister()">Book Now</button></div>';
+    }
+    grid.innerHTML = html;
+}
+
+function renderHomeServices() {
+    var c = document.getElementById('homeServiceList');
+    if (!c) return;
+    loadServices();
+    var html = '';
+    for (var i = 0; i < services.length; i++) {
+        html += '<li><i class="' + services[i].icon + '"></i> ' + services[i].name + ' – $' + services[i].price + '</li>';
+    }
+    c.innerHTML = html;
+    var b = document.getElementById('bookServiceList');
+    if (b) {
+        var h = '';
+        for (var i = 0; i < services.length; i++) {
+            h += '<li><i class="' + services[i].icon + '"></i> ' + services[i].name + ' – $' + services[i].price + '</li>';
+        }
+        b.innerHTML = h;
+    }
+}
+
+function renderGallery() {
+    var grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    loadGallery();
+    var currentUser = getCurrentUser();
+    var hasSubscription = false;
+    if (currentUser) {
+        var status = checkSubscriptionStatus(currentUser.id);
+        hasSubscription = status.active;
+    }
+    for (var i = 0; i < galleryItems.length; i++) {
+        var item = galleryItems[i];
+        var div = document.createElement('div');
+        div.className = 'gallery-item';
+        var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
+        var html = '<img src="' + item.src + '" alt="' + item.title + '" loading="lazy">';
+        if (!isUnlocked) {
+            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" data-id="' + item.id + '" data-type="image"><i class="fas fa-unlock"></i> Unlock</button></div>';
+        }
+        div.innerHTML = html;
+        if (isUnlocked) div.classList.add('unlocked');
+        grid.appendChild(div);
+    }
+    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var id = parseInt(this.dataset.id);
+            openUnlockModal(id, 'image');
+        });
+    });
+}
+
+function renderVideos() {
+    var grid = document.getElementById('videoGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    loadVideos();
+    var currentUser = getCurrentUser();
+    var hasSubscription = false;
+    if (currentUser) {
+        var status = checkSubscriptionStatus(currentUser.id);
+        hasSubscription = status.active;
+    }
+    for (var i = 0; i < videoItems.length; i++) {
+        var item = videoItems[i];
+        var div = document.createElement('div');
+        div.className = 'video-item';
+        var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
+        var html = '<video src="' + item.src + '" preload="metadata"></video><div class="play-icon"><i class="fas fa-play-circle"></i></div>';
+        if (!isUnlocked) {
+            html += '<div class="lock-overlay"><i class="fas fa-lock"></i><span class="price-tag">$' + item.price + '</span><button class="unlock-btn" data-id="' + item.id + '" data-type="video"><i class="fas fa-unlock"></i> Unlock</button></div>';
+        }
+        div.innerHTML = html;
+        if (isUnlocked) div.classList.add('unlocked');
+        grid.appendChild(div);
+    }
+    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var id = parseInt(this.dataset.id);
+            openUnlockModal(id, 'video');
+        });
+    });
+}
+
+var modal = document.getElementById('unlockModal');
+var modalClose = document.getElementById('modalClose');
+var modalPrice = document.getElementById('modalPrice');
+var unlockCodeInput = document.getElementById('unlockCodeInput');
+var unlockCodeBtn = document.getElementById('unlockCodeBtn');
+var unlockMessage = document.getElementById('unlockMessage');
+var whatsappUnlockBtn = document.getElementById('whatsappUnlockBtn');
+var currentUnlockId = null;
+
+function openUnlockModal(id, type) {
+    currentUnlockId = id;
+    var item = null;
+    for (var i = 0; i < galleryItems.length; i++) {
+        if (galleryItems[i].id === id) { item = galleryItems[i]; break; }
+    }
+    if (!item) {
+        for (var j = 0; j < videoItems.length; j++) {
+            if (videoItems[j].id === id) { item = videoItems[j]; break; }
+        }
+    }
+    if (item) modalPrice.textContent = '$' + item.price + '.00';
+    var currentUser = getCurrentUser();
+    if (currentUser) {
+        whatsappUnlockBtn.href = 'https://wa.me/14049070581?text=I%20want%20to%20unlock%20content%20-%20My%20ID%3A%20' + currentUser.id + '%20-%20Content%20ID%3A%20' + id;
+    }
+    unlockCodeInput.value = '';
+    unlockMessage.textContent = '';
+    modal.classList.add('active');
+}
+
+function closeModal() {
+    modal.classList.remove('active');
+    currentUnlockId = null;
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+unlockCodeBtn.addEventListener('click', function() {
+    var code = unlockCodeInput.value.trim().toUpperCase();
+    if (!code || code.length < 4) {
+        unlockMessage.textContent = 'Please enter a valid PIN';
+        unlockMessage.style.color = '#c0392b';
+        return;
+    }
+    var storedCode = localStorage.getItem('sophia_pin_' + currentUnlockId);
+    if (storedCode && storedCode.toUpperCase() === code) {
+        unlockCodes[currentUnlockId] = true;
+        localStorage.setItem('sophia_unlocked', JSON.stringify(unlockCodes));
+        unlockMessage.textContent = '✅ Content unlocked!';
+        unlockMessage.style.color = '#2b6e4f';
+        setTimeout(function() { closeModal(); renderGallery(); renderVideos(); }, 1200);
+    } else {
+        unlockMessage.textContent = '❌ Invalid PIN. Contact WhatsApp.';
+        unlockMessage.style.color = '#c0392b';
+    }
+});
+
+var registerModal = document.getElementById('registerModal');
+var registerClose = document.getElementById('registerClose');
+var registerBtn = document.getElementById('registerBtn');
+var regName = document.getElementById('regName');
+var regEmail = document.getElementById('regEmail');
+var regPhone = document.getElementById('regPhone');
+var registerMessage = document.getElementById('registerMessage');
+
+function showRegister() {
+    registerModal.classList.add('active');
+    registerMessage.textContent = '';
+}
+
+registerClose.addEventListener('click', function() { registerModal.classList.remove('active'); });
+registerModal.addEventListener('click', function(e) { if (e.target === this) registerModal.classList.remove('active'); });
+
+registerBtn.addEventListener('click', function() {
+    var name = regName.value.trim();
+    var email = regEmail.value.trim();
+    var phone = regPhone.value.trim();
+    if (!name || !email || !phone) {
+        registerMessage.textContent = 'Please fill in all fields';
+        registerMessage.style.color = '#c0392b';
+        return;
+    }
+    var result = registerUser(name, email, phone);
+    if (result.success) {
+        registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
+        registerMessage.style.color = '#2b6e4f';
+        regName.value = ''; regEmail.value = ''; regPhone.value = '';
+        setTimeout(function() {
+            registerModal.classList.remove('active');
+            loadAccountPage();
+        }, 2000);
+    } else {
+        registerMessage.textContent = result.message;
+        registerMessage.style.color = '#c0392b';
+    }
+});
+
+function loadAccountPage() {
+    var container = document.getElementById('accountContent');
+    var currentUser = getCurrentUser();
+    if (!currentUser) {
+        container.innerHTML = '<div class="account-card" style="text-align:center;"><i class="fas fa-user-circle" style="font-size:4rem;color:#d47a8a;margin-bottom:1rem;"></i><h3>Not Logged In</h3><p style="color:#8a7b6b;margin:0.5rem 0;">Create an account to get your unique ID.</p><button class="btn" onclick="showRegister()">Create Account</button></div>';
+        return;
+    }
+    var status = checkSubscriptionStatus(currentUser.id);
+    var statusHtml = status.active ? '<span class="status active">Active</span>' : '<span class="status inactive">Inactive</span>';
+    var timerHtml = status.active ? '<div class="timer">' + status.remainingDays + ' days remaining</div>' : '<div class="timer" style="color:#c0392b;">No Active Subscription</div>';
+    container.innerHTML = '<div class="account-card"><h3 style="text-align:center;">My Account</h3><div class="user-id"><i class="fas fa-id-card"></i> Your ID: ' + currentUser.id + '<button class="copy-btn" onclick="copyText(\'' + currentUser.id + '\')" style="margin-left:0.5rem;background:#f8d0d8;border:none;padding:0.2rem 0.8rem;border-radius:30px;cursor:pointer;"><i class="fas fa-copy"></i> Copy</button></div><p><strong>Name:</strong> ' + currentUser.name + '</p><p><strong>Email:</strong> ' + currentUser.email + '</p><p><strong>Phone:</strong> ' + currentUser.phone + '</p><p><strong>Status:</strong> ' + statusHtml + '</p><hr style="margin:1rem 0;">' + timerHtml + '<hr style="margin:1rem 0;"><div style="text-align:center;margin-top:0.5rem;"><a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20' + currentUser.id + '" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;"><i class="fab fa-whatsapp"></i> Contact Admin</a><button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;margin-left:0.5rem;"><i class="fas fa-sign-out-alt"></i> Logout</button></div></div>';
+}
+
+function copyText(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() { alert('Copied!'); });
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('Copied!');
+    }
+}
+
+var navLinks = document.querySelectorAll('.nav-links a');
+var pages = {
+    home: document.getElementById('page-home'),
+    services: document.getElementById('page-services'),
+    gallery: document.getElementById('page-gallery'),
+    videos: document.getElementById('page-videos'),
+    account: document.getElementById('page-account'),
+    book: document.getElementById('page-book')
+};
+
+for (var i = 0; i < navLinks.length; i++) {
+    navLinks[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        var page = this.dataset.page;
+        for (var j = 0; j < navLinks.length; j++) { navLinks[j].classList.remove('active'); }
+        this.classList.add('active');
+        var keys = Object.keys(pages);
+        for (var k = 0; k < keys.length; k++) { pages[keys[k]].classList.toggle('active', keys[k] === page); }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (page === 'account') loadAccountPage();
+        if (page === 'gallery') renderGallery();
+        if (page === 'videos') renderVideos();
+        if (page === 'services') renderServices();
+        if (page === 'home') renderHomeServices();
+    });
+}
+
+loadUsers();
+loadServices();
+loadGallery();
+loadVideos();
+renderHomeServices();
+renderServices();
+renderGallery();
+renderVideos();
+
+console.log('✅ Sophia Therapy Ready!');
+console.log('📸 10 Images | 🎬 4 Videos | 💼 4 Services');
+</script>
 
 </body>
 </html>
