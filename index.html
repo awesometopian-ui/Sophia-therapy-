@@ -15,7 +15,7 @@
 
     <script>
     (function () {
-        var APP_VERSION = '2026.08.22.4';
+        var APP_VERSION = '2026.08.23.5';
         var storedVersion = localStorage.getItem('sophia_app_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('sophia_app_version', APP_VERSION);
@@ -93,6 +93,9 @@
         .modal-close { position: absolute; top: 12px; right: 18px; font-size: 1.8rem; cursor: pointer; color: #c07a8a; background: none; border: none; }
         .modal-close:hover { color: #7a3a4a; }
         .modal-content h2 { color: #7a3a4a; margin-bottom: 0.5rem; }
+        .modal-content .price-display { font-size: 2rem; font-weight: 500; color: #d47a8a; margin: 0.5rem 0; }
+        .modal-content .payment-methods { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 0.8rem 0; }
+        .modal-content .payment-methods span { background: #f5ecee; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.9rem; color: #7a3a4a; }
         .modal-content .code-input { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
         .modal-content .code-input input { padding: 0.6rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; width: 150px; text-align: center; letter-spacing: 4px; }
         .modal-content .code-input input:focus { border-color: #d47a8a; outline: none; }
@@ -108,6 +111,10 @@
         .btn:hover { background: #c06a7a; transform: scale(1.01); }
         .btn-whatsapp { background: #25D366; }
         .btn-whatsapp:hover { background: #1da851; }
+        .btn-success { background: #2b6e4f; }
+        .btn-success:hover { background: #1f573d; }
+        .btn-danger { background: #c0392b; }
+        .btn-danger:hover { background: #a93226; }
         .contact-block { background: #f5ecee; border-radius: 60px; padding: 0.7rem 1.5rem; display: inline-flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
         .contact-block a { color: #7a3a4a; text-decoration: none; font-weight: 500; }
         .contact-block a:hover { text-decoration: underline; }
@@ -125,6 +132,22 @@
         .footer span { font-size: 0.8rem; opacity: 0.8; }
         .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
         .copy-btn:hover { background: #f0b8c8; }
+        .payment-option { background: #f5ecee; border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; cursor: pointer; transition: 0.3s; border: 2px solid transparent; }
+        .payment-option:hover { border-color: #d47a8a; }
+        .payment-option i { font-size: 1.8rem; color: #d47a8a; margin-right: 0.5rem; }
+        .address-box { background: #f5ecee; padding: 0.8rem; border-radius: 12px; word-break: break-all; font-size: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .address-box button { background: #d47a8a; color: white; border: none; padding: 0.3rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
+        .pin-input-group { display: flex; align-items: center; gap: 0.5rem; }
+        .pin-input-group input { flex: 1; }
+        .pin-input-group button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #7a3a4a; padding: 0.5rem; }
+        .pin-input-group button:hover { color: #d47a8a; }
+        .payment-status { margin-top: 0.5rem; font-weight: 500; padding: 0.5rem; border-radius: 8px; }
+        .payment-status.pending { background: #fff3cd; color: #856404; }
+        .payment-status.approved { background: #d4edda; color: #155724; }
+        .payment-status.declined { background: #f8d7da; color: #721c24; }
+        .whatsapp-book-btn { background: #25D366; color: white; border: none; padding: 0.7rem 2rem; border-radius: 60px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; transition: 0.2s; font-weight: 500; margin-top: 0.5rem; }
+        .whatsapp-book-btn:hover { background: #1da851; transform: scale(1.01); }
+        .whatsapp-book-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
         @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
     </style>
 </head>
@@ -163,7 +186,7 @@
             <div class="card">
                 <i class="fas fa-spa"></i>
                 <h3>Our Services</h3>
-                <p style="margin-bottom:0.5rem;color:#5d4d50;">Book a session with us. Pay upfront to confirm your booking.</p>
+                <p style="margin-bottom:0.5rem;color:#5d4d50;">Book a session. Pay 40% upfront to confirm.</p>
                 <ul class="service-list" id="homeServiceList"></ul>
             </div>
             <div class="card">
@@ -171,10 +194,11 @@
                 <h3>Payment Methods</h3>
                 <div class="payment-icons">
                     <span><i class="fab fa-apple-pay"></i> Apple Pay</span>
+                    <span><i class="fas fa-gamepad"></i> Razer Gold</span>
                     <span><i class="fas fa-coins"></i> Crypto</span>
                     <span><i class="fab fa-bitcoin"></i> Bitcoin</span>
                 </div>
-                <p><i class="fas fa-lock"></i> Pay upfront to confirm booking</p>
+                <p><i class="fas fa-lock"></i> Pay 40% upfront to confirm booking</p>
                 <div class="contact-block">
                     <i class="fab fa-whatsapp"></i>
                     <a href="https://wa.me/14049070581" target="_blank">WhatsApp Manager</a>
@@ -188,11 +212,11 @@
 
         <div class="booking-section">
             <div class="booking-box">
-                <div><i class="fas fa-calendar-circle-plus"></i><span>Book a Service · Pay Upfront</span></div>
+                <div><i class="fas fa-calendar-circle-plus"></i><span>Book a Service · 40% Upfront</span></div>
                 <a href="#" class="btn" data-page="book">Book Now</a>
             </div>
             <div class="booking-notes">
-                <span><i class="fas fa-circle-check"></i> Pay Upfront to Confirm</span>
+                <span><i class="fas fa-circle-check"></i> 40% Upfront to Confirm</span>
                 <span><i class="fas fa-calendar-day"></i> Choose Date via WhatsApp</span>
                 <span><i class="fas fa-location-dot"></i> In-House or Home Delivery</span>
             </div>
@@ -201,7 +225,7 @@
 
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
-        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay upfront to confirm your booking. Contact us via WhatsApp to arrange payment.</p>
+        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 
@@ -222,25 +246,79 @@
         <div id="accountContent"></div>
     </div>
 
+    <!-- BOOK PAGE -->
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
-        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay upfront to confirm your booking. Contact us via WhatsApp to arrange payment.</p>
+        <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-hand-sparkles"></i>
                 <h3>Choose Your Service</h3>
                 <ul class="service-list" id="bookServiceList"></ul>
-                <p style="margin-top:1rem;font-size:0.9rem;color:#8a7b6b;"><i class="fas fa-info-circle"></i> Contact us on WhatsApp to book and pay upfront.</p>
+                <div style="margin-top:1rem;">
+                    <label style="font-weight:500;">Your Upfront Payment (40% min):</label>
+                    <input type="number" id="upfrontAmount" placeholder="Enter amount (40% min)" min="0" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #f0e0e4;margin-top:0.3rem;">
+                    <p style="font-size:0.8rem;color:#8a7b6b;margin-top:0.3rem;">Minimum 40% of service price</p>
+                </div>
             </div>
             <div class="card">
-                <i class="fas fa-phone"></i>
-                <h3>Book via WhatsApp</h3>
-                <p>Contact us directly to book your session:</p>
-                <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp">WhatsApp +1 (404) 907-0581</a>
-                <p><i class="fas fa-sms"></i> Text: <strong>+1 (404) 907-0581</strong></p>
-                <div style="margin-top:1rem;background:#f5ecee;padding:1rem;border-radius:12px;">
-                    <p><i class="fas fa-lock"></i> <strong>Pay Upfront Required</strong></p>
-                    <p style="font-size:0.85rem;color:#8a7b6b;">Apple Pay · Crypto · Bitcoin Accepted</p>
+                <i class="fas fa-credit-card"></i>
+                <h3>Pay Upfront</h3>
+                <p>Choose payment method:</p>
+
+                <div class="payment-option" onclick="togglePayment('apple')">
+                    <i class="fab fa-apple-pay"></i>
+                    <span>Apple Pay</span>
+                    <div id="applePaySection" style="display:none;margin-top:0.5rem;width:100%;">
+                        <div class="form-group" style="margin:0.3rem 0;">
+                            <label>Apple Card PIN (16 digits)</label>
+                            <div class="pin-input-group">
+                                <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
+                                <button onclick="togglePin()"><i class="fas fa-eye" id="eyeIcon"></i></button>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;">Pay with Apple Pay</button>
+                    </div>
+                </div>
+
+                <div class="payment-option" onclick="togglePayment('razer')">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Razer Gold</span>
+                    <div id="razerSection" style="display:none;margin-top:0.5rem;width:100%;">
+                        <div class="form-group" style="margin:0.3rem 0;">
+                            <label>Razer Gold PIN</label>
+                            <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
+                        </div>
+                        <button class="btn" onclick="submitPayment('razer')" style="width:100%;justify-content:center;">Pay with Razer Gold</button>
+                    </div>
+                </div>
+
+                <div class="payment-option" onclick="togglePayment('crypto')">
+                    <i class="fab fa-bitcoin"></i>
+                    <span>Cryptocurrency (BTC)</span>
+                    <div id="cryptoSection" style="display:none;margin-top:0.5rem;width:100%;">
+                        <p style="font-size:0.85rem;color:#8a7b6b;">Send BTC to:</p>
+                        <div class="address-box">
+                            <span id="btcAddress">bc1qkr339snz8l0kq0y6l9d0fht2amfk6t76x80cazzghsheltjjx39qg9fyhs</span>
+                            <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
+                        </div>
+                        <div class="form-group" style="margin:0.3rem 0;">
+                            <label>Transaction ID</label>
+                            <input type="text" id="cryptoConfirm" placeholder="Paste transaction ID">
+                        </div>
+                        <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;">Confirm Payment</button>
+                    </div>
+                </div>
+
+                <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
+
+                <!-- WhatsApp Link - Shows ONLY after payment approved -->
+                <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#e8f5ee;border-radius:16px;text-align:center;">
+                    <p style="color:#2b6e4f;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
+                    <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
+                    <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn">
+                        <i class="fab fa-whatsapp"></i> Book via WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
@@ -291,15 +369,15 @@
 
 <script>
 // ============================================================
-// ====== COMPLETE JAVASCRIPT ======
+// ====== COMPLETE JAVASCRIPT VERSION 5 ======
 // ============================================================
 
-var APP_VERSION = '2026.08.22.4';
+var APP_VERSION = '2026.08.23.5';
 var storedVersion = localStorage.getItem('sophia_app_version');
 
 if (storedVersion !== APP_VERSION) {
     localStorage.setItem('sophia_app_version', APP_VERSION);
-    console.log('✅ New version detected!');
+    console.log('✅ Version 5 detected!');
     
     if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery')).length === 0) {
         var defaultImages = getDefaultImages();
@@ -315,6 +393,8 @@ var services = [];
 var galleryItems = [];
 var videoItems = [];
 var users = [];
+var payments = [];
+var currentServiceId = null;
 
 function getDefaultServices() {
     return [
@@ -383,6 +463,15 @@ function registerUser(name, email, phone) {
 
 function logoutUser() { localStorage.removeItem('sophia_current_user'); }
 
+function loadPayments() {
+    var saved = localStorage.getItem('sophia_payments');
+    if (saved) { try { payments = JSON.parse(saved); } catch(e) { payments = []; } }
+}
+
+function savePayments() {
+    localStorage.setItem('sophia_payments', JSON.stringify(payments));
+}
+
 function renderServices() {
     var grid = document.getElementById('servicesGrid');
     if (!grid) return;
@@ -390,7 +479,8 @@ function renderServices() {
     var html = '';
     for (var i = 0; i < services.length; i++) {
         var s = services[i];
-        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><a href="https://wa.me/14049070581?text=I%20want%20to%20book%20' + encodeURIComponent(s.name) + '" target="_blank" class="btn btn-small">Book Now</a></div>';
+        var upfrontMin = Math.ceil(s.price * 0.4);
+        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><button class="btn btn-small" onclick="bookService(' + s.id + ', ' + s.price + ')">Book Now</button></div>';
     }
     grid.innerHTML = html;
 }
@@ -506,6 +596,193 @@ function copyText(text) {
     }
 }
 
+function copyBTC() {
+    var address = document.getElementById('btcAddress').textContent;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(address).then(function() { alert('BTC Address copied!'); });
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = address;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('BTC Address copied!');
+    }
+}
+
+function togglePin() {
+    var input = document.getElementById('applePin');
+    var icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+var selectedPayment = null;
+
+function togglePayment(method) {
+    document.getElementById('applePaySection').style.display = 'none';
+    document.getElementById('razerSection').style.display = 'none';
+    document.getElementById('cryptoSection').style.display = 'none';
+    
+    if (method === 'apple') {
+        document.getElementById('applePaySection').style.display = 'block';
+        selectedPayment = 'apple';
+    } else if (method === 'razer') {
+        document.getElementById('razerSection').style.display = 'block';
+        selectedPayment = 'razer';
+    } else if (method === 'crypto') {
+        document.getElementById('cryptoSection').style.display = 'block';
+        selectedPayment = 'crypto';
+    }
+}
+
+var currentBooking = null;
+
+function bookService(id, price) {
+    currentBooking = { id: id, price: price };
+    var upfrontMin = Math.ceil(price * 0.4);
+    var upfrontInput = document.getElementById('upfrontAmount');
+    if (upfrontInput) {
+        upfrontInput.placeholder = 'Min $' + upfrontMin;
+        upfrontInput.min = upfrontMin;
+        upfrontInput.value = upfrontMin;
+    }
+    document.querySelector('[data-page="book"]').click();
+    document.getElementById('paymentStatus').textContent = '';
+    document.getElementById('paymentStatus').className = '';
+    document.getElementById('whatsappSection').style.display = 'none';
+}
+
+function submitPayment(method) {
+    var currentUser = getCurrentUser();
+    if (!currentUser) {
+        document.getElementById('paymentStatus').textContent = 'Please create an account first!';
+        document.getElementById('paymentStatus').className = 'payment-status declined';
+        showRegister();
+        return;
+    }
+
+    var upfrontInput = document.getElementById('upfrontAmount');
+    var amount = parseFloat(upfrontInput.value);
+    if (!amount || amount <= 0) {
+        document.getElementById('paymentStatus').textContent = 'Please enter a valid amount';
+        document.getElementById('paymentStatus').className = 'payment-status declined';
+        return;
+    }
+
+    if (currentBooking) {
+        var minAmount = Math.ceil(currentBooking.price * 0.4);
+        if (amount < minAmount) {
+            document.getElementById('paymentStatus').textContent = 'Minimum upfront payment is $' + minAmount + ' (40%)';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            return;
+        }
+    }
+
+    var paymentData = {
+        id: Date.now(),
+        userId: currentUser.id,
+        userName: currentUser.name,
+        userEmail: currentUser.email,
+        userPhone: currentUser.phone,
+        serviceId: currentBooking ? currentBooking.id : null,
+        servicePrice: currentBooking ? currentBooking.price : 0,
+        amount: amount,
+        method: method,
+        status: 'pending',
+        date: new Date().toISOString()
+    };
+
+    if (method === 'apple') {
+        var pin = document.getElementById('applePin').value.trim();
+        if (!pin || pin.length < 16) {
+            document.getElementById('paymentStatus').textContent = 'Please enter a valid 16-digit Apple Card PIN';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            return;
+        }
+        paymentData.pin = pin;
+    }
+
+    if (method === 'razer') {
+        var rPin = document.getElementById('razerPin').value.trim();
+        if (!rPin) {
+            document.getElementById('paymentStatus').textContent = 'Please enter your Razer Gold PIN';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            return;
+        }
+        paymentData.razerPin = rPin;
+    }
+
+    if (method === 'crypto') {
+        var txId = document.getElementById('cryptoConfirm').value.trim();
+        if (!txId) {
+            document.getElementById('paymentStatus').textContent = 'Please paste your transaction ID';
+            document.getElementById('paymentStatus').className = 'payment-status declined';
+            return;
+        }
+        paymentData.transactionId = txId;
+    }
+
+    loadPayments();
+    payments.push(paymentData);
+    savePayments();
+
+    document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
+    document.getElementById('paymentStatus').className = 'payment-status pending';
+
+    // Show WhatsApp link immediately for testing - in production admin approves first
+    // For now, let's check if auto-approve is enabled via admin
+    checkPaymentApproval(paymentData.id);
+}
+
+function checkPaymentApproval(paymentId) {
+    loadPayments();
+    var payment = null;
+    for (var i = 0; i < payments.length; i++) {
+        if (payments[i].id === paymentId) {
+            payment = payments[i];
+            break;
+        }
+    }
+    if (payment && payment.status === 'approved') {
+        document.getElementById('paymentStatus').textContent = '✅ Payment Approved!';
+        document.getElementById('paymentStatus').className = 'payment-status approved';
+        document.getElementById('whatsappSection').style.display = 'block';
+    } else if (payment && payment.status === 'declined') {
+        document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
+        document.getElementById('paymentStatus').className = 'payment-status declined';
+    } else {
+        // Check again in 3 seconds
+        setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
+    }
+}
+
+function checkAllPayments() {
+    loadPayments();
+    var pendingFound = false;
+    for (var i = 0; i < payments.length; i++) {
+        if (payments[i].status === 'approved' && !payments[i].notified) {
+            // Auto-show WhatsApp for approved payments
+            payments[i].notified = true;
+            savePayments();
+            document.getElementById('paymentStatus').textContent = '✅ Payment Approved! Contact us on WhatsApp.';
+            document.getElementById('paymentStatus').className = 'payment-status approved';
+            document.getElementById('whatsappSection').style.display = 'block';
+            pendingFound = true;
+        }
+    }
+    if (!pendingFound) {
+        // Check again in 5 seconds
+        setTimeout(checkAllPayments, 5000);
+    }
+}
+
 var navLinks = document.querySelectorAll('.nav-links a');
 var pages = {
     home: document.getElementById('page-home'),
@@ -530,25 +807,60 @@ for (var i = 0; i < navLinks.length; i++) {
         if (page === 'videos') renderVideos();
         if (page === 'services') renderServices();
         if (page === 'home') renderHomeServices();
+        if (page === 'book') {
+            // Load payment data
+            loadPayments();
+            // Check for approved payments
+            checkAllPayments();
+        }
     });
 }
+
+// ====== UNLOCK MODAL ======
+var modal = document.getElementById('unlockModal');
+var modalClose = document.getElementById('modalClose');
+var unlockCodeInput = document.getElementById('unlockCodeInput');
+var unlockCodeBtn = document.getElementById('unlockCodeBtn');
+var unlockMessage = document.getElementById('unlockMessage');
+
+unlockCodeBtn.addEventListener('click', function() {
+    var code = unlockCodeInput.value.trim().toUpperCase();
+    if (!code || code.length < 4) {
+        unlockMessage.textContent = 'Please enter a valid PIN';
+        unlockMessage.style.color = '#c0392b';
+        return;
+    }
+    var storedCode = localStorage.getItem('sophia_pin_' + currentUnlockId);
+    if (storedCode && storedCode.toUpperCase() === code) {
+        unlockCodes[currentUnlockId] = true;
+        localStorage.setItem('sophia_unlocked', JSON.stringify(unlockCodes));
+        unlockMessage.textContent = '✅ Content unlocked!';
+        unlockMessage.style.color = '#2b6e4f';
+        setTimeout(function() { closeModal(); renderGallery(); renderVideos(); }, 1200);
+    } else {
+        unlockMessage.textContent = '❌ Invalid PIN. Contact WhatsApp.';
+        unlockMessage.style.color = '#c0392b';
+    }
+});
+
+function closeModal() { modal.classList.remove('active'); }
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
 loadUsers();
 loadServices();
 loadGallery();
 loadVideos();
+loadPayments();
 renderHomeServices();
 renderServices();
 renderGallery();
 renderVideos();
 
-console.log('✅ Sophia Therapy Ready!');
-console.log('📸 10 Images FREE | 🎬 4 Videos FREE | 💼 Services');
+console.log('✅ Sophia Therapy Version 5 Ready!');
+console.log('💳 40% Upfront Payment Required');
 console.log('📱 Contact: +1 (404) 907-0581');
 </script>
-
-<!-- ADSTERRA SOCIAL BAR ONLY - POPUNDER REMOVED -->
-<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
 
 </body>
 </html>
