@@ -1,49 +1,127 @@
-// ====== MAIN SITE LOGIC WITH SUPABASE ======
+// ====== COMPLETE SCRIPT.JS WITH ALL DATA ======
 
-// ====== NAVIGATION ======
-var navLinks = document.querySelectorAll('.nav-links a');
-var pages = {
-    home: document.getElementById('page-home'),
-    services: document.getElementById('page-services'),
-    gallery: document.getElementById('page-gallery'),
-    videos: document.getElementById('page-videos'),
-    account: document.getElementById('page-account'),
-    book: document.getElementById('page-book')
-};
+var galleryItems = [];
+var videoItems = [];
+var unlockCodes = {};
+var services = [];
 
-for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].addEventListener('click', function(e) {
-        e.preventDefault();
-        var page = this.dataset.page;
-        for (var j = 0; j < navLinks.length; j++) {
-            navLinks[j].classList.remove('active');
+// ====== DEFAULT SERVICES ======
+function getDefaultServices() {
+    return [
+        {
+            name: 'Elite Wellness Rituals',
+            description: 'Premium 80-minute "Emba" Ayurvedic massage with hot stones. Includes organic essential oil wraps, full-body integration, and luxury amenities.',
+            price: 800,
+            duration: '80 minutes',
+            icon: 'fas fa-gem'
+        },
+        {
+            name: 'Amangiri Spa Experience',
+            description: 'Signature 80-minute Ayurvedic massage with hot stone therapy. Includes full-day access to whirlpools, mist rooms, and vanity amenities.',
+            price: 800,
+            duration: '80 minutes',
+            icon: 'fas fa-sun'
+        },
+        {
+            name: 'Standard Therapeutic Studio',
+            description: '60-90 minute targeted deep tissue or Swedish relaxation massage. Focuses on trigger-point therapy, stretching, and physical wellness.',
+            price: 150,
+            duration: '60-90 minutes',
+            icon: 'fas fa-hand-holding-heart'
+        },
+        {
+            name: 'SoJo Spa Club Experience',
+            description: '60-minute classic Swedish massage. Includes access to outdoor infinity pools, volcanic sand baths, rooftop saunas, and multi-story bathhouse.',
+            price: 150,
+            duration: '60 minutes',
+            icon: 'fas fa-water'
         }
-        this.classList.add('active');
-        var keys = Object.keys(pages);
-        for (var k = 0; k < keys.length; k++) {
-            pages[keys[k]].classList.toggle('active', keys[k] === page);
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        hideAdsForPremium();
-        if (page === 'account') loadAccountPage();
-        if (page === 'gallery') renderGallery();
-        if (page === 'videos') renderVideos();
-        if (page === 'services') renderServices();
-        if (page === 'home') renderHomeServices();
-    });
+    ];
+}
+
+// ====== DEFAULT IMAGES (10 Images) ======
+function getDefaultImages() {
+    return [
+        { id: 1, src: 'https://picsum.photos/400/400?random=1', price: 5, title: 'Relaxation Session' },
+        { id: 2, src: 'https://picsum.photos/400/400?random=2', price: 8, title: 'Deep Tissue Massage' },
+        { id: 3, src: 'https://picsum.photos/400/400?random=3', price: 6, title: 'Aromatherapy' },
+        { id: 4, src: 'https://picsum.photos/400/400?random=4', price: 10, title: 'Craniosacral Therapy' },
+        { id: 5, src: 'https://picsum.photos/400/400?random=5', price: 7, title: 'Energy Balance' },
+        { id: 6, src: 'https://picsum.photos/400/400?random=6', price: 5, title: 'Hot Stone Massage' },
+        { id: 7, src: 'https://picsum.photos/400/400?random=7', price: 9, title: 'Swedish Massage' },
+        { id: 8, src: 'https://picsum.photos/400/400?random=8', price: 6, title: 'Reflexology' },
+        { id: 9, src: 'https://picsum.photos/400/400?random=9', price: 7, title: 'Thai Massage' },
+        { id: 10, src: 'https://picsum.photos/400/400?random=10', price: 8, title: 'Lymphatic Drainage' }
+    ];
+}
+
+// ====== DEFAULT VIDEOS (4 Videos) ======
+function getDefaultVideos() {
+    return [
+        { id: 1, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 8, title: 'Massage Tutorial', thumbnail: '' },
+        { id: 2, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 6, title: 'Relaxation Guide', thumbnail: '' },
+        { id: 3, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 10, title: 'Advanced Techniques', thumbnail: '' },
+        { id: 4, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 7, title: 'Wellness Routine', thumbnail: '' }
+    ];
+}
+
+// ====== PIN GENERATION ======
+function generatePin() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var pin = '';
+    for (var i = 0; i < 6; i++) {
+        pin += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return pin;
+}
+
+// ====== LOAD DATA FROM LOCALSTORAGE (or use defaults) ======
+function loadGallery() {
+    var saved = localStorage.getItem('sophia_gallery');
+    if (saved) {
+        try { galleryItems = JSON.parse(saved); } catch(e) {}
+    }
+    if (!galleryItems || galleryItems.length === 0) {
+        galleryItems = getDefaultImages();
+        localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
+    }
+}
+
+function loadVideos() {
+    var saved = localStorage.getItem('sophia_videos');
+    if (saved) {
+        try { videoItems = JSON.parse(saved); } catch(e) {}
+    }
+    if (!videoItems || videoItems.length === 0) {
+        videoItems = getDefaultVideos();
+        localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
+    }
+}
+
+function loadUnlocked() {
+    var saved = localStorage.getItem('sophia_unlocked');
+    if (saved) {
+        try { unlockCodes = JSON.parse(saved); } catch(e) {}
+    }
+}
+
+function loadServices() {
+    var saved = localStorage.getItem('sophia_services');
+    if (saved) {
+        try { services = JSON.parse(saved); } catch(e) {}
+    }
+    if (!services || services.length === 0) {
+        services = getDefaultServices();
+        localStorage.setItem('sophia_services', JSON.stringify(services));
+    }
 }
 
 // ====== RENDER SERVICES ======
-async function renderServices() {
+function renderServices() {
     var grid = document.getElementById('servicesGrid');
     if (!grid) return;
     
-    var services = await getServices();
-    
-    if (services.length === 0) {
-        grid.innerHTML = '<p style="color:#8a7b6b;text-align:center;padding:2rem;">No services available yet.</p>';
-        return;
-    }
+    loadServices();
     
     var html = '';
     for (var i = 0; i < services.length; i++) {
@@ -53,9 +131,9 @@ async function renderServices() {
             <div class="service-card">
                 <div class="service-icon"><i class="${icon}"></i></div>
                 <h3>${service.name}</h3>
-                <p>${service.description || 'Professional therapy service'}</p>
+                <p>${service.description}</p>
                 <div class="service-price">$${service.price}</div>
-                <div class="service-duration">${service.duration || '60 minutes'}</div>
+                <div class="service-duration">${service.duration}</div>
                 <button class="btn btn-small" onclick="showRegister()">Book Now</button>
             </div>
         `;
@@ -63,20 +141,16 @@ async function renderServices() {
     grid.innerHTML = html;
 }
 
-async function renderHomeServices() {
+function renderHomeServices() {
     var container = document.getElementById('homeServiceList');
     if (!container) return;
     
-    var services = await getServices();
+    loadServices();
     
     var html = '';
-    var maxItems = services.length > 5 ? 5 : services.length;
-    for (var i = 0; i < maxItems; i++) {
+    for (var i = 0; i < services.length; i++) {
         var icon = services[i].icon || 'fas fa-star';
         html += `<li><i class="${icon}"></i> ${services[i].name} – $${services[i].price}</li>`;
-    }
-    if (services.length > 5) {
-        html += '<li><i class="fas fa-ellipsis-h"></i> And more...</li>';
     }
     container.innerHTML = html;
     
@@ -92,17 +166,12 @@ async function renderHomeServices() {
 }
 
 // ====== RENDER GALLERY ======
-async function renderGallery() {
+function renderGallery() {
     var grid = document.getElementById('galleryGrid');
     if (!grid) return;
     grid.innerHTML = '';
     
-    var images = await getImages();
-    
-    if (images.length === 0) {
-        grid.innerHTML = '<p style="color:#8a7b6b;text-align:center;padding:2rem;">No images available yet.</p>';
-        return;
-    }
+    loadGallery();
     
     var currentUser = getCurrentUser();
     var hasSubscription = false;
@@ -111,15 +180,15 @@ async function renderGallery() {
         hasSubscription = status.active;
     }
     
-    for (var i = 0; i < images.length; i++) {
-        var item = images[i];
+    for (var i = 0; i < galleryItems.length; i++) {
+        var item = galleryItems[i];
         var div = document.createElement('div');
         div.className = 'gallery-item';
         div.dataset.id = item.id;
         
         var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
         
-        var html = `<img src="${item.url}" alt="${item.title}" loading="lazy">`;
+        var html = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
         if (!isUnlocked) {
             html += `
                 <div class="lock-overlay">
@@ -134,7 +203,7 @@ async function renderGallery() {
         grid.appendChild(div);
     }
     
-    document.querySelectorAll('.unlock-btn').forEach(btn => {
+    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
             var id = parseInt(this.dataset.id);
@@ -145,17 +214,12 @@ async function renderGallery() {
 }
 
 // ====== RENDER VIDEOS ======
-async function renderVideos() {
+function renderVideos() {
     var grid = document.getElementById('videoGrid');
     if (!grid) return;
     grid.innerHTML = '';
     
-    var videos = await getVideos();
-    
-    if (videos.length === 0) {
-        grid.innerHTML = '<p style="color:#8a7b6b;text-align:center;padding:2rem;">No videos available yet.</p>';
-        return;
-    }
+    loadVideos();
     
     var currentUser = getCurrentUser();
     var hasSubscription = false;
@@ -164,15 +228,15 @@ async function renderVideos() {
         hasSubscription = status.active;
     }
     
-    for (var i = 0; i < videos.length; i++) {
-        var item = videos[i];
+    for (var i = 0; i < videoItems.length; i++) {
+        var item = videoItems[i];
         var div = document.createElement('div');
         div.className = 'video-item';
         div.dataset.id = item.id;
         
         var isUnlocked = hasSubscription || unlockCodes[item.id] === true;
         
-        var html = `<video src="${item.url}" poster="${item.thumbnail || ''}" preload="metadata"></video><div class="play-icon"><i class="fas fa-play-circle"></i></div>`;
+        var html = `<video src="${item.src}" poster="${item.thumbnail || ''}" preload="metadata"></video><div class="play-icon"><i class="fas fa-play-circle"></i></div>`;
         if (!isUnlocked) {
             html += `
                 <div class="lock-overlay">
@@ -187,7 +251,7 @@ async function renderVideos() {
         grid.appendChild(div);
     }
     
-    document.querySelectorAll('.unlock-btn').forEach(btn => {
+    document.querySelectorAll('.unlock-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
             var id = parseInt(this.dataset.id);
@@ -214,19 +278,17 @@ function openUnlockModal(id, type) {
     
     var item = null;
     if (type === 'image') {
-        getImages().then(images => {
-            for (var i = 0; i < images.length; i++) {
-                if (images[i].id === id) { item = images[i]; break; }
-            }
-            if (item) modalPrice.textContent = '$' + item.price + '.00';
-        });
+        for (var i = 0; i < galleryItems.length; i++) {
+            if (galleryItems[i].id === id) { item = galleryItems[i]; break; }
+        }
     } else if (type === 'video') {
-        getVideos().then(videos => {
-            for (var j = 0; j < videos.length; j++) {
-                if (videos[j].id === id) { item = videos[j]; break; }
-            }
-            if (item) modalPrice.textContent = '$' + item.price + '.00';
-        });
+        for (var j = 0; j < videoItems.length; j++) {
+            if (videoItems[j].id === id) { item = videoItems[j]; break; }
+        }
+    }
+    
+    if (item) {
+        modalPrice.textContent = '$' + item.price + '.00';
     }
     
     var currentUser = getCurrentUser();
@@ -281,7 +343,6 @@ unlockCodeBtn.addEventListener('click', function() {
             closeModal();
             renderGallery();
             renderVideos();
-            hideAdsForPremium();
         }, 1200);
     } else {
         unlockMessage.textContent = 'Invalid PIN. Contact WhatsApp for your PIN.';
@@ -335,7 +396,6 @@ registerBtn.addEventListener('click', function() {
         setTimeout(function() {
             registerModal.classList.remove('active');
             loadAccountPage();
-            hideAdsForPremium();
         }, 2000);
     } else {
         registerMessage.textContent = result.message;
@@ -357,7 +417,6 @@ function loadAccountPage() {
                 <button class="btn" onclick="showRegister()" style="margin-top:0.5rem;">Create Account</button>
             </div>
         `;
-        hideAdsForPremium();
         return;
     }
     
@@ -418,14 +477,12 @@ function loadAccountPage() {
                 <a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20${currentUser.id}" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;">
                     <i class="fab fa-whatsapp"></i> Contact Admin
                 </a>
-                <button class="btn" onclick="logoutUser(); loadAccountPage(); hideAdsForPremium();" style="font-size:0.9rem;background:#8a7b6b;margin-left:0.5rem;">
+                <button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;margin-left:0.5rem;">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
         </div>
     `;
-    
-    hideAdsForPremium();
 }
 
 function copyText(text) {
@@ -450,6 +507,7 @@ function fallbackCopy(text) {
     alert('Copied: ' + text);
 }
 
+// ====== PREMIUM USER - NO ADS ======
 function isPremiumUser() {
     var currentUser = getCurrentUser();
     if (!currentUser) return false;
@@ -469,12 +527,75 @@ function hideAdsForPremium() {
     }
 }
 
+// ====== NAVIGATION ======
+var navLinks = document.querySelectorAll('.nav-links a');
+var pages = {
+    home: document.getElementById('page-home'),
+    services: document.getElementById('page-services'),
+    gallery: document.getElementById('page-gallery'),
+    videos: document.getElementById('page-videos'),
+    account: document.getElementById('page-account'),
+    book: document.getElementById('page-book')
+};
+
+for (var i = 0; i < navLinks.length; i++) {
+    navLinks[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        var page = this.dataset.page;
+        for (var j = 0; j < navLinks.length; j++) {
+            navLinks[j].classList.remove('active');
+        }
+        this.classList.add('active');
+        var keys = Object.keys(pages);
+        for (var k = 0; k < keys.length; k++) {
+            pages[keys[k]].classList.toggle('active', keys[k] === page);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        hideAdsForPremium();
+        if (page === 'account') loadAccountPage();
+        if (page === 'gallery') renderGallery();
+        if (page === 'videos') renderVideos();
+        if (page === 'services') renderServices();
+        if (page === 'home') renderHomeServices();
+    });
+}
+
+document.querySelectorAll('[data-page]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+        if (this.dataset.page) {
+            e.preventDefault();
+            var page = this.dataset.page;
+            for (var m = 0; m < navLinks.length; m++) {
+                navLinks[m].classList.toggle('active', navLinks[m].dataset.page === page);
+            }
+            var keys2 = Object.keys(pages);
+            for (var n = 0; n < keys2.length; n++) {
+                pages[keys2[n]].classList.toggle('active', keys2[n] === page);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            hideAdsForPremium();
+            if (page === 'account') loadAccountPage();
+            if (page === 'gallery') renderGallery();
+            if (page === 'videos') renderVideos();
+            if (page === 'services') renderServices();
+            if (page === 'home') renderHomeServices();
+        }
+    });
+});
+
 // ====== INIT ======
-renderServices();
+loadServices();
+loadGallery();
+loadVideos();
+loadUnlocked();
 renderHomeServices();
+renderServices();
 renderGallery();
 renderVideos();
 hideAdsForPremium();
 
-console.log('✅ Sophia Therapy connected to Supabase!');
-console.log('📱 All content from cloud database!');
+console.log('✅ Sophia Therapy Ready!');
+console.log('📸 10 Images Loaded');
+console.log('🎬 4 Videos Loaded');
+console.log('💼 4 Services Loaded');
+console.log('📱 Contact: +1 (404) 907-0581');
