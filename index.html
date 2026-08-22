@@ -15,7 +15,7 @@
 
     <script>
     (function () {
-        var APP_VERSION = '2026.08.23.5';
+        var APP_VERSION = '2026.08.23.6';
         var storedVersion = localStorage.getItem('sophia_app_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('sophia_app_version', APP_VERSION);
@@ -75,32 +75,37 @@
         .service-card p { color: #5d4d50; font-size: 0.95rem; margin-bottom: 0.5rem; }
         .service-price { font-size: 1.6rem; font-weight: 600; color: #d47a8a; margin: 0.5rem 0; }
         .service-duration { font-size: 0.85rem; color: #8a7b6b; margin-bottom: 0.8rem; }
+        .upfront-badge { display: inline-block; background: #2b6e4f; color: white; padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.75rem; margin-top: 0.3rem; }
         .btn-small { padding: 0.4rem 1.5rem; font-size: 0.9rem; }
         .gallery-grid, .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
         .gallery-item, .video-item { position: relative; border-radius: 16px; overflow: hidden; background: #f5ecee; aspect-ratio: 1; border: 3px solid transparent; transition: 0.3s; cursor: pointer; }
         .gallery-item:hover, .video-item:hover { transform: scale(1.02); border-color: #d47a8a; }
-        .gallery-item img, .video-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .gallery-item img, .video-item video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
         .video-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); pointer-events: none; }
+        .gallery-item .zoom-icon { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 0.3rem 0.6rem; border-radius: 30px; font-size: 0.8rem; pointer-events: none; }
         .account-card { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f0e0e4; max-width: 600px; margin: 0 auto; }
         .account-card .user-id { background: #f5ecee; padding: 0.8rem; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 500; color: #7a3a4a; margin: 1rem 0; }
         .account-card .status { padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; font-weight: 500; }
         .account-card .status.active { background: #2b6e4f; color: white; }
         .account-card .status.inactive { background: #c0392b; color: white; }
         .account-card .timer { font-size: 2rem; font-weight: 600; color: #d47a8a; text-align: center; padding: 1rem; background: #fff5f7; border-radius: 16px; margin: 1rem 0; }
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(122,58,74,0.6); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 30px; padding: 2.5rem; max-width: 450px; width: 90%; text-align: center; position: relative; animation: fadeIn 0.3s ease; border: 2px solid #f0e0e4; max-height: 90vh; overflow-y: auto; }
-        .modal-close { position: absolute; top: 12px; right: 18px; font-size: 1.8rem; cursor: pointer; color: #c07a8a; background: none; border: none; }
-        .modal-close:hover { color: #7a3a4a; }
-        .modal-content h2 { color: #7a3a4a; margin-bottom: 0.5rem; }
-        .modal-content .price-display { font-size: 2rem; font-weight: 500; color: #d47a8a; margin: 0.5rem 0; }
-        .modal-content .payment-methods { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 0.8rem 0; }
-        .modal-content .payment-methods span { background: #f5ecee; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.9rem; color: #7a3a4a; }
-        .modal-content .code-input { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
-        .modal-content .code-input input { padding: 0.6rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; width: 150px; text-align: center; letter-spacing: 4px; }
-        .modal-content .code-input input:focus { border-color: #d47a8a; outline: none; }
-        .modal-content .code-input button { background: #d47a8a; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 30px; cursor: pointer; font-weight: 500; }
-        .modal-content .code-input button:hover { background: #c06a7a; }
+        .modal-content { background: transparent; border-radius: 0; padding: 0; max-width: 95vw; max-height: 95vh; width: auto; text-align: center; position: relative; animation: fadeIn 0.3s ease; }
+        .modal-close { position: absolute; top: -40px; right: 0; font-size: 2.5rem; cursor: pointer; color: white; background: none; border: none; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .modal-close:hover { color: #ddd; }
+        .modal-content img { max-width: 95vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .modal-content video { max-width: 95vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); background: #000; }
+        .modal-content .modal-title { color: white; margin-top: 0.5rem; font-size: 1.2rem; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .pin-modal .modal-content { background: white; border-radius: 30px; padding: 2.5rem; max-width: 450px; width: 90%; border: 2px solid #f0e0e4; }
+        .pin-modal .modal-close { position: absolute; top: 12px; right: 18px; font-size: 1.8rem; cursor: pointer; color: #c07a8a; background: none; border: none; }
+        .pin-modal .modal-close:hover { color: #7a3a4a; }
+        .pin-modal .modal-content h2 { color: #7a3a4a; margin-bottom: 0.5rem; }
+        .code-input { display: flex; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
+        .code-input input { padding: 0.6rem 1rem; border: 2px solid #f0e0e4; border-radius: 30px; font-size: 1rem; width: 150px; text-align: center; letter-spacing: 4px; }
+        .code-input input:focus { border-color: #d47a8a; outline: none; }
+        .code-input button { background: #d47a8a; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 30px; cursor: pointer; font-weight: 500; }
+        .code-input button:hover { background: #c06a7a; }
         #unlockMessage { margin-top: 0.5rem; font-weight: 500; }
         .form-group { margin: 1rem 0; text-align: left; }
         .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; color: #7a3a4a; }
@@ -148,7 +153,8 @@
         .whatsapp-book-btn { background: #25D366; color: white; border: none; padding: 0.7rem 2rem; border-radius: 60px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; transition: 0.2s; font-weight: 500; margin-top: 0.5rem; }
         .whatsapp-book-btn:hover { background: #1da851; transform: scale(1.01); }
         .whatsapp-book-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
-        @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
+        .pin-modal .modal-content { background: white; border-radius: 30px; padding: 2.5rem; max-width: 450px; width: 90%; border: 2px solid #f0e0e4; }
+        @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } .modal-close { top: -30px; font-size: 2rem; } }
     </style>
 </head>
 <body>
@@ -231,13 +237,13 @@
 
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
-        <p class="gallery-desc">All images are free to view. Enjoy!</p>
+        <p class="gallery-desc">Click any image to view full size.</p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
-        <p class="gallery-desc">All videos are free to view. Enjoy!</p>
+        <p class="gallery-desc">Click any video to watch full screen.</p>
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
@@ -312,7 +318,6 @@
 
                 <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
 
-                <!-- WhatsApp Link - Shows ONLY after payment approved -->
                 <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#e8f5ee;border-radius:16px;text-align:center;">
                     <p style="color:#2b6e4f;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
                     <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
@@ -324,7 +329,17 @@
         </div>
     </div>
 
-    <div class="modal" id="unlockModal">
+    <!-- IMAGE/VIDEO VIEWER MODAL -->
+    <div class="modal" id="viewerModal">
+        <div class="modal-content">
+            <button class="modal-close" id="viewerClose">&times;</button>
+            <div id="viewerContent"></div>
+            <div class="modal-title" id="viewerTitle"></div>
+        </div>
+    </div>
+
+    <!-- PIN MODAL -->
+    <div class="modal pin-modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Enter PIN</h2>
@@ -337,7 +352,7 @@
         </div>
     </div>
 
-    <div class="modal" id="registerModal">
+    <div class="modal pin-modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
             <h2>Create Account</h2>
@@ -369,15 +384,15 @@
 
 <script>
 // ============================================================
-// ====== COMPLETE JAVASCRIPT VERSION 5 ======
+// ====== COMPLETE JAVASCRIPT VERSION 6 ======
 // ============================================================
 
-var APP_VERSION = '2026.08.23.5';
+var APP_VERSION = '2026.08.23.6';
 var storedVersion = localStorage.getItem('sophia_app_version');
 
 if (storedVersion !== APP_VERSION) {
     localStorage.setItem('sophia_app_version', APP_VERSION);
-    console.log('✅ Version 5 detected!');
+    console.log('✅ Version 6 detected!');
     
     if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery')).length === 0) {
         var defaultImages = getDefaultImages();
@@ -480,7 +495,7 @@ function renderServices() {
     for (var i = 0; i < services.length; i++) {
         var s = services[i];
         var upfrontMin = Math.ceil(s.price * 0.4);
-        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><button class="btn btn-small" onclick="bookService(' + s.id + ', ' + s.price + ')">Book Now</button></div>';
+        html += '<div class="service-card"><div class="service-icon"><i class="' + s.icon + '"></i></div><h3>' + s.name + '</h3><p>' + s.description + '</p><div class="service-price">$' + s.price + '</div><div class="service-duration">' + s.duration + '</div><span class="upfront-badge">40% Upfront: $' + upfrontMin + '</span><br><button class="btn btn-small" onclick="bookService(' + s.id + ', ' + s.price + ')" style="margin-top:0.5rem;">Book Now</button></div>';
     }
     grid.innerHTML = html;
 }
@@ -513,7 +528,7 @@ function renderGallery() {
         var item = galleryItems[i];
         var div = document.createElement('div');
         div.className = 'gallery-item';
-        div.innerHTML = '<img src="' + item.src + '" alt="' + item.title + '" loading="lazy">';
+        div.innerHTML = '<img src="' + item.src + '" alt="' + item.title + '" loading="lazy" onclick="openViewer(\'image\', \'' + item.src + '\', \'' + item.title + '\')"><div class="zoom-icon"><i class="fas fa-search-plus"></i></div>';
         grid.appendChild(div);
     }
 }
@@ -527,10 +542,44 @@ function renderVideos() {
         var item = videoItems[i];
         var div = document.createElement('div');
         div.className = 'video-item';
-        div.innerHTML = '<video src="' + item.src + '" preload="metadata"></video><div class="play-icon"><i class="fas fa-play-circle"></i></div>';
+        div.innerHTML = '<video src="' + item.src + '" preload="metadata" onclick="openViewer(\'video\', \'' + item.src + '\', \'' + item.title + '\')"></video><div class="play-icon"><i class="fas fa-play-circle" onclick="openViewer(\'video\', \'' + item.src + '\', \'' + item.title + '\')"></i></div>';
         grid.appendChild(div);
     }
 }
+
+// ====== VIEWER MODAL ======
+var viewerModal = document.getElementById('viewerModal');
+var viewerClose = document.getElementById('viewerClose');
+var viewerContent = document.getElementById('viewerContent');
+var viewerTitle = document.getElementById('viewerTitle');
+
+function openViewer(type, src, title) {
+    if (type === 'image') {
+        viewerContent.innerHTML = '<img src="' + src + '" alt="' + title + '">';
+    } else if (type === 'video') {
+        viewerContent.innerHTML = '<video src="' + src + '" controls autoplay></video>';
+    }
+    viewerTitle.textContent = title || '';
+    viewerModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeViewer() {
+    viewerModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    // Stop video
+    var video = viewerContent.querySelector('video');
+    if (video) { video.pause(); }
+    viewerContent.innerHTML = '';
+}
+
+viewerClose.addEventListener('click', closeViewer);
+viewerModal.addEventListener('click', function(e) {
+    if (e.target === this) closeViewer();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeViewer();
+});
 
 function loadAccountPage() {
     var container = document.getElementById('accountContent');
@@ -736,8 +785,6 @@ function submitPayment(method) {
     document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
     document.getElementById('paymentStatus').className = 'payment-status pending';
 
-    // Show WhatsApp link immediately for testing - in production admin approves first
-    // For now, let's check if auto-approve is enabled via admin
     checkPaymentApproval(paymentData.id);
 }
 
@@ -758,7 +805,6 @@ function checkPaymentApproval(paymentId) {
         document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
         document.getElementById('paymentStatus').className = 'payment-status declined';
     } else {
-        // Check again in 3 seconds
         setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
     }
 }
@@ -768,7 +814,6 @@ function checkAllPayments() {
     var pendingFound = false;
     for (var i = 0; i < payments.length; i++) {
         if (payments[i].status === 'approved' && !payments[i].notified) {
-            // Auto-show WhatsApp for approved payments
             payments[i].notified = true;
             savePayments();
             document.getElementById('paymentStatus').textContent = '✅ Payment Approved! Contact us on WhatsApp.';
@@ -778,7 +823,6 @@ function checkAllPayments() {
         }
     }
     if (!pendingFound) {
-        // Check again in 5 seconds
         setTimeout(checkAllPayments, 5000);
     }
 }
@@ -808,9 +852,7 @@ for (var i = 0; i < navLinks.length; i++) {
         if (page === 'services') renderServices();
         if (page === 'home') renderHomeServices();
         if (page === 'book') {
-            // Load payment data
             loadPayments();
-            // Check for approved payments
             checkAllPayments();
         }
     });
@@ -822,6 +864,7 @@ var modalClose = document.getElementById('modalClose');
 var unlockCodeInput = document.getElementById('unlockCodeInput');
 var unlockCodeBtn = document.getElementById('unlockCodeBtn');
 var unlockMessage = document.getElementById('unlockMessage');
+var currentUnlockId = null;
 
 unlockCodeBtn.addEventListener('click', function() {
     var code = unlockCodeInput.value.trim().toUpperCase();
@@ -857,7 +900,8 @@ renderServices();
 renderGallery();
 renderVideos();
 
-console.log('✅ Sophia Therapy Version 5 Ready!');
+console.log('✅ Sophia Therapy Version 6 Ready!');
+console.log('🖼️ Click images to zoom | 🎬 Click videos to watch full screen');
 console.log('💳 40% Upfront Payment Required');
 console.log('📱 Contact: +1 (404) 907-0581');
 </script>
