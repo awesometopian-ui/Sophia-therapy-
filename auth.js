@@ -1,20 +1,22 @@
 // ====== USER AUTHENTICATION ======
 
 function generateUserId() {
-    const prefix = 'ST';
-    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+    var prefix = 'ST';
+    var random = Math.random().toString(36).substring(2, 8).toUpperCase();
     return prefix + random;
 }
 
 function registerUser(name, email, phone) {
-    const users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+    var users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
     
-    if (users.find(u => u.email === email)) {
-        return { success: false, message: 'Email already registered' };
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email) {
+            return { success: false, message: 'Email already registered' };
+        }
     }
     
-    const userId = generateUserId();
-    const newUser = {
+    var userId = generateUserId();
+    var newUser = {
         id: userId,
         name: name,
         email: email,
@@ -40,7 +42,7 @@ function registerUser(name, email, phone) {
 }
 
 function getCurrentUser() {
-    const saved = localStorage.getItem('sophia_current_user');
+    var saved = localStorage.getItem('sophia_current_user');
     if (saved) {
         try { return JSON.parse(saved); } catch(e) { return null; }
     }
@@ -52,12 +54,18 @@ function logoutUser() {
 }
 
 function updateUserSubscription(userId, durationDays, type) {
-    const users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
-    const index = users.findIndex(u => u.id === userId);
+    var users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+    var index = -1;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) {
+            index = i;
+            break;
+        }
+    }
     if (index === -1) return { success: false, message: 'User not found' };
     
-    const startDate = new Date();
-    const endDate = new Date();
+    var startDate = new Date();
+    var endDate = new Date();
     endDate.setDate(endDate.getDate() + durationDays);
     
     users[index].subscription = {
@@ -69,7 +77,7 @@ function updateUserSubscription(userId, durationDays, type) {
     
     localStorage.setItem('sophia_users', JSON.stringify(users));
     
-    const current = getCurrentUser();
+    var current = getCurrentUser();
     if (current && current.id === userId) {
         localStorage.setItem('sophia_current_user', JSON.stringify(users[index]));
     }
@@ -78,16 +86,22 @@ function updateUserSubscription(userId, durationDays, type) {
 }
 
 function checkSubscriptionStatus(userId) {
-    const users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
-    const user = users.find(u => u.id === userId);
+    var users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+    var user = null;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) {
+            user = users[i];
+            break;
+        }
+    }
     if (!user) return { active: false };
     
     if (!user.subscription || !user.subscription.active) {
         return { active: false };
     }
     
-    const endDate = new Date(user.subscription.endDate);
-    const now = new Date();
+    var endDate = new Date(user.subscription.endDate);
+    var now = new Date();
     
     if (endDate < now) {
         user.subscription.active = false;
@@ -95,7 +109,7 @@ function checkSubscriptionStatus(userId) {
         return { active: false, expired: true };
     }
     
-    const remainingDays = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
+    var remainingDays = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
     return { 
         active: true, 
         remainingDays: remainingDays,
@@ -106,8 +120,14 @@ function checkSubscriptionStatus(userId) {
 }
 
 function unlockContent(userId, contentId, contentType) {
-    const users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
-    const index = users.findIndex(u => u.id === userId);
+    var users = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+    var index = -1;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) {
+            index = i;
+            break;
+        }
+    }
     if (index === -1) return { success: false, message: 'User not found' };
     
     if (!users[index].unlockedContent) {
@@ -115,18 +135,18 @@ function unlockContent(userId, contentId, contentType) {
     }
     
     if (contentType === 'image') {
-        if (!users[index].unlockedContent.images.includes(contentId)) {
+        if (users[index].unlockedContent.images.indexOf(contentId) === -1) {
             users[index].unlockedContent.images.push(contentId);
         }
     } else if (contentType === 'video') {
-        if (!users[index].unlockedContent.videos.includes(contentId)) {
+        if (users[index].unlockedContent.videos.indexOf(contentId) === -1) {
             users[index].unlockedContent.videos.push(contentId);
         }
     }
     
     localStorage.setItem('sophia_users', JSON.stringify(users));
     
-    const current = getCurrentUser();
+    var current = getCurrentUser();
     if (current && current.id === userId) {
         localStorage.setItem('sophia_current_user', JSON.stringify(users[index]));
     }
