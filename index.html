@@ -7,20 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- SERVICE WORKER -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function(reg) {
-                    console.log('Service Worker registered successfully');
-                })
-                .catch(function(err) {
-                    console.log('Service Worker registration failed:', err);
-                });
-        }
-    </script>
-<script src="supabase.js"></script>
-<script src="script.js"></script>
+    <!-- ADSTERRA POPUNDER -->
+    <script src="https://pl30955346.effectivecpmnetwork.com/20/df/e5/20dfe5163634eccc1f82d9fb632ccfa6.js"></script>
 </head>
 <body>
 
@@ -36,6 +24,12 @@
 </nav>
 
 <div class="container">
+
+    <!-- AD: TOP -->
+    <div class="ad-container" id="ad-top">
+        <span class="ad-label">Sponsored</span>
+        <div id="monetag-top"></div>
+    </div>
 
     <!-- HOME PAGE -->
     <div id="page-home" class="page active">
@@ -91,6 +85,12 @@
             </div>
         </div>
 
+        <!-- AD: IN-CONTENT -->
+        <div class="ad-container" id="ad-incontent">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-in-content"></div>
+        </div>
+
         <div class="grid-2">
             <div class="card">
                 <i class="fas fa-spa"></i>
@@ -115,6 +115,12 @@
                 </div>
                 <div class="home-delivery"><i class="fas fa-truck-fast"></i> Home Delivery · In-House</div>
             </div>
+        </div>
+
+        <!-- AD: MIDDLE -->
+        <div class="ad-container" id="ad-middle">
+            <span class="ad-label">Sponsored</span>
+            <div id="monetag-middle"></div>
         </div>
 
         <div class="booking-section">
@@ -235,6 +241,12 @@
         </div>
     </div>
 
+    <!-- AD: BOTTOM -->
+    <div class="ad-container" id="ad-bottom">
+        <span class="ad-label">Sponsored</span>
+        <div id="monetag-bottom"></div>
+    </div>
+
     <!-- FOOTER -->
     <div class="footer">
         <i class="fas fa-flag-usa"></i> US Residents Only · Sophia Message & Therapy
@@ -246,12 +258,7 @@
 <script src="auth.js"></script>
 <script src="script.js"></script>
 
-<!-- ====== SUPABASE CONNECTION ====== -->
-<script src="supabase.js"></script>
-<script src="auth.js"></script>
-<script src="script.js"></script>
-
-<!-- ====== ADSTERRA SOCIAL BAR ====== -->
+<!-- ADSTERRA SOCIAL BAR -->
 <script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
 
 </body>
