@@ -1,4 +1,4 @@
-// ====== COMPLETE SCRIPT.JS WITH ALL DATA ======
+// ====== COMPLETE SCRIPT.JS ======
 
 var galleryItems = [];
 var videoItems = [];
@@ -65,17 +65,7 @@ function getDefaultVideos() {
     ];
 }
 
-// ====== PIN GENERATION ======
-function generatePin() {
-    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    var pin = '';
-    for (var i = 0; i < 6; i++) {
-        pin += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return pin;
-}
-
-// ====== LOAD DATA FROM LOCALSTORAGE (or use defaults) ======
+// ====== LOAD FUNCTIONS ======
 function loadGallery() {
     var saved = localStorage.getItem('sophia_gallery');
     if (saved) {
@@ -116,7 +106,7 @@ function loadServices() {
     }
 }
 
-// ====== RENDER SERVICES ======
+// ====== RENDER FUNCTIONS ======
 function renderServices() {
     var grid = document.getElementById('servicesGrid');
     if (!grid) return;
@@ -165,7 +155,6 @@ function renderHomeServices() {
     }
 }
 
-// ====== RENDER GALLERY ======
 function renderGallery() {
     var grid = document.getElementById('galleryGrid');
     if (!grid) return;
@@ -213,7 +202,6 @@ function renderGallery() {
     });
 }
 
-// ====== RENDER VIDEOS ======
 function renderVideos() {
     var grid = document.getElementById('videoGrid');
     if (!grid) return;
@@ -507,7 +495,6 @@ function fallbackCopy(text) {
     alert('Copied: ' + text);
 }
 
-// ====== PREMIUM USER - NO ADS ======
 function isPremiumUser() {
     var currentUser = getCurrentUser();
     if (!currentUser) return false;
@@ -559,29 +546,6 @@ for (var i = 0; i < navLinks.length; i++) {
         if (page === 'home') renderHomeServices();
     });
 }
-
-document.querySelectorAll('[data-page]').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-        if (this.dataset.page) {
-            e.preventDefault();
-            var page = this.dataset.page;
-            for (var m = 0; m < navLinks.length; m++) {
-                navLinks[m].classList.toggle('active', navLinks[m].dataset.page === page);
-            }
-            var keys2 = Object.keys(pages);
-            for (var n = 0; n < keys2.length; n++) {
-                pages[keys2[n]].classList.toggle('active', keys2[n] === page);
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            hideAdsForPremium();
-            if (page === 'account') loadAccountPage();
-            if (page === 'gallery') renderGallery();
-            if (page === 'videos') renderVideos();
-            if (page === 'services') renderServices();
-            if (page === 'home') renderHomeServices();
-        }
-    });
-});
 
 // ====== INIT ======
 loadServices();
