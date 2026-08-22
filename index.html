@@ -10,10 +10,53 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
+    <!-- PRODUCTION CACHE CONTROL -->
+    <meta name="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta name="pragma" content="no-cache">
+    <meta name="expires" content="0">
+
+    <script>
+    (function () {
+        // Change this number whenever you publish a major new version.
+        var APP_VERSION = '2026.08.22.1';
+
+        var storedVersion = localStorage.getItem('sophia_app_version');
+
+        if (storedVersion !== APP_VERSION) {
+            console.log(
+                'New website version detected:',
+                storedVersion,
+                '→',
+                APP_VERSION
+            );
+
+            // IMPORTANT:
+            // Do NOT clear localStorage.
+            // User accounts, uploads, PINs and other data must remain safe.
+
+            localStorage.setItem('sophia_app_version', APP_VERSION);
+
+            // Force the browser to request the newest index.html.
+            if (!sessionStorage.getItem('sophia_cache_refresh')) {
+                sessionStorage.setItem('sophia_cache_refresh', '1');
+
+                var url = window.location.href.split('#')[0];
+
+                // Add a cache-busting query parameter.
+                url += (url.indexOf('?') === -1 ? '?' : '&');
+                url += '_v=' + encodeURIComponent(APP_VERSION);
+
+                window.location.replace(url);
+            } else {
+                sessionStorage.removeItem('sophia_cache_refresh');
+            }
+        }
+    })();
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ADSTERRA POPUNDER -->
-    <script src="https://pl30955346.effectivecpmnetwork.com/20/df/e5/20dfe5163634eccc1f82d9fb632ccfa6.js"></script>
+    <!-- POPUNDER REMOVED -->
     
     <style>
         /* ====== COMPLETE STYLES ====== */
@@ -132,78 +175,23 @@
         .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
         .copy-btn:hover { background: #f0b8c8; }
         @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; gap: 1.2rem; } .navbar { flex-direction: column; align-items: stretch; text-align: center; } .nav-links { justify-content: center; } .hero h1 { font-size: 2rem; } .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; } .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } .booking-box { flex-direction: column; text-align: center; gap: 1rem; } .plans-grid { grid-template-columns: 1fr; } .services-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
-        /* Admin Panel Styles */
-        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-        .admin-login { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
-        .login-box { background: white; border-radius: 30px; padding: 3rem 2.5rem; max-width: 400px; width: 100%; border: 2px solid #d47a8a; text-align: center; }
-        .login-box h2 { color: #8b3a4a; margin-bottom: 0.5rem; }
-        .login-box .sub { color: #a06a7a; margin-bottom: 1.5rem; }
-        .login-box .form-group { margin-bottom: 1rem; text-align: left; }
-        .login-box .form-group label { display: block; font-weight: 500; color: #8b3a4a; margin-bottom: 0.3rem; }
-        .login-box .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #f0b8c8; border-radius: 30px; font-size: 1rem; }
-        .login-box .form-group input:focus { border-color: #d47a8a; outline: none; }
-        .login-box .btn-login { width: 100%; background: #d47a8a; color: white; border: none; padding: 0.8rem; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
-        .login-box .btn-login:hover { background: #c06a7a; }
-        .login-error { color: #c0392b; margin-top: 0.5rem; font-weight: 500; }
-        .login-box .lock-icon { font-size: 3rem; color: #d47a8a; margin-bottom: 0.5rem; }
-        .secret-badge { background: #f0e8ea; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.75rem; color: #8b3a4a; display: inline-block; margin-bottom: 1rem; letter-spacing: 1px; }
-        .admin-panel { display: none; }
-        .admin-panel.active { display: block; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid #f8d0d8; padding-bottom: 1rem; }
-        .admin-header h1 { font-size: 2rem; font-weight: 300; color: #8b3a4a; }
-        .admin-header h1 span { color: #d47a8a; }
-        .admin-header .logout-btn { background: #8b3a4a; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; }
-        .admin-header .logout-btn:hover { background: #6a2a3a; }
-        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-        .stat-card { background: white; padding: 1rem; border-radius: 16px; text-align: center; border: 1px solid #f8d0d8; }
-        .stat-card .number { font-size: 2rem; font-weight: 600; color: #d47a8a; }
-        .stat-card .label { color: #6b5d4f; font-size: 0.85rem; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
-        .upload-section { background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f8d0d8; }
-        .upload-section h3 { margin-bottom: 1rem; color: #8b3a4a; }
-        .upload-area { border: 3px dashed #f0b8c8; border-radius: 16px; padding: 2rem; text-align: center; cursor: pointer; transition: 0.3s; }
-        .upload-area:hover { border-color: #d47a8a; background: #fff5f7; }
-        .upload-area i { font-size: 3rem; color: #d47a8a; }
-        .upload-area input { display: none; }
-        .image-list, .video-list, .service-list-admin { margin-top: 1rem; max-height: 500px; overflow-y: auto; }
-        .image-item, .video-item, .service-item { display: flex; align-items: center; gap: 1rem; background: #fff5f7; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.5rem; }
-        .image-item img, .video-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-        .service-item .service-icon { font-size: 1.8rem; color: #d47a8a; width: 40px; text-align: center; }
-        .image-item .info, .video-item .info, .service-item .info { flex: 1; }
-        .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #8b3a4a; }
-        .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #6b5d4f; }
-        .image-item .info .pin, .video-item .info .pin { background: #d47a8a; color: white; padding: 0.1rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.2rem; }
-        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .tab-btn { padding: 0.5rem 1.5rem; border-radius: 30px; border: 2px solid #f8d0d8; background: white; cursor: pointer; color: #8b3a4a; font-weight: 500; }
-        .tab-btn.active { background: #d47a8a; color: white; border-color: #d47a8a; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .users-list { margin-top: 1rem; max-height: 400px; overflow-y: auto; }
-        .user-item { display: flex; justify-content: space-between; align-items: center; background: #fff5f7; padding: 0.8rem 1rem; border-radius: 12px; margin-bottom: 0.5rem; }
-        .user-item .user-info { flex: 1; }
-        .user-item .user-info .name { font-weight: 500; color: #8b3a4a; }
-        .user-item .user-info .id { font-size: 0.85rem; color: #6b5d4f; }
-        .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; }
-        .user-item .user-status.active { background: #2b6e4f; color: white; }
-        .user-item .user-status.inactive { background: #c0392b; color: white; }
-        #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
     </style>
 </head>
 <body>
 
-<!-- ====== MAIN WEBSITE ====== -->
+<nav class="navbar">
+    <div class="nav-brand">Sophia <span>Therapy</span></div>
+    <div class="nav-links">
+        <a href="#" class="active" data-page="home">Home</a>
+        <a href="#" data-page="services">Services</a>
+        <a href="#" data-page="gallery">Gallery</a>
+        <a href="#" data-page="videos">Videos</a>
+        <a href="#" data-page="account">Account</a>
+        <!-- ADMIN BUTTON REMOVED -->
+    </div>
+</nav>
+
 <div class="container">
-    <nav class="navbar">
-        <div class="nav-brand">Sophia <span>Therapy</span></div>
-        <div class="nav-links">
-            <a href="index.html" class="active" data-page="home">Home</a>
-            <a href="index.html" data-page="services">Services</a>
-            <a href="index.html" data-page="gallery">Gallery</a>
-            <a href="index.html" data-page="videos">Videos</a>
-            <a href="index.html" data-page="account">Account</a>
-            <a href="admin.html" target="_blank"><i class="fas fa-user-cog"></i> Admin</a>
-        </div>
-    </nav>
 
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-top"></div></div>
 
@@ -375,13 +363,35 @@
     </div>
 </div>
 
-<!-- ====== ADSTERRA SOCIAL BAR ====== -->
+<!-- ADSTERRA SOCIAL BAR -->
 <script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
 
 <script>
 // ============================================================
-// ====== COMPLETE JAVASCRIPT FOR MAIN SITE ======
+// ====== COMPLETE JAVASCRIPT ======
 // ============================================================
+
+// ====== VERSION CHECK - SAFE (Does NOT delete user data) ======
+var APP_VERSION = '2026.08.22.1';
+var storedVersion = localStorage.getItem('sophia_app_version');
+
+if (storedVersion !== APP_VERSION) {
+    // Only update version marker - DO NOT delete any user data
+    localStorage.setItem('sophia_app_version', APP_VERSION);
+    console.log('✅ New version detected!');
+    
+    // Force refresh of images/videos from built-in data if they are empty
+    // This ensures new content shows without deleting old data
+    if (!localStorage.getItem('sophia_gallery') || JSON.parse(localStorage.getItem('sophia_gallery')).length === 0) {
+        // Only set defaults if user has no custom data
+        var defaultImages = getDefaultImages();
+        localStorage.setItem('sophia_gallery', JSON.stringify(defaultImages));
+    }
+    if (!localStorage.getItem('sophia_services') || JSON.parse(localStorage.getItem('sophia_services')).length === 0) {
+        var defaultServices = getDefaultServices();
+        localStorage.setItem('sophia_services', JSON.stringify(defaultServices));
+    }
+}
 
 var services = [];
 var galleryItems = [];
