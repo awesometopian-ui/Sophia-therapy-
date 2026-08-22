@@ -4,58 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin · Sophia Therapy</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- NO CACHE META TAGS -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
+    <!-- ADSTERRA POPUNDER -->
+    <script src="https://pl30955346.effectivecpmnetwork.com/20/df/e5/20dfe5163634eccc1f82d9fb632ccfa6.js"></script>
     
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: #faf5f6; color: #2d2a2c; }
         .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-        .login-screen { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
-        .login-box {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem 2.5rem;
-            max-width: 400px;
-            width: 100%;
-            border: 2px solid #d47a8a;
-            text-align: center;
-        }
+        
+        /* LOGIN */
+        .admin-login { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
+        .login-box { background: white; border-radius: 30px; padding: 3rem 2.5rem; max-width: 400px; width: 100%; border: 2px solid #d47a8a; text-align: center; }
         .login-box h2 { color: #8b3a4a; margin-bottom: 0.5rem; }
         .login-box .sub { color: #a06a7a; margin-bottom: 1.5rem; }
         .login-box .form-group { margin-bottom: 1rem; text-align: left; }
         .login-box .form-group label { display: block; font-weight: 500; color: #8b3a4a; margin-bottom: 0.3rem; }
-        .login-box .form-group input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 2px solid #f0b8c8;
-            border-radius: 30px;
-            font-size: 1rem;
-        }
+        .login-box .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #f0b8c8; border-radius: 30px; font-size: 1rem; }
         .login-box .form-group input:focus { border-color: #d47a8a; outline: none; }
-        .login-box .btn-login {
-            width: 100%;
-            background: #d47a8a;
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .login-box .btn-login { width: 100%; background: #d47a8a; color: white; border: none; padding: 0.8rem; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
         .login-box .btn-login:hover { background: #c06a7a; }
         .login-error { color: #c0392b; margin-top: 0.5rem; font-weight: 500; }
         .login-box .lock-icon { font-size: 3rem; color: #d47a8a; margin-bottom: 0.5rem; }
-        .secret-badge {
-            background: #f0e8ea;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            color: #8b3a4a;
-            display: inline-block;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
+        .secret-badge { background: #f0e8ea; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.75rem; color: #8b3a4a; display: inline-block; margin-bottom: 1rem; letter-spacing: 1px; }
+        
+        /* ADMIN PANEL */
         .admin-panel { display: none; }
         .admin-panel.active { display: block; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid #f8d0d8; padding-bottom: 1rem; }
@@ -91,8 +71,6 @@
         .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #8b3a4a; }
         .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #6b5d4f; }
         .image-item .info .pin, .video-item .info .pin { background: #d47a8a; color: white; padding: 0.1rem 0.8rem; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin-top: 0.2rem; }
-        .service-item .info .price { color: #d47a8a; font-weight: 600; }
-        .service-item .info .duration { font-size: 0.8rem; color: #8a7b6b; }
         .copy-btn { background: #f8d0d8; border: none; padding: 0.2rem 0.8rem; border-radius: 30px; cursor: pointer; color: #8b3a4a; }
         .copy-btn:hover { background: #f0b8c8; }
         .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
@@ -114,25 +92,17 @@
         #generateResult { background: #f5ecee; border-radius: 12px; padding: 1rem; margin-top: 1rem; }
         .ad-container { background: #f5ecee; border-radius: 16px; padding: 0.8rem; margin: 1rem 0; text-align: center; border: 1px dashed #e0c8ce; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .ad-label { font-size: 0.6rem; color: #c07a8a; text-transform: uppercase; letter-spacing: 1.5px; }
-        @media (max-width: 700px) { 
-            .admin-grid { grid-template-columns: 1fr; }
-            .login-box { padding: 2rem 1.5rem; }
-            .admin-stats { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 700px) { .admin-grid { grid-template-columns: 1fr; } .login-box { padding: 2rem 1.5rem; } .admin-stats { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 
 <div class="admin-container">
 
-    <!-- AD: ADMIN TOP -->
-    <div class="ad-container" id="ad-admin-top">
-        <span class="ad-label">Sponsored</span>
-        <div id="adsterra-admin-top"></div>
-    </div>
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-top"></div></div>
 
     <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="loginScreen">
+    <div class="admin-login" id="loginScreen">
         <div class="login-box">
             <div class="lock-icon"><i class="fas fa-lock"></i></div>
             <h2>Admin Login</h2>
@@ -148,7 +118,7 @@
             </div>
             <button class="btn-login" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
             <div class="login-error" id="loginError"></div>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: #8a7b6b;">Default: admin / admin123</p>
+            <p style="margin-top:1rem;font-size:0.8rem;color:#8a7b6b;">Default: admin / admin123</p>
         </div>
     </div>
 
@@ -157,12 +127,11 @@
         <div class="admin-header">
             <h1>Admin <span>·</span> Sophia Therapy</h1>
             <div>
-                <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 0.5rem 1.5rem; font-size: 0.9rem;"><i class="fas fa-eye"></i> View Site</a>
+                <a href="index.html" class="btn-primary" style="text-decoration:none;padding:0.5rem 1.5rem;font-size:0.9rem;"><i class="fas fa-eye"></i> View Site</a>
                 <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
 
-        <!-- STATS -->
         <div class="admin-stats" id="statsContainer">
             <div class="stat-card"><div class="number" id="totalUsers">0</div><div class="label">Users</div></div>
             <div class="stat-card"><div class="number" id="totalServices">0</div><div class="label">Services</div></div>
@@ -171,7 +140,6 @@
             <div class="stat-card"><div class="number" id="activeSubs">0</div><div class="label">Active Subs</div></div>
         </div>
 
-        <!-- TABS -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="images">Images</button>
             <button class="tab-btn" data-tab="videos">Videos</button>
@@ -188,7 +156,7 @@
                     <div class="upload-area" id="imageUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color: #8a7b6b; font-size: 0.9rem;">PNG, JPG, WebP up to 10MB</p>
+                        <p style="color:#8a7b6b;font-size:0.9rem;">PNG, JPG, WebP up to 10MB</p>
                         <input type="file" id="imageFileInput" accept="image/*" multiple>
                     </div>
                     <div class="form-group">
@@ -220,7 +188,7 @@
                     <div class="upload-area" id="videoUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color: #8a7b6b; font-size: 0.9rem;">MP4, WebM up to 50MB</p>
+                        <p style="color:#8a7b6b;font-size:0.9rem;">MP4, WebM up to 50MB</p>
                         <input type="file" id="videoFileInput" accept="video/*" multiple>
                     </div>
                     <div class="form-group">
@@ -331,7 +299,6 @@
             </div>
         </div>
 
-        <!-- INSTRUCTIONS -->
         <div class="instructions-box">
             <h4><i class="fas fa-info-circle"></i> How It Works</h4>
             <ol>
@@ -343,18 +310,456 @@
             </ol>
         </div>
 
-        <!-- AD: ADMIN BOTTOM -->
-        <div class="ad-container" id="ad-admin-bottom">
-            <span class="ad-label">Sponsored</span>
-            <div id="adsterra-admin-bottom"></div>
-        </div>
+        <div class="ad-container"><span class="ad-label">Sponsored</span><div id="adsterra-admin-bottom"></div></div>
     </div>
 </div>
 
-<script src="admin.js"></script>
-
 <!-- ADSTERRA SOCIAL BAR -->
 <script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
+<script>
+// ============================================================
+// ====== COMPLETE ADMIN JAVASCRIPT ======
+// ============================================================
+
+// ====== LOGIN ======
+var loginScreen = document.getElementById('loginScreen');
+var adminPanel = document.getElementById('adminPanel');
+var loginBtn = document.getElementById('loginBtn');
+var loginError = document.getElementById('loginError');
+var logoutBtn = document.getElementById('logoutBtn');
+
+var ADMIN_USERNAME = 'admin';
+var ADMIN_PASSWORD = 'admin123';
+
+function checkSession() {
+    var loggedIn = localStorage.getItem('sophia_admin_loggedin');
+    if (loggedIn === 'true') {
+        loginScreen.style.display = 'none';
+        adminPanel.classList.add('active');
+        loadAllData();
+    }
+}
+
+function showLoginScreen() {
+    loginScreen.style.display = 'flex';
+    adminPanel.classList.remove('active');
+}
+
+loginBtn.addEventListener('click', function() {
+    var username = document.getElementById('loginUsername').value.trim();
+    var password = document.getElementById('loginPassword').value.trim();
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        localStorage.setItem('sophia_admin_loggedin', 'true');
+        loginError.textContent = '';
+        loginScreen.style.display = 'none';
+        adminPanel.classList.add('active');
+        loadAllData();
+    } else {
+        loginError.textContent = 'Invalid username or password';
+    }
+});
+
+document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') loginBtn.click();
+});
+document.getElementById('loginUsername').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') loginBtn.click();
+});
+
+logoutBtn.addEventListener('click', function() {
+    localStorage.removeItem('sophia_admin_loggedin');
+    showLoginScreen();
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+    loginError.textContent = '';
+});
+
+// ====== TABS ======
+var tabBtns = document.querySelectorAll('.tab-btn');
+for (var i = 0; i < tabBtns.length; i++) {
+    tabBtns[i].addEventListener('click', function() {
+        var tabs = document.querySelectorAll('.tab-btn');
+        for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
+        this.classList.add('active');
+        var contents = document.querySelectorAll('.tab-content');
+        for (var k = 0; k < contents.length; k++) { contents[k].classList.remove('active'); }
+        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+    });
+}
+
+// ====== LOAD DATA ======
+var galleryItems = [];
+var videoItems = [];
+var users = [];
+var services = [];
+
+function loadAllData() {
+    loadGallery();
+    loadVideos();
+    loadUsers();
+    loadServices();
+    renderStats();
+}
+
+function loadGallery() {
+    var saved = localStorage.getItem('sophia_gallery');
+    if (saved) { try { galleryItems = JSON.parse(saved); } catch(e) {} }
+    renderImageList();
+}
+
+function loadVideos() {
+    var saved = localStorage.getItem('sophia_videos');
+    if (saved) { try { videoItems = JSON.parse(saved); } catch(e) {} }
+    renderVideoList();
+}
+
+function loadUsers() {
+    var saved = localStorage.getItem('sophia_users');
+    if (saved) { try { users = JSON.parse(saved); } catch(e) {} }
+    renderUsersList();
+}
+
+function loadServices() {
+    var saved = localStorage.getItem('sophia_services');
+    if (saved) { try { services = JSON.parse(saved); } catch(e) { services = []; } }
+    renderServiceList();
+}
+
+function saveGallery() {
+    localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
+    renderImageList();
+    renderStats();
+}
+
+function saveVideos() {
+    localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
+    renderVideoList();
+    renderStats();
+}
+
+function saveServices() {
+    localStorage.setItem('sophia_services', JSON.stringify(services));
+    renderServiceList();
+    renderStats();
+}
+
+function renderStats() {
+    document.getElementById('totalImages').textContent = galleryItems.length;
+    document.getElementById('totalVideos').textContent = videoItems.length;
+    document.getElementById('totalUsers').textContent = users.length;
+    document.getElementById('totalServices').textContent = services.length;
+    var active = 0;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].subscription && users[i].subscription.active) {
+            var endDate = new Date(users[i].subscription.endDate);
+            if (endDate > new Date()) active++;
+        }
+    }
+    document.getElementById('activeSubs').textContent = active;
+}
+
+// ====== RENDER IMAGE LIST ======
+function renderImageList() {
+    var container = document.getElementById('imageList');
+    if (!container) return;
+    if (galleryItems.length === 0) {
+        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No images uploaded yet.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < galleryItems.length; i++) {
+        var item = galleryItems[i];
+        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+        var num = i + 1;
+        html += '<div class="image-item"><img src="' + item.src + '" alt="' + item.title + '"><div class="info"><div class="title">#' + num + ' - ' + (item.title || 'Untitled') + '</div><div class="details">Price: $' + item.price + ' · ID: ' + item.id + '</div><div class="pin"><i class="fas fa-key"></i> PIN: <strong>' + pin + '</strong></div></div><div><button class="copy-btn" onclick="copyPin(\'' + pin + '\')"><i class="fas fa-copy"></i></button><button class="btn-danger" onclick="deleteImage(' + item.id + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ====== RENDER VIDEO LIST ======
+function renderVideoList() {
+    var container = document.getElementById('videoList');
+    if (!container) return;
+    if (videoItems.length === 0) {
+        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No videos uploaded yet.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < videoItems.length; i++) {
+        var item = videoItems[i];
+        var pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
+        var num = i + 1;
+        html += '<div class="video-item"><img src="' + (item.thumbnail || 'https://via.placeholder.com/60x60/8b3a4a/fff?text=Video') + '" alt="' + item.title + '"><div class="info"><div class="title">#' + num + ' - ' + (item.title || 'Untitled') + '</div><div class="details">Price: $' + item.price + ' · ID: ' + item.id + '</div><div class="pin"><i class="fas fa-key"></i> PIN: <strong>' + pin + '</strong></div></div><div><button class="copy-btn" onclick="copyPin(\'' + pin + '\')"><i class="fas fa-copy"></i></button><button class="btn-danger" onclick="deleteVideo(' + item.id + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ====== RENDER SERVICES LIST ======
+function renderServiceList() {
+    var container = document.getElementById('serviceListAdmin');
+    if (!container) return;
+    if (services.length === 0) {
+        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No services added yet.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < services.length; i++) {
+        var service = services[i];
+        var num = i + 1;
+        var icon = service.icon || 'fas fa-star';
+        html += '<div class="service-item"><div class="service-icon"><i class="' + icon + '"></i></div><div class="info"><div class="name">#' + num + ' - ' + service.name + '</div><div class="desc">' + (service.description || 'No description') + '</div><div><span class="price">$' + service.price + '</span> · <span class="duration">' + (service.duration || 'N/A') + '</span></div></div><div><button class="btn-danger" onclick="deleteService(' + i + ')" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ====== RENDER USERS LIST ======
+function renderUsersList() {
+    var container = document.getElementById('usersList');
+    if (!container) return;
+    if (users.length === 0) {
+        container.innerHTML = '<p style="color:#d47a8a;text-align:center;padding:1rem;">No users registered yet.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i];
+        var status = checkSubscriptionStatus(user.id);
+        var statusClass = status.active ? 'active' : 'inactive';
+        var statusText = status.active ? status.remainingDays + ' days left' : 'Inactive';
+        html += '<div class="user-item"><div class="user-info"><div class="name">' + user.name + '</div><div class="id">ID: ' + user.id + ' · ' + user.email + '</div><div style="font-size:0.8rem;color:#6b5d4f;">' + user.phone + '</div></div><div><span class="user-status ' + statusClass + '">' + statusText + '</span><button class="copy-btn" onclick="copyText(\'' + user.id + '\')" style="margin-left:0.3rem;"><i class="fas fa-copy"></i></button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ====== UPLOAD FUNCTIONS ======
+var imageUploadArea = document.getElementById('imageUploadArea');
+var imageFileInput = document.getElementById('imageFileInput');
+var imagePrice = document.getElementById('imagePrice');
+var imageTitle = document.getElementById('imageTitle');
+var imageUploadBtn = document.getElementById('imageUploadBtn');
+var imageUploadStatus = document.getElementById('imageUploadStatus');
+
+imageUploadArea.addEventListener('click', function() { imageFileInput.click(); });
+imageUploadArea.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor = '#d47a8a'; this.style.background = '#fff5f7'; });
+imageUploadArea.addEventListener('dragleave', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; });
+imageUploadArea.addEventListener('drop', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; handleImageFiles(e.dataTransfer.files); });
+imageFileInput.addEventListener('change', function(e) { handleImageFiles(this.files); });
+
+function handleImageFiles(files) {
+    if (files.length === 0) return;
+    var price = parseInt(imagePrice.value) || 5;
+    if (price < 1) { imageUploadStatus.textContent = 'Price must be at least $1'; imageUploadStatus.style.color = '#c0392b'; return; }
+    var uploaded = 0;
+    imageUploadStatus.textContent = 'Uploading...';
+    imageUploadStatus.style.color = '#d47a8a';
+    for (var i = 0; i < files.length; i++) {
+        if (!files[i].type.startsWith('image/')) continue;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var title = imageTitle.value.trim() || file.name.slice(0, 30);
+            var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, date: new Date().toISOString() };
+            galleryItems.push(newItem);
+            var pin = generatePin();
+            localStorage.setItem('sophia_pin_' + newItem.id, pin);
+            uploaded++;
+            if (uploaded === files.length) {
+                saveGallery();
+                imageUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
+                imageUploadStatus.style.color = '#2b6e4f';
+                imageTitle.value = '';
+                imageFileInput.value = '';
+                alert('Upload successful!\n\nPIN: ' + pin);
+            }
+        };
+        reader.readAsDataURL(files[i]);
+    }
+}
+
+imageUploadBtn.addEventListener('click', function() { imageUploadArea.click(); });
+
+// ====== VIDEO UPLOAD ======
+var videoUploadArea = document.getElementById('videoUploadArea');
+var videoFileInput = document.getElementById('videoFileInput');
+var videoPrice = document.getElementById('videoPrice');
+var videoTitle = document.getElementById('videoTitle');
+var videoUploadBtn = document.getElementById('videoUploadBtn');
+var videoUploadStatus = document.getElementById('videoUploadStatus');
+
+videoUploadArea.addEventListener('click', function() { videoFileInput.click(); });
+videoUploadArea.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor = '#d47a8a'; this.style.background = '#fff5f7'; });
+videoUploadArea.addEventListener('dragleave', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; });
+videoUploadArea.addEventListener('drop', function(e) { e.preventDefault(); this.style.borderColor = '#f0b8c8'; this.style.background = 'white'; handleVideoFiles(e.dataTransfer.files); });
+videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.files); });
+
+function handleVideoFiles(files) {
+    if (files.length === 0) return;
+    var price = parseInt(videoPrice.value) || 8;
+    if (price < 1) { videoUploadStatus.textContent = 'Price must be at least $1'; videoUploadStatus.style.color = '#c0392b'; return; }
+    var uploaded = 0;
+    videoUploadStatus.textContent = 'Uploading...';
+    videoUploadStatus.style.color = '#d47a8a';
+    for (var i = 0; i < files.length; i++) {
+        if (!files[i].type.startsWith('video/')) continue;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var title = videoTitle.value.trim() || file.name.slice(0, 30);
+            var newItem = { id: Date.now() + Math.floor(Math.random() * 10000), src: e.target.result, price: price, title: title, thumbnail: '', date: new Date().toISOString() };
+            videoItems.push(newItem);
+            var pin = generatePin();
+            localStorage.setItem('sophia_pin_' + newItem.id, pin);
+            uploaded++;
+            if (uploaded === files.length) {
+                saveVideos();
+                videoUploadStatus.innerHTML = 'Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
+                videoUploadStatus.style.color = '#2b6e4f';
+                videoTitle.value = '';
+                videoFileInput.value = '';
+                alert('Upload successful!\n\nPIN: ' + pin);
+            }
+        };
+        reader.readAsDataURL(files[i]);
+    }
+}
+
+videoUploadBtn.addEventListener('click', function() { videoUploadArea.click(); });
+
+// ====== ADD SERVICE ======
+document.getElementById('addServiceBtn').addEventListener('click', function() {
+    var name = document.getElementById('serviceName').value.trim();
+    var description = document.getElementById('serviceDescription').value.trim();
+    var price = parseInt(document.getElementById('servicePrice').value);
+    var duration = document.getElementById('serviceDuration').value.trim();
+    var icon = document.getElementById('serviceIcon').value;
+    if (!name || !price) {
+        document.getElementById('serviceStatus').textContent = 'Please fill in Name and Price';
+        document.getElementById('serviceStatus').style.color = '#c0392b';
+        return;
+    }
+    var newService = { name: name, description: description || 'Professional therapy service', price: price, duration: duration || '60 minutes', icon: icon || 'fas fa-star' };
+    services.push(newService);
+    saveServices();
+    document.getElementById('serviceStatus').textContent = '✅ Service added!';
+    document.getElementById('serviceStatus').style.color = '#2b6e4f';
+    document.getElementById('serviceName').value = '';
+    document.getElementById('serviceDescription').value = '';
+    document.getElementById('servicePrice').value = '';
+    document.getElementById('serviceDuration').value = '';
+    setTimeout(function() { document.getElementById('serviceStatus').textContent = ''; }, 3000);
+});
+
+// ====== DELETE FUNCTIONS ======
+window.deleteService = function(index) {
+    if (!confirm('Delete this service?')) return;
+    services.splice(index, 1);
+    saveServices();
+};
+
+window.deleteImage = function(id) {
+    if (!confirm('Delete this image?')) return;
+    galleryItems = galleryItems.filter(function(item) { return item.id !== id; });
+    localStorage.removeItem('sophia_pin_' + id);
+    saveGallery();
+    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
+    delete unlocked[id];
+    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
+};
+
+window.deleteVideo = function(id) {
+    if (!confirm('Delete this video?')) return;
+    videoItems = videoItems.filter(function(item) { return item.id !== id; });
+    localStorage.removeItem('sophia_pin_' + id);
+    saveVideos();
+    var unlocked = JSON.parse(localStorage.getItem('sophia_unlocked') || '{}');
+    delete unlocked[id];
+    localStorage.setItem('sophia_unlocked', JSON.stringify(unlocked));
+};
+
+// ====== GENERATE PIN ======
+function generatePin() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var pin = '';
+    for (var i = 0; i < 6; i++) { pin += chars.charAt(Math.floor(Math.random() * chars.length)); }
+    return pin;
+}
+
+function checkSubscriptionStatus(userId) {
+    var user = null;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) { user = users[i]; break; }
+    }
+    if (!user) return { active: false };
+    if (!user.subscription || !user.subscription.active) return { active: false };
+    var endDate = new Date(user.subscription.endDate);
+    if (endDate < new Date()) {
+        user.subscription.active = false;
+        localStorage.setItem('sophia_users', JSON.stringify(users));
+        return { active: false, expired: true };
+    }
+    var remainingDays = Math.ceil((endDate - new Date()) / (1000 * 60 * 60 * 24));
+    return { active: true, remainingDays: remainingDays };
+}
+
+document.getElementById('generatePinBtn').addEventListener('click', function() {
+    var userId = document.getElementById('pinUserId').value.trim();
+    var contentType = document.getElementById('pinContentType').value;
+    var duration = parseInt(document.getElementById('pinDuration').value) || 30;
+    if (!userId) { alert('Please enter a User ID'); return; }
+    var pin = generatePin();
+    var usersData = JSON.parse(localStorage.getItem('sophia_users') || '[]');
+    var userFound = false;
+    for (var i = 0; i < usersData.length; i++) {
+        if (usersData[i].id === userId) {
+            userFound = true;
+            var startDate = new Date();
+            var endDate = new Date();
+            endDate.setDate(endDate.getDate() + duration);
+            usersData[i].subscription = { active: true, startDate: startDate.toISOString(), endDate: endDate.toISOString(), type: 'monthly' };
+            break;
+        }
+    }
+    if (!userFound) { alert('User not found. Please check the ID.'); return; }
+    localStorage.setItem('sophia_users', JSON.stringify(usersData));
+    if (contentType === 'all' || contentType === 'image') {
+        for (var j = 0; j < galleryItems.length; j++) { localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin); }
+    }
+    if (contentType === 'all' || contentType === 'video') {
+        for (var k = 0; k < videoItems.length; k++) { localStorage.setItem('sophia_pin_' + videoItems[k].id, pin); }
+    }
+    var resultDiv = document.getElementById('generateResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<h4 style="color:#2b6e4f;">PIN Generated Successfully!</h4><p><strong>User:</strong> ' + userId + '</p><p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#d47a8a;">' + pin + '</span></p><p><strong>Duration:</strong> ' + duration + ' days</p><p><strong>Content:</strong> ' + contentType + '</p><button class="copy-btn" onclick="copyText(\'' + pin + '\')"><i class="fas fa-copy"></i> Copy PIN</button><br><a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20' + pin + '%20for%20User%20ID%3A%20' + userId + '" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;"><i class="fab fa-whatsapp"></i> Send PIN via WhatsApp</a>';
+});
+
+// ====== COPY FUNCTIONS ======
+window.copyPin = function(pin) { copyText(pin); };
+window.copyText = function(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() { alert('Copied: ' + text); }).catch(function() { fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+};
+function fallbackCopy(text) {
+    var textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('Copied: ' + text);
+}
+
+// ====== REFRESH ======
+document.getElementById('refreshImagesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+document.getElementById('refreshVideosBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+document.getElementById('refreshUsersBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+document.getElementById('refreshServicesBtn').addEventListener('click', function() { loadAllData(); this.innerHTML = '<i class="fas fa-check"></i> Refreshed'; setTimeout(function() { this.innerHTML = '<i class="fas fa-sync"></i> Refresh'; }.bind(this), 1500); });
+
+// ====== INIT ======
+checkSession();
+
+console.log('✅ Admin Panel Ready!');
+console.log('🔑 Default login: admin / admin123');
+</script>
 
 </body>
 </html>
