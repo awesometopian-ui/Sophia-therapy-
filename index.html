@@ -16,6 +16,9 @@
     <!-- ====== GOOGLE FONTS FOR LOGO ====== -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
+    <!-- ====== ADSTERRA ====== -->
+    <script src="https://pl30955345.profitableratecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+    
     <!-- ====== FAVICON ====== -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
     
@@ -47,7 +50,6 @@
             align-items: center;
             justify-content: center;
         }
-        /* Rotating ring */
         .loader-ring {
             position: absolute;
             top: 0;
@@ -86,7 +88,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        /* Logo inside loader */
         .loader-logo {
             position: relative;
             z-index: 10;
@@ -117,7 +118,6 @@
             text-transform: uppercase;
             margin-top: -2px;
         }
-        /* Pulsing dots */
         .loader-dots {
             display: flex;
             gap: 6px;
@@ -869,19 +869,10 @@
             .modal-content img, .modal-content video { max-width: 98vw; max-height: 75vh; }
             .card { padding: 1.2rem; }
             .service-card { padding: 1.2rem; }
-            .nav-brand {
-                flex-direction: row;
-            }
-            .logo-icon {
-                width: 40px;
-                height: 40px;
-            }
-            .logo-sophia {
-                font-size: 1.5rem;
-            }
-            .logo-sub {
-                font-size: 0.6rem;
-            }
+            .nav-brand { flex-direction: row; }
+            .logo-icon { width: 40px; height: 40px; }
+            .logo-sophia { font-size: 1.5rem; }
+            .logo-sub { font-size: 0.6rem; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.6rem; }
@@ -889,17 +880,9 @@
             .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
             .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; }
             .modal-close { top: -30px; font-size: 1.8rem; }
-            .logo-icon {
-                width: 32px;
-                height: 32px;
-            }
-            .logo-sophia {
-                font-size: 1.2rem;
-            }
-            .logo-sub {
-                font-size: 0.5rem;
-                letter-spacing: 1px;
-            }
+            .logo-icon { width: 32px; height: 32px; }
+            .logo-sophia { font-size: 1.2rem; }
+            .logo-sub { font-size: 0.5rem; letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -1057,79 +1040,8 @@
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
         <p style="color:#795F66;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
-        <div class="grid-2">
-            <div class="card">
-                <i class="fas fa-hand-sparkles"></i>
-                <h3>Choose Your Service</h3>
-                <ul class="service-list" id="bookServiceList"></ul>
-                <div style="margin-top:1rem;">
-                    <label style="font-weight:500;color:#7A3A4A;">Your Upfront Payment (40% min):</label>
-                    <input type="number" id="upfrontAmount" placeholder="Enter amount (40% min)" min="0" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #E8CDD3;margin-top:0.3rem;">
-                    <p style="font-size:0.8rem;color:#795F66;margin-top:0.3rem;">Minimum 40% of service price</p>
-                </div>
-            </div>
-            <div class="card">
-                <i class="fas fa-credit-card"></i>
-                <h3>Pay Upfront</h3>
-                <p>Choose payment method:</p>
-
-                <!-- APPLE PAY -->
-                <div class="payment-option" onclick="togglePayment('apple')">
-                    <i class="fab fa-apple-pay"></i>
-                    <span>Apple Pay</span>
-                    <div id="applePaySection" class="payment-section">
-                        <div class="form-group" style="margin:0.5rem 0;">
-                            <label>Apple Card PIN (16 digits)</label>
-                            <div class="pin-input-group">
-                                <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
-                                <button onclick="togglePin()"><i class="fas fa-eye" id="eyeIcon"></i></button>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;">Pay with Apple Pay</button>
-                    </div>
-                </div>
-
-                <!-- RAZER GOLD -->
-                <div class="payment-option" onclick="togglePayment('razer')">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Razer Gold</span>
-                    <div id="razerSection" class="payment-section">
-                        <div class="form-group" style="margin:0.5rem 0;">
-                            <label>Razer Gold PIN</label>
-                            <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
-                        </div>
-                        <button class="btn" onclick="submitPayment('razer')" style="width:100%;justify-content:center;">Pay with Razer Gold</button>
-                    </div>
-                </div>
-
-                <!-- CRYPTO -->
-                <div class="payment-option" onclick="togglePayment('crypto')">
-                    <i class="fab fa-bitcoin"></i>
-                    <span>Cryptocurrency (BTC)</span>
-                    <div id="cryptoSection" class="payment-section">
-                        <p style="font-size:0.85rem;color:#795F66;">Send BTC to:</p>
-                        <div class="address-box">
-                            <span id="btcAddress">bc1qkr339snz8l0kq0y6l9d0fht2amfk6t76x80cazzghsheltjjx39qg9fyhs</span>
-                            <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
-                        </div>
-                        <div class="form-group" style="margin:0.5rem 0;">
-                            <label>Transaction ID</label>
-                            <input type="text" id="cryptoConfirm" placeholder="Paste transaction ID">
-                        </div>
-                        <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;">Confirm Payment</button>
-                    </div>
-                </div>
-
-                <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
-
-                <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#d4edda;border-radius:16px;text-align:center;">
-                    <p style="color:#2B6E4F;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
-                    <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
-                    <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn">
-                        <i class="fab fa-whatsapp"></i> Book via WhatsApp
-                    </a>
-                </div>
-            </div>
+        <div id="bookContent">
+            <!-- Will be filled by JavaScript -->
         </div>
     </div>
 
@@ -1207,7 +1119,7 @@
     // ============================================================
     // ====== VERSION SYSTEM ======
     // ============================================================
-    const APP_VERSION = '2026.08.23.10';
+    const APP_VERSION = '2026.08.23.11';
     const APP_KEY = 'sophia_app_version';
     
     (function checkVersion() {
@@ -1407,15 +1319,6 @@
         }
         if (services.length > 5) html += `<li><i class="fas fa-ellipsis-h"></i> And more...</li>`;
         c.innerHTML = html;
-
-        const b = document.getElementById('bookServiceList');
-        if (b) {
-            let h = '';
-            for (let i = 0; i < services.length; i++) {
-                h += `<li><i class="${services[i].icon}"></i> ${services[i].name} – $${services[i].price}</li>`;
-            }
-            b.innerHTML = h;
-        }
     }
 
     // ============================================================
@@ -1583,22 +1486,200 @@
     });
 
     // ============================================================
-    // ====== BOOK SERVICE ======
+    // ====== BOOK SERVICE (FIXED) ======
     // ============================================================
     function bookService(id, price) {
-        currentBooking = { id: id, price: price };
-        const upfrontMin = Math.ceil(price * 0.4);
-        const upfrontInput = document.getElementById('upfrontAmount');
-        if (upfrontInput) {
-            upfrontInput.placeholder = 'Min $' + upfrontMin;
-            upfrontInput.min = upfrontMin;
-            upfrontInput.value = upfrontMin;
+        console.log('📚 Book Service called:', id, price);
+        
+        // Find the selected service
+        loadServices();
+        const selectedService = services.find(s => s.id === id);
+        if (!selectedService) {
+            console.error('❌ Service not found:', id);
+            return;
         }
-        const target = document.querySelector('[data-page="book"]');
-        if (target) target.click();
+        
+        // Save booking details
+        currentBooking = {
+            id: id,
+            price: price,
+            name: selectedService.name,
+            description: selectedService.description,
+            duration: selectedService.duration,
+            icon: selectedService.icon
+        };
+        console.log('✅ Service selected:', currentBooking);
+        
+        // Check if user is logged in
+        currentUser = getCurrentUser();
+        if (!currentUser) {
+            // Show register modal first, then proceed to book
+            showRegister();
+            // After registration, the flow continues via handlePageNavigation
+            return;
+        }
+        
+        // User is logged in, proceed to book page
+        navigateToBookPage();
+    }
+
+    function navigateToBookPage() {
+        console.log('📖 Navigating to book page');
+        
+        // Update navigation
+        const navLinks = document.querySelectorAll('.nav-links a');
+        for (let i = 0; i < navLinks.length; i++) {
+            navLinks[i].classList.toggle('active', navLinks[i].dataset.page === 'book');
+        }
+        
+        // Show book page
+        const pages = {
+            home: document.getElementById('page-home'),
+            services: document.getElementById('page-services'),
+            gallery: document.getElementById('page-gallery'),
+            videos: document.getElementById('page-videos'),
+            account: document.getElementById('page-account'),
+            book: document.getElementById('page-book')
+        };
+        
+        for (const key in pages) {
+            pages[key].classList.toggle('active', key === 'book');
+        }
+        
+        // Render book page content
+        renderBookPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderBookPage() {
+        const container = document.getElementById('bookContent');
+        if (!container) return;
+        
+        // Load services to get full details
+        loadServices();
+        
+        // If no booking selected, try to find the first service as default
+        if (!currentBooking && services.length > 0) {
+            const first = services[0];
+            currentBooking = {
+                id: first.id,
+                price: first.price,
+                name: first.name,
+                description: first.description,
+                duration: first.duration,
+                icon: first.icon
+            };
+        }
+        
+        // Calculate minimum upfront (40%)
+        const minUpfront = currentBooking ? Math.ceil(currentBooking.price * 0.4) : 0;
+        
+        let html = `
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-hand-sparkles"></i>
+                    <h3>Your Service</h3>
+                    ${currentBooking ? `
+                        <div style="padding:1rem;background:#F8E8EC;border-radius:16px;margin-bottom:1rem;">
+                            <h4 style="color:#7A3A4A;font-size:1.1rem;">${currentBooking.name}</h4>
+                            <p style="color:#795F66;font-size:0.9rem;">${currentBooking.description || 'Professional therapy service'}</p>
+                            <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem;">
+                                <span style="font-weight:600;color:#D47A8A;">Price: $${currentBooking.price}</span>
+                                <span style="color:#795F66;">Duration: ${currentBooking.duration || '60 minutes'}</span>
+                            </div>
+                            <div style="margin-top:0.5rem;background:#2B6E4F;color:white;padding:0.2rem 1rem;border-radius:30px;display:inline-block;font-size:0.8rem;">
+                                40% Upfront: $${minUpfront}
+                            </div>
+                        </div>
+                    ` : `
+                        <p style="color:#795F66;">Please select a service first.</p>
+                        <a href="#" class="btn btn-small" data-page="services">Browse Services</a>
+                    `}
+                    <div style="margin-top:1rem;">
+                        <label style="font-weight:500;color:#7A3A4A;">Your Upfront Payment (40% min):</label>
+                        <input type="number" id="upfrontAmount" placeholder="Min $${minUpfront}" min="${minUpfront}" value="${minUpfront}" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #E8CDD3;margin-top:0.3rem;">
+                        <p style="font-size:0.8rem;color:#795F66;margin-top:0.3rem;">Minimum 40% of service price</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Pay Upfront</h3>
+                    <p>Choose payment method:</p>
+
+                    <!-- APPLE PAY -->
+                    <div class="payment-option" onclick="togglePayment('apple')">
+                        <i class="fab fa-apple-pay"></i>
+                        <span>Apple Pay</span>
+                        <div id="applePaySection" class="payment-section">
+                            <div class="form-group" style="margin:0.5rem 0;">
+                                <label>Apple Card PIN (16 digits)</label>
+                                <div class="pin-input-group">
+                                    <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
+                                    <button onclick="togglePin()"><i class="fas fa-eye" id="eyeIcon"></i></button>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;">Pay with Apple Pay</button>
+                        </div>
+                    </div>
+
+                    <!-- RAZER GOLD -->
+                    <div class="payment-option" onclick="togglePayment('razer')">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Razer Gold</span>
+                        <div id="razerSection" class="payment-section">
+                            <div class="form-group" style="margin:0.5rem 0;">
+                                <label>Razer Gold PIN</label>
+                                <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
+                            </div>
+                            <button class="btn" onclick="submitPayment('razer')" style="width:100%;justify-content:center;">Pay with Razer Gold</button>
+                        </div>
+                    </div>
+
+                    <!-- CRYPTO -->
+                    <div class="payment-option" onclick="togglePayment('crypto')">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>Cryptocurrency (BTC)</span>
+                        <div id="cryptoSection" class="payment-section">
+                            <p style="font-size:0.85rem;color:#795F66;">Send BTC to:</p>
+                            <div class="address-box">
+                                <span id="btcAddress">bc1qkr339snz8l0kq0y6l9d0fht2amfk6t76x80cazzghsheltjjx39qg9fyhs</span>
+                                <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
+                            </div>
+                            <div class="form-group" style="margin:0.5rem 0;">
+                                <label>Transaction ID</label>
+                                <input type="text" id="cryptoConfirm" placeholder="Paste transaction ID">
+                            </div>
+                            <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;">Confirm Payment</button>
+                        </div>
+                    </div>
+
+                    <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
+
+                    <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#d4edda;border-radius:16px;text-align:center;">
+                        <p style="color:#2B6E4F;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
+                        <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
+                        <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn">
+                            <i class="fab fa-whatsapp"></i> Book via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        
+        // Reset payment status
         document.getElementById('paymentStatus').textContent = '';
         document.getElementById('paymentStatus').className = '';
         document.getElementById('whatsappSection').style.display = 'none';
+        
+        // Set upfront amount
+        const upfrontInput = document.getElementById('upfrontAmount');
+        if (upfrontInput && currentBooking) {
+            upfrontInput.placeholder = 'Min $' + minUpfront;
+            upfrontInput.min = minUpfront;
+            upfrontInput.value = minUpfront;
+        }
     }
 
     // ============================================================
@@ -1644,6 +1725,8 @@
     // ====== SUBMIT PAYMENT ======
     // ============================================================
     function submitPayment(method) {
+        console.log('💳 Submitting payment:', method);
+        
         currentUser = getCurrentUser();
         if (!currentUser) {
             document.getElementById('paymentStatus').textContent = 'Please create an account first!';
@@ -1676,6 +1759,7 @@
             userEmail: currentUser.email,
             userPhone: currentUser.phone,
             serviceId: currentBooking ? currentBooking.id : null,
+            serviceName: currentBooking ? currentBooking.name : null,
             servicePrice: currentBooking ? currentBooking.price : 0,
             amount: amount,
             method: method,
@@ -1716,11 +1800,15 @@
         loadPayments();
         payments.push(paymentData);
         savePayments();
+        console.log('✅ Payment saved:', paymentData);
 
         document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
         document.getElementById('paymentStatus').className = 'payment-status pending';
 
-        checkPaymentApproval(paymentData.id);
+        // Check for approval (simulated)
+        setTimeout(function() {
+            checkPaymentApproval(paymentData.id);
+        }, 1000);
     }
 
     function checkPaymentApproval(paymentId) {
@@ -1740,20 +1828,8 @@
             document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
             document.getElementById('paymentStatus').className = 'payment-status declined';
         } else {
+            // Check again in 3 seconds
             setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
-        }
-    }
-
-    function checkAllPayments() {
-        loadPayments();
-        for (let i = 0; i < payments.length; i++) {
-            if (payments[i].status === 'approved' && !payments[i].notified) {
-                payments[i].notified = true;
-                savePayments();
-                document.getElementById('paymentStatus').textContent = '✅ Payment Approved! Contact us on WhatsApp.';
-                document.getElementById('paymentStatus').className = 'payment-status approved';
-                document.getElementById('whatsappSection').style.display = 'block';
-            }
         }
     }
 
@@ -1770,30 +1846,67 @@
         book: document.getElementById('page-book')
     };
 
+    function handlePageNavigation(page) {
+        console.log('🔀 Navigating to:', page);
+        
+        // Update nav links
+        for (let i = 0; i < navLinks.length; i++) {
+            navLinks[i].classList.toggle('active', navLinks[i].dataset.page === page);
+        }
+        
+        // Show page
+        for (const key in pages) {
+            pages[key].classList.toggle('active', key === page);
+        }
+        
+        // Load page content
+        if (page === 'account') loadAccountPage();
+        if (page === 'gallery') renderGallery();
+        if (page === 'videos') renderVideos();
+        if (page === 'services') renderServices();
+        if (page === 'home') renderHomeServices();
+        if (page === 'book') {
+            renderBookPage();
+            loadPayments();
+            // Check for any approved payments
+            for (let i = 0; i < payments.length; i++) {
+                if (payments[i].status === 'approved' && !payments[i].notified) {
+                    payments[i].notified = true;
+                    savePayments();
+                    const statusEl = document.getElementById('paymentStatus');
+                    if (statusEl) {
+                        statusEl.textContent = '✅ Payment Approved! Contact us on WhatsApp.';
+                        statusEl.className = 'payment-status approved';
+                    }
+                    const wsEl = document.getElementById('whatsappSection');
+                    if (wsEl) wsEl.style.display = 'block';
+                }
+            }
+        }
+    }
+
     for (let i = 0; i < navLinks.length; i++) {
         navLinks[i].addEventListener('click', function(e) {
             e.preventDefault();
             const page = this.dataset.page;
-            for (let j = 0; j < navLinks.length; j++) {
-                navLinks[j].classList.toggle('active', navLinks[j].dataset.page === page);
-            }
-            const keys = Object.keys(pages);
-            for (let k = 0; k < keys.length; k++) {
-                pages[keys[k]].classList.toggle('active', keys[k] === page);
-            }
-            if (page === 'account') loadAccountPage();
-            if (page === 'gallery') renderGallery();
-            if (page === 'videos') renderVideos();
-            if (page === 'services') renderServices();
-            if (page === 'home') renderHomeServices();
-            if (page === 'book') {
-                loadPayments();
-                checkAllPayments();
-                document.getElementById('paymentStatus').textContent = '';
-                document.getElementById('paymentStatus').className = '';
-            }
+            handlePageNavigation(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // Also handle [data-page] links
+    document.querySelectorAll('[data-page]').forEach(function(el) {
+        if (el.tagName !== 'A') {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.dataset.page;
+                if (page) {
+                    handlePageNavigation(page);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+    });
 
     // ============================================================
     // ====== UNLOCK MODAL ======
@@ -1839,6 +1952,39 @@
     unlockModal.addEventListener('click', function(e) { if (e.target === this) unlockModal.classList.remove('active'); });
 
     // ============================================================
+    // ====== REGISTER COMPLETE HANDLER ======
+    // ============================================================
+    // After registration, if there was a pending booking, go to book page
+    const originalRegister = registerBtn.click;
+    registerBtn.addEventListener('click', function() {
+        const name = regName.value.trim();
+        const email = regEmail.value.trim();
+        const phone = regPhone.value.trim();
+        if (!name || !email || !phone) {
+            registerMessage.textContent = 'Please fill in all fields';
+            registerMessage.style.color = '#C0392B';
+            return;
+        }
+        const result = registerUser(name, email, phone);
+        if (result.success) {
+            registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
+            registerMessage.style.color = '#2B6E4F';
+            regName.value = ''; regEmail.value = ''; regPhone.value = '';
+            setTimeout(() => {
+                registerModal.classList.remove('active');
+                loadAccountPage();
+                // If there was a pending booking, go to book page
+                if (currentBooking) {
+                    handlePageNavigation('book');
+                }
+            }, 1500);
+        } else {
+            registerMessage.textContent = result.message;
+            registerMessage.style.color = '#C0392B';
+        }
+    });
+
+    // ============================================================
     // ====== INIT ======
     // ============================================================
     loadUsers();
@@ -1854,12 +2000,16 @@
     renderVideos();
     loadAccountPage();
 
+    // Check if book page should be pre-rendered
+    renderBookPage();
+
     console.log('🌸 Sophia Therapy v' + APP_VERSION + ' ready!');
     console.log('📸 Gallery: ' + galleryItems.length + ' images');
     console.log('🎬 Videos: ' + videoItems.length + ' videos');
     console.log('💼 Services: ' + services.length + ' services');
     console.log('👤 Users: ' + users.length + ' users');
     console.log('📱 Contact: +1 (404) 907-0581');
+    console.log('🔗 Adsterra: Loaded');
 </script>
 
 </body>
