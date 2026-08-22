@@ -1,4 +1,4 @@
-// ====== ADMIN.JS (COMPLETE) ======
+// ====== ADMIN.JS ======
 
 // ====== LOGIN ======
 var loginScreen = document.getElementById('loginScreen');
@@ -71,7 +71,7 @@ for (var i = 0; i < tabBtns.length; i++) {
     });
 }
 
-// ====== LOAD FUNCTIONS ======
+// ====== LOAD DATA ======
 var galleryItems = [];
 var videoItems = [];
 var users = [];
@@ -514,7 +514,6 @@ document.getElementById('generatePinBtn').addEventListener('click', function() {
     
     var pin = generatePin();
     
-    // Update user subscription
     var usersData = JSON.parse(localStorage.getItem('sophia_users') || '[]');
     var userFound = false;
     for (var i = 0; i < usersData.length; i++) {
@@ -540,7 +539,6 @@ document.getElementById('generatePinBtn').addEventListener('click', function() {
     
     localStorage.setItem('sophia_users', JSON.stringify(usersData));
     
-    // Unlock content
     if (contentType === 'all' || contentType === 'image') {
         for (var j = 0; j < galleryItems.length; j++) {
             localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin);
