@@ -1,14 +1,19 @@
-// ====== COMPLETE SCRIPT.JS ======
+// ====== SOPHIA THERAPY - COMPLETE SCRIPT ======
+
+// ====== ALL DATA IS BUILT-IN (No localStorage needed!) ======
 
 var galleryItems = [];
 var videoItems = [];
 var unlockCodes = {};
 var services = [];
+var users = [];
+var currentUser = null;
 
-// ====== DEFAULT SERVICES ======
+// ====== DEFAULT SERVICES (Built-in) ======
 function getDefaultServices() {
     return [
         {
+            id: 1,
             name: 'Elite Wellness Rituals',
             description: 'Premium 80-minute "Emba" Ayurvedic massage with hot stones. Includes organic essential oil wraps, full-body integration, and luxury amenities.',
             price: 800,
@@ -16,6 +21,7 @@ function getDefaultServices() {
             icon: 'fas fa-gem'
         },
         {
+            id: 2,
             name: 'Amangiri Spa Experience',
             description: 'Signature 80-minute Ayurvedic massage with hot stone therapy. Includes full-day access to whirlpools, mist rooms, and vanity amenities.',
             price: 800,
@@ -23,6 +29,7 @@ function getDefaultServices() {
             icon: 'fas fa-sun'
         },
         {
+            id: 3,
             name: 'Standard Therapeutic Studio',
             description: '60-90 minute targeted deep tissue or Swedish relaxation massage. Focuses on trigger-point therapy, stretching, and physical wellness.',
             price: 150,
@@ -30,6 +37,7 @@ function getDefaultServices() {
             icon: 'fas fa-hand-holding-heart'
         },
         {
+            id: 4,
             name: 'SoJo Spa Club Experience',
             description: '60-minute classic Swedish massage. Includes access to outdoor infinity pools, volcanic sand baths, rooftop saunas, and multi-story bathhouse.',
             price: 150,
@@ -39,7 +47,7 @@ function getDefaultServices() {
     ];
 }
 
-// ====== DEFAULT IMAGES (10 Images) ======
+// ====== DEFAULT IMAGES (10 Images - Built-in) ======
 function getDefaultImages() {
     return [
         { id: 1, src: 'https://picsum.photos/400/400?random=1', price: 5, title: 'Relaxation Session' },
@@ -55,7 +63,7 @@ function getDefaultImages() {
     ];
 }
 
-// ====== DEFAULT VIDEOS (4 Videos) ======
+// ====== DEFAULT VIDEOS (4 Videos - Built-in) ======
 function getDefaultVideos() {
     return [
         { id: 1, src: 'https://www.w3schools.com/html/mov_bbb.mp4', price: 8, title: 'Massage Tutorial', thumbnail: '' },
@@ -66,26 +74,16 @@ function getDefaultVideos() {
 }
 
 // ====== LOAD FUNCTIONS ======
+function loadServices() {
+    services = getDefaultServices();
+}
+
 function loadGallery() {
-    var saved = localStorage.getItem('sophia_gallery');
-    if (saved) {
-        try { galleryItems = JSON.parse(saved); } catch(e) {}
-    }
-    if (!galleryItems || galleryItems.length === 0) {
-        galleryItems = getDefaultImages();
-        localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
-    }
+    galleryItems = getDefaultImages();
 }
 
 function loadVideos() {
-    var saved = localStorage.getItem('sophia_videos');
-    if (saved) {
-        try { videoItems = JSON.parse(saved); } catch(e) {}
-    }
-    if (!videoItems || videoItems.length === 0) {
-        videoItems = getDefaultVideos();
-        localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
-    }
+    videoItems = getDefaultVideos();
 }
 
 function loadUnlocked() {
@@ -95,15 +93,125 @@ function loadUnlocked() {
     }
 }
 
-function loadServices() {
-    var saved = localStorage.getItem('sophia_services');
+function loadUsers() {
+    var saved = localStorage.getItem('sophia_users');
     if (saved) {
-        try { services = JSON.parse(saved); } catch(e) {}
+        try { users = JSON.parse(saved); } catch(e) {}
     }
-    if (!services || services.length === 0) {
-        services = getDefaultServices();
-        localStorage.setItem('sophia_services', JSON.stringify(services));
+}
+
+function getCurrentUser() {
+    var saved = localStorage.getItem('sophia_current_user');
+    if (saved) {
+        try { return JSON.parse(saved); } catch(e) { return null; }
     }
+    return null;
+}
+
+function saveUsers() {
+    localStorage.setItem('sophia_users', JSON.stringify(users));
+}
+
+// ====== REGISTER USER ======
+function registerUser(name, email, phone) {
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email) {
+            return { success: false, message: 'Email already registered' };
+        }
+    }
+    
+    var userId = 'ST' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    var newUser = {
+        id: userId,
+        name: name,
+        email: email,
+        phone: phone,
+        registered: new Date().toISOString(),
+        subscription: {
+            active: false,
+            startDate: null,
+            endDate: null,
+            type: null
+        },
+        unlockedContent: {
+            images: [],
+            videos: []
+        }
+    };
+    
+    users.push(newUser);
+    saveUsers();
+    localStorage.setItem('sophia_current_user', JSON.stringify(newUser));
+    currentUser = newUser;
+    
+    return { success: true, user: newUser };
+}
+
+function logoutUser() {
+    localStorage.removeItem('sophia_current_user');
+    currentUser = null;
+}
+
+function checkSubscriptionStatus(userId) {
+    var user = null;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) {
+            user = users[i];
+            break;
+        }
+    }
+    if (!user) return { active: false };
+    
+    if (!user.subscription || !user.subscription.active) {
+        return { active: false };
+    }
+    
+    var endDate = new Date(user.subscription.endDate);
+    var now = new Date();
+    
+    if (endDate < now) {
+        user.subscription.active = false;
+        saveUsers();
+        return { active: false, expired: true };
+    }
+    
+    var remainingDays = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
+    return { 
+        active: true, 
+        remainingDays: remainingDays,
+        endDate: endDate.toISOString()
+    };
+}
+
+function unlockContent(userId, contentId, contentType) {
+    var index = -1;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userId) {
+            index = i;
+            break;
+        }
+    }
+    if (index === -1) return { success: false, message: 'User not found' };
+    
+    if (!users[index].unlockedContent) {
+        users[index].unlockedContent = { images: [], videos: [] };
+    }
+    
+    if (contentType === 'image') {
+        if (users[index].unlockedContent.images.indexOf(contentId) === -1) {
+            users[index].unlockedContent.images.push(contentId);
+        }
+    } else if (contentType === 'video') {
+        if (users[index].unlockedContent.videos.indexOf(contentId) === -1) {
+            users[index].unlockedContent.videos.push(contentId);
+        }
+    }
+    
+    saveUsers();
+    localStorage.setItem('sophia_current_user', JSON.stringify(users[index]));
+    currentUser = users[index];
+    
+    return { success: true };
 }
 
 // ====== RENDER FUNCTIONS ======
@@ -161,6 +269,7 @@ function renderGallery() {
     grid.innerHTML = '';
     
     loadGallery();
+    loadUnlocked();
     
     var currentUser = getCurrentUser();
     var hasSubscription = false;
@@ -208,6 +317,7 @@ function renderVideos() {
     grid.innerHTML = '';
     
     loadVideos();
+    loadUnlocked();
     
     var currentUser = getCurrentUser();
     var hasSubscription = false;
@@ -547,6 +657,32 @@ for (var i = 0; i < navLinks.length; i++) {
     });
 }
 
+document.querySelectorAll('[data-page]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+        if (this.dataset.page) {
+            e.preventDefault();
+            var page = this.dataset.page;
+            for (var m = 0; m < navLinks.length; m++) {
+                navLinks[m].classList.toggle('active', navLinks[m].dataset.page === page);
+            }
+            var keys2 = Object.keys(pages);
+            for (var n = 0; n < keys2.length; n++) {
+                pages[keys2[n]].classList.toggle('active', keys2[n] === page);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            hideAdsForPremium();
+            if (page === 'account') loadAccountPage();
+            if (page === 'gallery') renderGallery();
+            if (page === 'videos') renderVideos();
+            if (page === 'services') renderServices();
+            if (page === 'home') renderHomeServices();
+        }
+    });
+});
+
+// ====== LOAD USERS ======
+loadUsers();
+
 // ====== INIT ======
 loadServices();
 loadGallery();
@@ -562,4 +698,5 @@ console.log('✅ Sophia Therapy Ready!');
 console.log('📸 10 Images Loaded');
 console.log('🎬 4 Videos Loaded');
 console.log('💼 4 Services Loaded');
+console.log('👤 User data saved in localStorage');
 console.log('📱 Contact: +1 (404) 907-0581');
