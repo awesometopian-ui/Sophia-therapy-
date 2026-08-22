@@ -35,7 +35,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
-        /* ALL YOUR CSS HERE - SAME AS BEFORE (I'M NOT REPEATING IT TO SAVE SPACE, BUT YOU CAN KEEP YOUR EXISTING STYLES) */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background: #faf5f6; color: #2d2a2c; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
@@ -159,7 +158,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-brand">Sophia <span>Therapy</span></div>
     <div class="nav-links">
@@ -175,7 +173,6 @@
 
     <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-top"></div></div>
 
-    <!-- HOME -->
     <div id="page-home" class="page active">
         <div class="hero">
             <h1>Sophia <span>Message & Therapy</span></h1>
@@ -231,34 +228,37 @@
         </div>
     </div>
 
-    <!-- SERVICES -->
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-incontent"></div></div>
+
     <div id="page-services" class="page">
         <h2 class="section-title">Our Services & Pricing</h2>
         <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 
-    <!-- GALLERY -->
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-middle"></div></div>
+
     <div id="page-gallery" class="page">
         <h2 class="section-title">Premium Gallery</h2>
         <p class="gallery-desc">Click any image to view full size.</p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
-    <!-- VIDEOS -->
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-gallery-top"></div></div>
+
     <div id="page-videos" class="page">
         <h2 class="section-title">Video Library</h2>
         <p class="gallery-desc">Click any video to watch full screen.</p>
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
-    <!-- ACCOUNT -->
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-videos-top"></div></div>
+
     <div id="page-account" class="page">
         <h2 class="section-title">My Account</h2>
         <div id="accountContent"></div>
     </div>
 
-    <!-- BOOK PAGE -->
     <div id="page-book" class="page">
         <h2 class="section-title">Book a Session</h2>
         <p style="color:#8a7b6b;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
@@ -328,7 +328,8 @@
         </div>
     </div>
 
-    <!-- VIEWER MODAL -->
+    <div class="ad-container"><span class="ad-label">Sponsored</span><div id="ad-book-top"></div></div>
+
     <div class="modal" id="viewerModal">
         <div class="modal-content">
             <button class="modal-close" id="viewerClose">&times;</button>
@@ -337,7 +338,6 @@
         </div>
     </div>
 
-    <!-- PIN MODAL -->
     <div class="modal pin-modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
@@ -351,7 +351,6 @@
         </div>
     </div>
 
-    <!-- REGISTER MODAL -->
     <div class="modal pin-modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
@@ -382,6 +381,8 @@
     </div>
 </div>
 
+<script src="https://pl30955345.effectivecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+
 <script>
 // ============================================================
 // ====== COMPLETE JAVASCRIPT VERSION 8 ======
@@ -402,7 +403,6 @@ var users = [];
 var payments = [];
 var currentBooking = null;
 
-// ====== DEFAULT SERVICES (KEPT) ======
 function getDefaultServices() {
     return [
         { id: 1, name: 'Elite Wellness Rituals', description: 'Premium 80-minute Ayurvedic massage with hot stones and organic essential oil wraps.', price: 800, duration: '80 minutes', icon: 'fas fa-gem' },
@@ -412,45 +412,25 @@ function getDefaultServices() {
     ];
 }
 
-// ====== DEFAULT IMAGES - EMPTY ======
-function getDefaultImages() {
-    return [];
-}
+function getDefaultImages() { return []; }
+function getDefaultVideos() { return []; }
 
-// ====== DEFAULT VIDEOS - EMPTY ======
-function getDefaultVideos() {
-    return [];
-}
-
-// ====== LOAD FUNCTIONS ======
 function loadServices() {
     var saved = localStorage.getItem('sophia_services');
-    if (saved) {
-        try { services = JSON.parse(saved); } catch(e) { services = getDefaultServices(); }
-    } else {
-        services = getDefaultServices();
-        localStorage.setItem('sophia_services', JSON.stringify(services));
-    }
+    if (saved) { try { services = JSON.parse(saved); } catch(e) { services = getDefaultServices(); } }
+    else { services = getDefaultServices(); localStorage.setItem('sophia_services', JSON.stringify(services)); }
 }
 
 function loadGallery() {
     var saved = localStorage.getItem('sophia_gallery');
-    if (saved) {
-        try { galleryItems = JSON.parse(saved); } catch(e) { galleryItems = []; }
-    } else {
-        galleryItems = [];
-        localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems));
-    }
+    if (saved) { try { galleryItems = JSON.parse(saved); } catch(e) { galleryItems = []; } }
+    else { galleryItems = []; localStorage.setItem('sophia_gallery', JSON.stringify(galleryItems)); }
 }
 
 function loadVideos() {
     var saved = localStorage.getItem('sophia_videos');
-    if (saved) {
-        try { videoItems = JSON.parse(saved); } catch(e) { videoItems = []; }
-    } else {
-        videoItems = [];
-        localStorage.setItem('sophia_videos', JSON.stringify(videoItems));
-    }
+    if (saved) { try { videoItems = JSON.parse(saved); } catch(e) { videoItems = []; } }
+    else { videoItems = []; localStorage.setItem('sophia_videos', JSON.stringify(videoItems)); }
 }
 
 function loadUsers() {
@@ -477,10 +457,7 @@ function registerUser(name, email, phone) {
         if (users[i].email === email) { return { success: false, message: 'Email already registered' }; }
     }
     var userId = 'ST' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    var newUser = {
-        id: userId, name: name, email: email, phone: phone,
-        registered: new Date().toISOString()
-    };
+    var newUser = { id: userId, name: name, email: email, phone: phone, registered: new Date().toISOString() };
     users.push(newUser);
     saveUsers();
     localStorage.setItem('sophia_current_user', JSON.stringify(newUser));
@@ -489,7 +466,6 @@ function registerUser(name, email, phone) {
 
 function logoutUser() { localStorage.removeItem('sophia_current_user'); }
 
-// ====== RENDER FUNCTIONS ======
 function renderServices() {
     var grid = document.getElementById('servicesGrid');
     if (!grid) return;
@@ -558,7 +534,6 @@ function renderVideos() {
     }
 }
 
-// ====== VIEWER ======
 var viewerModal = document.getElementById('viewerModal');
 var viewerClose = document.getElementById('viewerClose');
 var viewerContent = document.getElementById('viewerContent');
@@ -587,7 +562,6 @@ viewerClose.addEventListener('click', closeViewer);
 viewerModal.addEventListener('click', function(e) { if (e.target === this) closeViewer(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeViewer(); });
 
-// ====== ACCOUNT ======
 function loadAccountPage() {
     var container = document.getElementById('accountContent');
     var currentUser = getCurrentUser();
@@ -598,7 +572,6 @@ function loadAccountPage() {
     container.innerHTML = '<div class="account-card"><h3 style="text-align:center;">My Account</h3><div class="user-id"><i class="fas fa-id-card"></i> Your ID: ' + currentUser.id + '<button class="copy-btn" onclick="copyText(\'' + currentUser.id + '\')" style="margin-left:0.5rem;background:#f8d0d8;border:none;padding:0.2rem 0.8rem;border-radius:30px;cursor:pointer;"><i class="fas fa-copy"></i> Copy</button></div><p><strong>Name:</strong> ' + currentUser.name + '</p><p><strong>Email:</strong> ' + currentUser.email + '</p><p><strong>Phone:</strong> ' + currentUser.phone + '</p><hr style="margin:1rem 0;"><div style="text-align:center;margin-top:0.5rem;"><a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20' + currentUser.id + '" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;"><i class="fab fa-whatsapp"></i> Contact Admin</a><button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;margin-left:0.5rem;"><i class="fas fa-sign-out-alt"></i> Logout</button></div></div>';
 }
 
-// ====== REGISTER ======
 var registerModal = document.getElementById('registerModal');
 var registerClose = document.getElementById('registerClose');
 var registerBtn = document.getElementById('registerBtn');
@@ -693,7 +666,6 @@ function togglePayment(method) {
     }
 }
 
-// ====== BOOK SERVICE ======
 function bookService(id, price) {
     currentBooking = { id: id, price: price };
     var upfrontMin = Math.ceil(price * 0.4);
@@ -703,14 +675,11 @@ function bookService(id, price) {
         upfrontInput.min = upfrontMin;
         upfrontInput.value = upfrontMin;
     }
-    // Navigate to book page
     var page = 'book';
     var navLinks = document.querySelectorAll('.nav-links a');
     for (var j = 0; j < navLinks.length; j++) {
         navLinks[j].classList.remove('active');
-        if (navLinks[j].dataset.page === page) {
-            navLinks[j].classList.add('active');
-        }
+        if (navLinks[j].dataset.page === page) { navLinks[j].classList.add('active'); }
     }
     var pages = {
         home: document.getElementById('page-home'),
@@ -729,7 +698,6 @@ function bookService(id, price) {
     document.getElementById('whatsappSection').style.display = 'none';
 }
 
-// ====== PAYMENT SUBMISSION ======
 function submitPayment(method) {
     var currentUser = getCurrentUser();
     if (!currentUser) {
@@ -738,7 +706,6 @@ function submitPayment(method) {
         showRegister();
         return;
     }
-
     var upfrontInput = document.getElementById('upfrontAmount');
     var amount = parseFloat(upfrontInput.value);
     if (!amount || amount <= 0) {
@@ -746,7 +713,6 @@ function submitPayment(method) {
         document.getElementById('paymentStatus').className = 'payment-status declined';
         return;
     }
-
     if (currentBooking) {
         var minAmount = Math.ceil(currentBooking.price * 0.4);
         if (amount < minAmount) {
@@ -755,7 +721,6 @@ function submitPayment(method) {
             return;
         }
     }
-
     var paymentData = {
         id: Date.now(),
         userId: currentUser.id,
@@ -769,7 +734,6 @@ function submitPayment(method) {
         status: 'pending',
         date: new Date().toISOString()
     };
-
     if (method === 'apple') {
         var pin = document.getElementById('applePin').value.trim();
         if (!pin || pin.length < 16) {
@@ -779,7 +743,6 @@ function submitPayment(method) {
         }
         paymentData.pin = pin;
     }
-
     if (method === 'razer') {
         var rPin = document.getElementById('razerPin').value.trim();
         if (!rPin) {
@@ -789,7 +752,6 @@ function submitPayment(method) {
         }
         paymentData.razerPin = rPin;
     }
-
     if (method === 'crypto') {
         var txId = document.getElementById('cryptoConfirm').value.trim();
         if (!txId) {
@@ -799,14 +761,11 @@ function submitPayment(method) {
         }
         paymentData.transactionId = txId;
     }
-
     loadPayments();
     payments.push(paymentData);
     savePayments();
-
     document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
     document.getElementById('paymentStatus').className = 'payment-status pending';
-
     checkPaymentApproval(paymentData.id);
 }
 
@@ -849,7 +808,6 @@ function checkAllPayments() {
     }
 }
 
-// ====== NAVIGATION ======
 var navLinks = document.querySelectorAll('.nav-links a');
 var pages = {
     home: document.getElementById('page-home'),
@@ -882,7 +840,6 @@ for (var i = 0; i < navLinks.length; i++) {
     });
 }
 
-// ====== UNLOCK MODAL ======
 var modal = document.getElementById('unlockModal');
 var modalClose = document.getElementById('modalClose');
 var unlockCodeInput = document.getElementById('unlockCodeInput');
@@ -914,7 +871,6 @@ function closeModal() { modal.classList.remove('active'); }
 modalClose.addEventListener('click', closeModal);
 modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-// ====== INIT ======
 loadUsers();
 loadServices();
 loadGallery();
