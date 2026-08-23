@@ -12,14 +12,14 @@
     <!-- ====== FONT AWESOME ====== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ====== GOOGLE FONTS FOR LOGO ====== -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- ====== GOOGLE FONTS ====== -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- ====== FAVICON ====== -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
     
     <style>
-        /* ====== LOADER ANIMATION ====== */
+        /* ====== LOADER ====== */
         #loader-wrapper {
             position: fixed;
             top: 0;
@@ -136,8 +136,13 @@
         }
         
         /* ====== ADMIN STYLES ====== */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background: #FFF8FA; color: #2F2024; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #FFF8FA;
+            color: #2F2024;
+            -webkit-font-smoothing: antialiased;
+        }
         .admin-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
         
         /* ====== LOGO ====== */
@@ -205,17 +210,19 @@
             width: 100%;
             border: 2px solid #D47A8A;
             text-align: center;
+            box-shadow: 0 20px 60px rgba(212, 122, 138, 0.1);
         }
         .login-box h2 { color: #7A3A4A; margin-bottom: 0.5rem; }
         .login-box .sub { color: #795F66; margin-bottom: 1.5rem; }
         .login-box .form-group { margin-bottom: 1rem; text-align: left; }
-        .login-box .form-group label { display: block; font-weight: 500; color: #7A3A4A; margin-bottom: 0.3rem; }
+        .login-box .form-group label { display: block; font-weight: 600; color: #7A3A4A; margin-bottom: 0.3rem; font-size: 0.9rem; }
         .login-box .form-group input {
             width: 100%;
             padding: 0.8rem 1rem;
             border: 2px solid #E8CDD3;
             border-radius: 30px;
             font-size: 1rem;
+            transition: 0.2s;
         }
         .login-box .form-group input:focus { border-color: #D47A8A; outline: none; }
         .login-box .btn-login {
@@ -226,10 +233,11 @@
             padding: 0.8rem;
             border-radius: 30px;
             font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
         }
-        .login-box .btn-login:hover { background: #c06a7a; }
+        .login-box .btn-login:hover { background: #c06a7a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,122,138,0.3); }
         .login-error { color: #C0392B; margin-top: 0.5rem; font-weight: 500; }
         .login-box .lock-icon { font-size: 3rem; color: #D47A8A; margin-bottom: 0.5rem; }
         .secret-badge {
@@ -241,6 +249,7 @@
             display: inline-block;
             margin-bottom: 1rem;
             letter-spacing: 0.5px;
+            font-weight: 600;
         }
         
         /* ====== ADMIN PANEL ====== */
@@ -259,9 +268,11 @@
             background: #7A3A4A;
             color: white;
             border: none;
-            padding: 0.4rem 1.2rem;
+            padding: 0.4rem 1.5rem;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
         }
         .admin-header .logout-btn:hover { background: #542631; }
         
@@ -274,19 +285,25 @@
         }
         .stat-card {
             background: #FFFFFF;
-            padding: 1rem;
+            padding: 1.2rem;
             border-radius: 16px;
             text-align: center;
             border: 1px solid #E8CDD3;
+            transition: 0.3s ease;
         }
-        .stat-card .number { font-size: 2rem; font-weight: 600; color: #D47A8A; }
-        .stat-card .label { color: #795F66; font-size: 0.85rem; }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212,122,138,0.08);
+            border-color: #D47A8A;
+        }
+        .stat-card .number { font-size: 2rem; font-weight: 700; color: #D47A8A; }
+        .stat-card .label { color: #795F66; font-size: 0.85rem; font-weight: 500; }
         
         /* ====== TABS ====== */
         .tabs {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
         .tab-btn {
@@ -296,8 +313,9 @@
             background: white;
             cursor: pointer;
             color: #7A3A4A;
-            font-weight: 500;
+            font-weight: 600;
             transition: 0.2s;
+            font-size: 0.9rem;
         }
         .tab-btn.active {
             background: #D47A8A;
@@ -305,23 +323,33 @@
             border-color: #D47A8A;
         }
         .tab-btn:hover:not(.active) { background: #F8E8EC; }
-        .tab-content { display: none; }
+        .tab-content { display: none; animation: fadeUp 0.3s ease; }
         .tab-content.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         /* ====== ADMIN GRID ====== */
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
         }
         .upload-section {
             background: white;
             border-radius: 24px;
             padding: 2rem;
             border: 1px solid #E8CDD3;
+            transition: 0.3s ease;
         }
-        .upload-section h3 { margin-bottom: 1rem; color: #7A3A4A; }
+        .upload-section:hover {
+            border-color: #D47A8A;
+        }
+        .upload-section h3 { margin-bottom: 1rem; color: #7A3A4A; font-weight: 600; }
+        .upload-section h3 i { color: #D47A8A; margin-right: 0.5rem; }
+        
         .upload-area {
             border: 3px dashed #E8CDD3;
             border-radius: 16px;
@@ -335,21 +363,79 @@
             background: #FFF5F7;
         }
         .upload-area i { font-size: 3rem; color: #D47A8A; }
+        .upload-area p { color: #795F66; margin-top: 0.3rem; }
         .upload-area input { display: none; }
         
+        /* ====== PROGRESS BAR ====== */
+        .progress-wrapper {
+            margin: 1rem 0;
+            display: none;
+        }
+        .progress-wrapper.show {
+            display: block;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #E8CDD3;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D47A8A, #D99A2B);
+            border-radius: 30px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #7A3A4A;
+            margin-top: 0.3rem;
+        }
+        .progress-text .percent {
+            font-weight: 700;
+            color: #D47A8A;
+        }
+        .progress-status {
+            font-weight: 500;
+            margin-top: 0.3rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .progress-status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .progress-status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .progress-status.uploading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        /* ====== FORM ====== */
         .form-group { margin: 1rem 0; }
         .form-group label {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.3rem;
             color: #7A3A4A;
+            font-size: 0.9rem;
         }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 0.6rem 1rem;
+            padding: 0.7rem 1rem;
             border-radius: 30px;
             border: 2px solid #E8CDD3;
             font-size: 1rem;
+            transition: 0.2s;
+            font-family: inherit;
         }
         .form-group textarea { border-radius: 16px; min-height: 80px; resize: vertical; }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -366,9 +452,14 @@
             border-radius: 60px;
             cursor: pointer;
             font-size: 1rem;
+            font-weight: 600;
             transition: 0.2s;
         }
-        .btn-primary:hover { background: #c06a7a; }
+        .btn-primary:hover {
+            background: #c06a7a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212,122,138,0.3);
+        }
         .btn-success {
             background: #2B6E4F;
             color: white;
@@ -376,6 +467,8 @@
             padding: 0.3rem 1.2rem;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
         }
         .btn-success:hover { background: #1f573d; }
         .btn-danger {
@@ -385,6 +478,8 @@
             padding: 0.3rem 1.2rem;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
         }
         .btn-danger:hover { background: #a93226; }
         .btn-warning {
@@ -394,8 +489,11 @@
             padding: 0.3rem 1.2rem;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
         }
         .btn-warning:hover { background: #c6891e; }
+        .btn-sm { padding: 0.2rem 0.8rem; font-size: 0.8rem; }
         
         /* ====== LISTS ====== */
         .image-list, .video-list, .service-list-admin, .payment-list, .users-list {
@@ -412,17 +510,29 @@
             border-radius: 12px;
             margin-bottom: 0.5rem;
             flex-wrap: wrap;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .image-item:hover, .video-item:hover {
+            border-color: #D47A8A;
         }
         .image-item img, .video-item img {
             width: 60px;
             height: 60px;
             object-fit: cover;
             border-radius: 8px;
+            border: 2px solid #E8CDD3;
         }
         .service-item .service-icon { font-size: 1.8rem; color: #D47A8A; width: 40px; text-align: center; }
         .image-item .info, .video-item .info, .service-item .info, .payment-item .info, .user-item .info { flex: 1; }
-        .image-item .info .title, .video-item .info .title, .service-item .info .name { font-weight: 500; color: #7A3A4A; }
-        .image-item .info .details, .video-item .info .details, .service-item .info .desc { font-size: 0.85rem; color: #795F66; }
+        .image-item .info .title, .video-item .info .title, .service-item .info .name {
+            font-weight: 600;
+            color: #7A3A4A;
+        }
+        .image-item .info .details, .video-item .info .details, .service-item .info .desc {
+            font-size: 0.85rem;
+            color: #795F66;
+        }
         .image-item .info .pin, .video-item .info .pin {
             background: #D47A8A;
             color: white;
@@ -431,11 +541,12 @@
             font-size: 0.75rem;
             display: inline-block;
             margin-top: 0.2rem;
+            font-weight: 600;
         }
-        .payment-item .status-pending { background: #D99A2B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        .payment-item .status-approved { background: #2B6E4F; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        .payment-item .status-declined { background: #C0392B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; }
-        .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; }
+        .payment-item .status-pending { background: #D99A2B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
+        .payment-item .status-approved { background: #2B6E4F; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
+        .payment-item .status-declined { background: #C0392B; color: white; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
+        .user-item .user-status { font-size: 0.8rem; padding: 0.2rem 0.8rem; border-radius: 30px; font-weight: 600; }
         .user-item .user-status.active { background: #2B6E4F; color: white; }
         .user-item .user-status.inactive { background: #C0392B; color: white; }
         
@@ -446,6 +557,8 @@
             border-radius: 30px;
             cursor: pointer;
             color: #7A3A4A;
+            font-weight: 500;
+            transition: 0.2s;
         }
         .copy-btn:hover { background: #E8CDD3; }
         
@@ -453,10 +566,10 @@
             background: #F8E8EC;
             border-radius: 16px;
             padding: 1.5rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             border: 1px solid #E8CDD3;
         }
-        .instructions-box h4 { color: #7A3A4A; }
+        .instructions-box h4 { color: #7A3A4A; margin-bottom: 0.5rem; }
         .instructions-box ol { padding-left: 1.5rem; color: #3d352c; }
         #generateResult {
             background: #F8E8EC;
@@ -465,6 +578,7 @@
             margin-top: 1rem;
         }
         
+        /* ====== RESPONSIVE ====== */
         @media (max-width: 768px) {
             .admin-grid { grid-template-columns: 1fr; gap: 1rem; }
             .admin-stats { grid-template-columns: repeat(2, 1fr); }
@@ -472,12 +586,17 @@
             .tab-btn { font-size: 0.8rem; padding: 0.3rem 1rem; }
             .login-box { padding: 2rem 1.5rem; }
             .upload-section { padding: 1.2rem; }
+            .admin-header { flex-direction: column; text-align: center; }
         }
         @media (max-width: 480px) {
             .admin-stats { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
             .stat-card .number { font-size: 1.4rem; }
-            .image-item, .video-item, .service-item, .payment-item, .user-item { flex-direction: column; text-align: center; }
+            .image-item, .video-item, .service-item, .payment-item, .user-item {
+                flex-direction: column;
+                text-align: center;
+            }
             .image-item img, .video-item img { width: 80px; height: 80px; }
+            .tabs { justify-content: center; }
         }
     </style>
 </head>
@@ -520,7 +639,7 @@
             <div class="lock-icon"><i class="fas fa-lock"></i></div>
             <h2>Admin Login</h2>
             <p class="sub">Sophia Message & Therapy</p>
-            <div class="secret-badge">Administrator Access Only</div>
+            <div class="secret-badge"><i class="fas fa-shield-alt"></i> Administrator Access Only</div>
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Username</label>
                 <input type="text" id="loginUsername" placeholder="Enter username">
@@ -555,7 +674,7 @@
                     <span class="logo-sub">Admin Panel</span>
                 </div>
             </div>
-            <div>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
                 <a href="index.html" class="btn-primary" style="text-decoration:none;padding:0.4rem 1.5rem;font-size:0.85rem;"><i class="fas fa-eye"></i> View Site</a>
                 <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
@@ -573,12 +692,12 @@
 
         <!-- TABS -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="payments">Payments</button>
-            <button class="tab-btn" data-tab="images">Images</button>
-            <button class="tab-btn" data-tab="videos">Videos</button>
-            <button class="tab-btn" data-tab="services">Services</button>
-            <button class="tab-btn" data-tab="users">Users</button>
-            <button class="tab-btn" data-tab="generate">Generate PIN</button>
+            <button class="tab-btn active" data-tab="payments"><i class="fas fa-credit-card"></i> Payments</button>
+            <button class="tab-btn" data-tab="images"><i class="fas fa-images"></i> Images</button>
+            <button class="tab-btn" data-tab="videos"><i class="fas fa-video"></i> Videos</button>
+            <button class="tab-btn" data-tab="services"><i class="fas fa-spa"></i> Services</button>
+            <button class="tab-btn" data-tab="users"><i class="fas fa-users"></i> Users</button>
+            <button class="tab-btn" data-tab="generate"><i class="fas fa-key"></i> Generate PIN</button>
         </div>
 
         <!-- ====== PAYMENTS TAB ====== -->
@@ -595,12 +714,23 @@
         <div class="tab-content" id="tab-images">
             <div class="admin-grid">
                 <div class="upload-section">
-                    <h3><i class="fas fa-upload"></i> Upload Image</h3>
+                    <h3><i class="fas fa-cloud-upload-alt"></i> Upload Image</h3>
                     <div class="upload-area" id="imageUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color:#795F66;font-size:0.9rem;">PNG, JPG, WebP up to 10MB</p>
+                        <p style="color:#795F66;font-size:0.9rem;">PNG, JPG, WebP · Uploads to Cloudinary</p>
                         <input type="file" id="imageFileInput" accept="image/*" multiple>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="progress-wrapper" id="imageProgressWrapper">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="imageProgressFill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="imageProgressLabel">Uploading...</span>
+                            <span class="percent" id="imageProgressPercent">0%</span>
+                        </div>
+                        <div id="imageProgressStatus" class="progress-status uploading">⏳ Uploading...</div>
                     </div>
                     <div class="form-group">
                         <label>Price ($)</label>
@@ -615,6 +745,7 @@
                 </div>
                 <div class="upload-section">
                     <h3><i class="fas fa-images"></i> Manage Images</h3>
+                    <p style="color:#795F66;font-size:0.85rem;margin-bottom:0.5rem;">Images stored on Cloudinary · All users see them</p>
                     <button class="btn-primary" id="refreshImagesBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                     <div class="image-list" id="imageList"></div>
                 </div>
@@ -625,12 +756,23 @@
         <div class="tab-content" id="tab-videos">
             <div class="admin-grid">
                 <div class="upload-section">
-                    <h3><i class="fas fa-video"></i> Upload Video</h3>
+                    <h3><i class="fas fa-cloud-upload-alt"></i> Upload Video</h3>
                     <div class="upload-area" id="videoUploadArea">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <p><strong>Click to upload</strong> or drag & drop</p>
-                        <p style="color:#795F66;font-size:0.9rem;">MP4, WebM up to 150MB</p>
+                        <p style="color:#795F66;font-size:0.9rem;">MP4, WebM · Uploads to Cloudinary</p>
                         <input type="file" id="videoFileInput" accept="video/*" multiple>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="progress-wrapper" id="videoProgressWrapper">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="videoProgressFill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="videoProgressLabel">Uploading...</span>
+                            <span class="percent" id="videoProgressPercent">0%</span>
+                        </div>
+                        <div id="videoProgressStatus" class="progress-status uploading">⏳ Uploading...</div>
                     </div>
                     <div class="form-group">
                         <label>Price ($)</label>
@@ -645,6 +787,7 @@
                 </div>
                 <div class="upload-section">
                     <h3><i class="fas fa-video"></i> Manage Videos</h3>
+                    <p style="color:#795F66;font-size:0.85rem;margin-bottom:0.5rem;">Videos stored on Cloudinary · All users see them</p>
                     <button class="btn-primary" id="refreshVideosBtn" style="padding:0.3rem 1.2rem;font-size:0.85rem;"><i class="fas fa-sync"></i> Refresh</button>
                     <div class="video-list" id="videoList"></div>
                 </div>
@@ -687,6 +830,7 @@
                             <option value="fas fa-gem">Gem</option>
                             <option value="fas fa-dove">Dove</option>
                             <option value="fas fa-sun">Sun</option>
+                            <option value="fas fa-water">Water</option>
                         </select>
                     </div>
                     <button class="btn-primary" id="addServiceBtn" style="width:100%;"><i class="fas fa-plus"></i> Add Service</button>
@@ -742,6 +886,7 @@
                 <li>Check Payments tab to approve/decline</li>
                 <li>Approved users get WhatsApp booking link</li>
                 <li>Generate PIN for content access after service</li>
+                <li><strong>All content stored on Cloudinary</strong> — all users see it!</li>
             </ol>
         </div>
     </div>
@@ -760,9 +905,9 @@
     });
 
     // ============================================================
-    // ====== ADMIN VERSION ======
+    // ====== VERSION ======
     // ============================================================
-    const ADMIN_VERSION = '2026.08.23.10';
+    const ADMIN_VERSION = '2026.08.23.13';
     const ADMIN_VERSION_KEY = 'sophia_admin_version';
     
     (function checkAdminVersion() {
@@ -778,6 +923,13 @@
             }
         }
     })();
+
+    // ============================================================
+    // ====== CLOUDINARY CONFIG ======
+    // ============================================================
+    const CLOUDINARY_CLOUD_NAME = 'bpupxsnv';
+    const CLOUDINARY_UPLOAD_PRESET = 'sophia_uploads';
+    const CLOUDINARY_BASE_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}`;
 
     // ============================================================
     // ====== LOGIN ======
@@ -850,7 +1002,7 @@
     }
 
     // ============================================================
-    // ====== LOAD DATA ======
+    // ====== DATA ======
     // ============================================================
     let galleryItems = [];
     let videoItems = [];
@@ -954,7 +1106,7 @@
         const container = document.getElementById('paymentList');
         if (!container) return;
         if (paymentData.length === 0) {
-            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No payments yet.</p>';
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;"><i class="fas fa-info-circle"></i> No payments yet.</p>';
             return;
         }
         let html = '';
@@ -966,7 +1118,7 @@
                 <div class="info">
                     <div class="title">${p.userName} (${p.userId})</div>
                     <div class="details">Email: ${p.userEmail} · Phone: ${p.userPhone}</div>
-                    <div class="details">Amount: $${p.amount} · Method: ${p.method}</div>`;
+                    <div class="details">Service: ${p.serviceName || 'N/A'} · Amount: $${p.amount} · Method: ${p.method}</div>`;
             if (p.method === 'apple') {
                 html += `<div class="details" style="color:#D47A8A;">Apple PIN: <strong>${p.pin}</strong></div>`;
             }
@@ -981,15 +1133,15 @@
                 <div><span class="${statusClass}">${statusText}</span></div>
                 <div>`;
             if (p.status === 'pending') {
-                html += `<button class="btn-success" onclick="approvePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;margin-right:0.3rem;">Approve</button>`;
-                html += `<button class="btn-danger" onclick="declinePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;">Decline</button>`;
+                html += `<button class="btn-success" onclick="approvePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;margin-right:0.3rem;"><i class="fas fa-check"></i> Approve</button>`;
+                html += `<button class="btn-danger" onclick="declinePayment(${p.id})" style="padding:0.2rem 0.8rem;font-size:0.7rem;"><i class="fas fa-times"></i> Decline</button>`;
             }
             html += `</div></div>`;
         }
         container.innerHTML = html;
     }
 
-    function approvePayment(id) {
+    window.approvePayment = function(id) {
         if (!confirm('Approve this payment?')) return;
         for (let i = 0; i < paymentData.length; i++) {
             if (paymentData[i].id === id) {
@@ -1000,9 +1152,9 @@
         savePayments();
         loadAllData();
         alert('✅ Payment approved! User can now book via WhatsApp.');
-    }
+    };
 
-    function declinePayment(id) {
+    window.declinePayment = function(id) {
         if (!confirm('Decline this payment?')) return;
         for (let i = 0; i < paymentData.length; i++) {
             if (paymentData[i].id === id) {
@@ -1013,7 +1165,7 @@
         savePayments();
         loadAllData();
         alert('❌ Payment declined.');
-    }
+    };
 
     // ============================================================
     // ====== RENDER IMAGE LIST ======
@@ -1022,7 +1174,7 @@
         const container = document.getElementById('imageList');
         if (!container) return;
         if (galleryItems.length === 0) {
-            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No images uploaded yet.</p>';
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;"><i class="fas fa-info-circle"></i> No images uploaded yet.</p>';
             return;
         }
         let html = '';
@@ -1030,11 +1182,13 @@
             const item = galleryItems[i];
             const pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
             const num = i + 1;
+            const imgSrc = item.cloudinaryUrl || item.src || 'https://via.placeholder.com/60x60/D47A8A/fff?text=Image';
             html += `<div class="image-item">
-                <img src="${item.src}" alt="${item.title}">
+                <img src="${imgSrc}" alt="${item.title}">
                 <div class="info">
                     <div class="title">#${num} - ${item.title || 'Untitled'}</div>
                     <div class="details">Price: $${item.price} · ID: ${item.id}</div>
+                    ${item.cloudinaryUrl ? `<div class="details" style="color:#2B6E4F;"><i class="fas fa-cloud"></i> Cloudinary</div>` : ''}
                     <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
                 </div>
                 <div>
@@ -1053,7 +1207,7 @@
         const container = document.getElementById('videoList');
         if (!container) return;
         if (videoItems.length === 0) {
-            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No videos uploaded yet.</p>';
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;"><i class="fas fa-info-circle"></i> No videos uploaded yet.</p>';
             return;
         }
         let html = '';
@@ -1061,11 +1215,13 @@
             const item = videoItems[i];
             const pin = localStorage.getItem('sophia_pin_' + item.id) || 'N/A';
             const num = i + 1;
+            const thumb = item.thumbnail || 'https://via.placeholder.com/60x60/D47A8A/fff?text=Video';
             html += `<div class="video-item">
-                <img src="${item.thumbnail || 'https://via.placeholder.com/60x60/D47A8A/fff?text=Video'}" alt="${item.title}">
+                <img src="${thumb}" alt="${item.title}">
                 <div class="info">
                     <div class="title">#${num} - ${item.title || 'Untitled'}</div>
                     <div class="details">Price: $${item.price} · ID: ${item.id}</div>
+                    ${item.cloudinaryUrl ? `<div class="details" style="color:#2B6E4F;"><i class="fas fa-cloud"></i> Cloudinary</div>` : ''}
                     <div class="pin"><i class="fas fa-key"></i> PIN: <strong>${pin}</strong></div>
                 </div>
                 <div>
@@ -1084,7 +1240,7 @@
         const container = document.getElementById('serviceListAdmin');
         if (!container) return;
         if (services.length === 0) {
-            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No services added yet.</p>';
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;"><i class="fas fa-info-circle"></i> No services added yet.</p>';
             return;
         }
         let html = '';
@@ -1097,7 +1253,7 @@
                 <div class="info">
                     <div class="name">#${num} - ${service.name}</div>
                     <div class="desc">${service.description || 'No description'}</div>
-                    <div><span style="color:#D47A8A;font-weight:600;">$${service.price}</span> · <span style="color:#795F66;">${service.duration || 'N/A'}</span></div>
+                    <div><span style="color:#D47A8A;font-weight:700;">$${service.price}</span> · <span style="color:#795F66;">${service.duration || 'N/A'}</span></div>
                 </div>
                 <div>
                     <button class="btn-danger" onclick="deleteService(${i})" style="padding:0.2rem 0.6rem;font-size:0.8rem;"><i class="fas fa-trash"></i></button>
@@ -1114,7 +1270,7 @@
         const container = document.getElementById('usersList');
         if (!container) return;
         if (users.length === 0) {
-            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;">No users registered yet.</p>';
+            container.innerHTML = '<p style="color:#795F66;text-align:center;padding:1rem;"><i class="fas fa-info-circle"></i> No users registered yet.</p>';
             return;
         }
         let html = '';
@@ -1156,7 +1312,7 @@
     }
 
     // ============================================================
-    // ====== UPLOAD IMAGE ======
+    // ====== UPLOAD IMAGE TO CLOUDINARY ======
     // ============================================================
     const imageUploadArea = document.getElementById('imageUploadArea');
     const imageFileInput = document.getElementById('imageFileInput');
@@ -1164,6 +1320,13 @@
     const imageTitle = document.getElementById('imageTitle');
     const imageUploadBtn = document.getElementById('imageUploadBtn');
     const imageUploadStatus = document.getElementById('imageUploadStatus');
+
+    // Progress elements
+    const imageProgressWrapper = document.getElementById('imageProgressWrapper');
+    const imageProgressFill = document.getElementById('imageProgressFill');
+    const imageProgressPercent = document.getElementById('imageProgressPercent');
+    const imageProgressLabel = document.getElementById('imageProgressLabel');
+    const imageProgressStatus = document.getElementById('imageProgressStatus');
 
     imageUploadArea.addEventListener('click', () => imageFileInput.click());
     imageUploadArea.addEventListener('dragover', function(e) {
@@ -1180,11 +1343,30 @@
         e.preventDefault();
         this.style.borderColor = '#E8CDD3';
         this.style.background = 'white';
-        handleImageFiles(e.dataTransfer.files);
+        handleImageUpload(e.dataTransfer.files);
     });
-    imageFileInput.addEventListener('change', function(e) { handleImageFiles(this.files); });
+    imageFileInput.addEventListener('change', function(e) { handleImageUpload(this.files); });
+    imageUploadBtn.addEventListener('click', () => imageUploadArea.click());
 
-    function handleImageFiles(files) {
+    function showImageProgress(show) {
+        imageProgressWrapper.classList.toggle('show', show);
+        if (!show) {
+            imageProgressFill.style.width = '0%';
+            imageProgressPercent.textContent = '0%';
+        }
+    }
+
+    function updateImageProgress(percent, label, status, statusClass) {
+        imageProgressFill.style.width = percent + '%';
+        imageProgressPercent.textContent = percent + '%';
+        if (label) imageProgressLabel.textContent = label;
+        if (status) {
+            imageProgressStatus.textContent = status;
+            imageProgressStatus.className = 'progress-status ' + statusClass;
+        }
+    }
+
+    async function handleImageUpload(files) {
         if (files.length === 0) return;
         const price = parseInt(imagePrice.value) || 5;
         if (price < 1) {
@@ -1192,57 +1374,85 @@
             imageUploadStatus.style.color = '#C0392B';
             return;
         }
+
+        showImageProgress(true);
+        updateImageProgress(0, 'Preparing upload...', '⏳ Preparing...', 'uploading');
+
         let uploaded = 0;
         const total = files.length;
-        imageUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
-        imageUploadStatus.style.color = '#D47A8A';
+        const titleBase = imageTitle.value.trim() || 'Upload';
+
         for (let i = 0; i < files.length; i++) {
-            if (!files[i].type.startsWith('image/')) { uploaded++; continue; }
-            const reader = new FileReader();
             const file = files[i];
-            reader.onload = function(e) {
-                try {
-                    const title = imageTitle.value.trim() || file.name.slice(0, 30);
-                    const newItem = {
-                        id: Date.now() + Math.floor(Math.random() * 10000),
-                        src: e.target.result,
-                        price: price,
-                        title: title,
-                        date: new Date().toISOString()
-                    };
-                    galleryItems.push(newItem);
-                    const pin = generatePin();
-                    localStorage.setItem('sophia_pin_' + newItem.id, pin);
-                    uploaded++;
-                    const percent = Math.round((uploaded / total) * 100);
-                    imageUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
-                    imageUploadStatus.style.color = '#D47A8A';
-                    if (uploaded === total) {
-                        saveGallery();
-                        imageUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' image(s)! PIN: <strong>' + pin + '</strong>';
-                        imageUploadStatus.style.color = '#2B6E4F';
-                        imageTitle.value = '';
-                        imageFileInput.value = '';
-                        alert('✅ Upload successful!\n\n' + uploaded + ' image(s) uploaded.\n\nPIN: ' + pin);
-                    }
-                } catch (err) {
-                    imageUploadStatus.textContent = '❌ Upload failed: ' + err.message;
-                    imageUploadStatus.style.color = '#C0392B';
-                    console.error(err);
+            if (!file.type.startsWith('image/')) {
+                uploaded++;
+                continue;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+            try {
+                const percent = Math.round((uploaded / total) * 100);
+                updateImageProgress(percent, `Uploading ${file.name}... (${uploaded+1}/${total})`, `⏳ Uploading ${Math.round(percent)}%...`, 'uploading');
+
+                const response = await fetch(`${CLOUDINARY_BASE_URL}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed: ' + response.status);
                 }
-            };
-            reader.onerror = function() {
-                imageUploadStatus.textContent = '❌ Failed to read image file. Please try again.';
+
+                const data = await response.json();
+                const cloudinaryUrl = data.secure_url;
+
+                const title = titleBase + (total > 1 ? ` ${i+1}` : '');
+                const newItem = {
+                    id: Date.now() + i + Math.floor(Math.random() * 10000),
+                    src: cloudinaryUrl,
+                    cloudinaryUrl: cloudinaryUrl,
+                    price: price,
+                    title: title,
+                    date: new Date().toISOString(),
+                    publicId: data.public_id
+                };
+
+                galleryItems.push(newItem);
+                const pin = generatePin();
+                localStorage.setItem('sophia_pin_' + newItem.id, pin);
+
+                uploaded++;
+                const newPercent = Math.round((uploaded / total) * 100);
+                updateImageProgress(newPercent, `Uploaded ${uploaded}/${total}`, `✅ ${uploaded}/${total} uploaded`, 'uploading');
+
+            } catch (err) {
+                console.error('Upload error:', err);
+                updateImageProgress(0, 'Upload failed', '❌ Failed: ' + err.message, 'error');
+                imageUploadStatus.textContent = '❌ Upload failed: ' + err.message;
                 imageUploadStatus.style.color = '#C0392B';
-            };
-            reader.readAsDataURL(files[i]);
+                showImageProgress(false);
+                return;
+            }
+        }
+
+        if (uploaded === total) {
+            saveGallery();
+            const pin = localStorage.getItem('sophia_pin_' + galleryItems[galleryItems.length - 1].id) || 'N/A';
+            updateImageProgress(100, 'Upload complete!', '✅ Upload complete!', 'success');
+            imageUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' image(s) to Cloudinary! PIN: <strong>' + pin + '</strong>';
+            imageUploadStatus.style.color = '#2B6E4F';
+            imageTitle.value = '';
+            imageFileInput.value = '';
+            setTimeout(() => showImageProgress(false), 3000);
+            alert('✅ Upload successful!\n\n' + uploaded + ' image(s) uploaded to Cloudinary.\n\nPIN: ' + pin);
         }
     }
 
-    imageUploadBtn.addEventListener('click', () => imageUploadArea.click());
-
     // ============================================================
-    // ====== UPLOAD VIDEO (150MB MAX) ======
+    // ====== UPLOAD VIDEO TO CLOUDINARY ======
     // ============================================================
     const videoUploadArea = document.getElementById('videoUploadArea');
     const videoFileInput = document.getElementById('videoFileInput');
@@ -1250,6 +1460,12 @@
     const videoTitle = document.getElementById('videoTitle');
     const videoUploadBtn = document.getElementById('videoUploadBtn');
     const videoUploadStatus = document.getElementById('videoUploadStatus');
+
+    const videoProgressWrapper = document.getElementById('videoProgressWrapper');
+    const videoProgressFill = document.getElementById('videoProgressFill');
+    const videoProgressPercent = document.getElementById('videoProgressPercent');
+    const videoProgressLabel = document.getElementById('videoProgressLabel');
+    const videoProgressStatus = document.getElementById('videoProgressStatus');
 
     videoUploadArea.addEventListener('click', () => videoFileInput.click());
     videoUploadArea.addEventListener('dragover', function(e) {
@@ -1266,17 +1482,37 @@
         e.preventDefault();
         this.style.borderColor = '#E8CDD3';
         this.style.background = 'white';
-        handleVideoFiles(e.dataTransfer.files);
+        handleVideoUpload(e.dataTransfer.files);
     });
-    videoFileInput.addEventListener('change', function(e) { handleVideoFiles(this.files); });
+    videoFileInput.addEventListener('change', function(e) { handleVideoUpload(this.files); });
+    videoUploadBtn.addEventListener('click', () => videoUploadArea.click());
 
-    function handleVideoFiles(files) {
+    function showVideoProgress(show) {
+        videoProgressWrapper.classList.toggle('show', show);
+        if (!show) {
+            videoProgressFill.style.width = '0%';
+            videoProgressPercent.textContent = '0%';
+        }
+    }
+
+    function updateVideoProgress(percent, label, status, statusClass) {
+        videoProgressFill.style.width = percent + '%';
+        videoProgressPercent.textContent = percent + '%';
+        if (label) videoProgressLabel.textContent = label;
+        if (status) {
+            videoProgressStatus.textContent = status;
+            videoProgressStatus.className = 'progress-status ' + statusClass;
+        }
+    }
+
+    async function handleVideoUpload(files) {
         if (files.length === 0) return;
 
+        // Check file size (max 150MB)
         const maxSize = 150 * 1024 * 1024;
         for (let i = 0; i < files.length; i++) {
             if (files[i].size > maxSize) {
-                videoUploadStatus.textContent = '❌ Video too large! Max 150MB. Please compress first.';
+                videoUploadStatus.textContent = '❌ Video too large! Max 150MB.';
                 videoUploadStatus.style.color = '#C0392B';
                 alert('❌ Video too large! Maximum size is 150MB.\n\nPlease compress your video and try again.');
                 return;
@@ -1290,59 +1526,84 @@
             return;
         }
 
+        showVideoProgress(true);
+        updateVideoProgress(0, 'Preparing upload...', '⏳ Preparing...', 'uploading');
+
         let uploaded = 0;
         const total = files.length;
-        videoUploadStatus.textContent = '⏳ Uploading 0%... (0/' + total + ')';
-        videoUploadStatus.style.color = '#D47A8A';
+        const titleBase = videoTitle.value.trim() || 'Video';
 
         for (let i = 0; i < files.length; i++) {
-            if (!files[i].type.startsWith('video/')) { uploaded++; continue; }
-            const reader = new FileReader();
             const file = files[i];
-            reader.onload = function(e) {
-                try {
-                    const title = videoTitle.value.trim() || file.name.slice(0, 30);
-                    const newItem = {
-                        id: Date.now() + Math.floor(Math.random() * 10000),
-                        src: e.target.result,
-                        price: price,
-                        title: title,
-                        thumbnail: '',
-                        date: new Date().toISOString()
-                    };
-                    videoItems.push(newItem);
-                    const pin = generatePin();
-                    localStorage.setItem('sophia_pin_' + newItem.id, pin);
-                    uploaded++;
-                    const percent = Math.round((uploaded / total) * 100);
-                    videoUploadStatus.textContent = '⏳ Uploading ' + percent + '%... (' + uploaded + '/' + total + ')';
-                    videoUploadStatus.style.color = '#D47A8A';
+            if (!file.type.startsWith('video/')) {
+                uploaded++;
+                continue;
+            }
 
-                    if (uploaded === total) {
-                        saveVideos();
-                        videoUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' video(s)! PIN: <strong>' + pin + '</strong>';
-                        videoUploadStatus.style.color = '#2B6E4F';
-                        videoTitle.value = '';
-                        videoFileInput.value = '';
-                        alert('✅ Upload successful!\n\n' + uploaded + ' video(s) uploaded.\n\nPIN: ' + pin);
-                    }
-                } catch (err) {
-                    videoUploadStatus.textContent = '❌ Upload failed: ' + err.message;
-                    videoUploadStatus.style.color = '#C0392B';
-                    console.error(err);
-                    alert('❌ Upload failed: ' + err.message);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('resource_type', 'video');
+
+            try {
+                const percent = Math.round((uploaded / total) * 100);
+                updateVideoProgress(percent, `Uploading ${file.name}... (${uploaded+1}/${total})`, `⏳ Uploading ${Math.round(percent)}%...`, 'uploading');
+
+                const response = await fetch(`${CLOUDINARY_BASE_URL}/video/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed: ' + response.status);
                 }
-            };
-            reader.onerror = function() {
-                videoUploadStatus.textContent = '❌ Failed to read video file. Please try again.';
+
+                const data = await response.json();
+                const cloudinaryUrl = data.secure_url;
+
+                const title = titleBase + (total > 1 ? ` ${i+1}` : '');
+                const newItem = {
+                    id: Date.now() + i + Math.floor(Math.random() * 10000),
+                    src: cloudinaryUrl,
+                    cloudinaryUrl: cloudinaryUrl,
+                    price: price,
+                    title: title,
+                    thumbnail: data.thumbnail_url || 'https://via.placeholder.com/60x60/D47A8A/fff?text=Video',
+                    date: new Date().toISOString(),
+                    publicId: data.public_id,
+                    duration: data.duration ? Math.round(data.duration) + 's' : ''
+                };
+
+                videoItems.push(newItem);
+                const pin = generatePin();
+                localStorage.setItem('sophia_pin_' + newItem.id, pin);
+
+                uploaded++;
+                const newPercent = Math.round((uploaded / total) * 100);
+                updateVideoProgress(newPercent, `Uploaded ${uploaded}/${total}`, `✅ ${uploaded}/${total} uploaded`, 'uploading');
+
+            } catch (err) {
+                console.error('Upload error:', err);
+                updateVideoProgress(0, 'Upload failed', '❌ Failed: ' + err.message, 'error');
+                videoUploadStatus.textContent = '❌ Upload failed: ' + err.message;
                 videoUploadStatus.style.color = '#C0392B';
-                alert('❌ Failed to read video file. Please try again.');
-            };
-            reader.readAsDataURL(files[i]);
+                showVideoProgress(false);
+                return;
+            }
+        }
+
+        if (uploaded === total) {
+            saveVideos();
+            const pin = localStorage.getItem('sophia_pin_' + videoItems[videoItems.length - 1].id) || 'N/A';
+            updateVideoProgress(100, 'Upload complete!', '✅ Upload complete!', 'success');
+            videoUploadStatus.innerHTML = '✅ Uploaded ' + uploaded + ' video(s) to Cloudinary! PIN: <strong>' + pin + '</strong>';
+            videoUploadStatus.style.color = '#2B6E4F';
+            videoTitle.value = '';
+            videoFileInput.value = '';
+            setTimeout(() => showVideoProgress(false), 3000);
+            alert('✅ Upload successful!\n\n' + uploaded + ' video(s) uploaded to Cloudinary.\n\nPIN: ' + pin);
         }
     }
-
-    videoUploadBtn.addEventListener('click', () => videoUploadArea.click());
 
     // ============================================================
     // ====== ADD SERVICE ======
@@ -1359,6 +1620,7 @@
             return;
         }
         const newService = {
+            id: Date.now(),
             name: name,
             description: description || 'Professional therapy service',
             price: price,
@@ -1448,6 +1710,8 @@
             return;
         }
         localStorage.setItem('sophia_users', JSON.stringify(usersData));
+
+        // Set PIN for content
         if (contentType === 'all' || contentType === 'image') {
             for (let j = 0; j < galleryItems.length; j++) {
                 localStorage.setItem('sophia_pin_' + galleryItems[j].id, pin);
@@ -1458,19 +1722,21 @@
                 localStorage.setItem('sophia_pin_' + videoItems[k].id, pin);
             }
         }
+
         const resultDiv = document.getElementById('generateResult');
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
-            <h4 style="color:#2B6E4F;">PIN Generated Successfully!</h4>
+            <h4 style="color:#2B6E4F;"><i class="fas fa-check-circle"></i> PIN Generated Successfully!</h4>
             <p><strong>User:</strong> ${userId}</p>
-            <p><strong>PIN:</strong> <span style="font-size:1.5rem;font-weight:600;color:#D47A8A;">${pin}</span></p>
+            <p><strong>PIN:</strong> <span style="font-size:1.8rem;font-weight:700;color:#D47A8A;letter-spacing:4px;">${pin}</span></p>
             <p><strong>Duration:</strong> ${duration} days</p>
             <p><strong>Content:</strong> ${contentType}</p>
-            <button class="copy-btn" onclick="copyText('${pin}')"><i class="fas fa-copy"></i> Copy PIN</button>
-            <br>
-            <a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20${pin}%20for%20User%20ID%3A%20${userId}" target="_blank" class="btn btn-whatsapp" style="margin-top:0.5rem;font-size:0.9rem;display:inline-flex;background:#25D366;color:white;padding:0.5rem 1.5rem;border-radius:30px;text-decoration:none;gap:0.5rem;">
-                <i class="fab fa-whatsapp"></i> Send PIN via WhatsApp
-            </a>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+                <button class="copy-btn" onclick="copyText('${pin}')"><i class="fas fa-copy"></i> Copy PIN</button>
+                <a href="https://wa.me/14049070581?text=Your%20PIN%20is%3A%20${pin}%20for%20User%20ID%3A%20${userId}" target="_blank" class="btn btn-whatsapp" style="display:inline-flex;background:#25D366;color:white;padding:0.4rem 1.5rem;border-radius:30px;text-decoration:none;gap:0.5rem;font-weight:500;font-size:0.9rem;">
+                    <i class="fab fa-whatsapp"></i> Send via WhatsApp
+                </a>
+            </div>
         `;
     });
 
@@ -1532,10 +1798,11 @@
     checkSession();
 
     console.log('🌸 Admin Panel v' + ADMIN_VERSION + ' ready!');
+    console.log('☁️ Cloudinary: ' + CLOUDINARY_CLOUD_NAME);
+    console.log('📤 Upload Preset: ' + CLOUDINARY_UPLOAD_PRESET);
     console.log('🔑 Default login: admin / admin123');
-    console.log('📹 Video upload: Max 150MB with progress');
+    console.log('📹 Video upload: Max 150MB with progress bar');
     console.log('💳 Approve/Decline upfront payments');
 </script>
-
 </body>
 </html>
