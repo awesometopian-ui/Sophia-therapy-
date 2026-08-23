@@ -13,8 +13,8 @@
     <!-- ====== FONT AWESOME ====== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ====== GOOGLE FONTS FOR LOGO ====== -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- ====== GOOGLE FONTS ====== -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- ====== ADSTERRA ====== -->
     <script src="https://pl30955345.profitableratecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
@@ -23,7 +23,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
     
     <style>
-        /* ====== LOADER ANIMATION ====== */
+        /* ====== LOADER ====== */
         #loader-wrapper {
             position: fixed;
             top: 0;
@@ -139,11 +139,11 @@
             40% { transform: scale(1); opacity: 1; }
         }
         
-        /* ====== RESET & BASE ====== */
+        /* ====== RESET ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             background: #FFF8FA;
             color: #2F2024;
             line-height: 1.6;
@@ -161,7 +161,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 0.8rem 1.5rem;
             border-bottom: 2px solid #E8CDD3;
             flex-wrap: wrap;
             gap: 0.8rem;
@@ -171,8 +171,6 @@
             z-index: 100;
             box-shadow: 0 2px 20px rgba(122, 58, 74, 0.06);
         }
-        
-        /* ====== LOGO ====== */
         .nav-brand {
             display: flex;
             align-items: center;
@@ -221,10 +219,9 @@
             color: #D47A8A;
             font-size: 0.6rem;
         }
-        
         .nav-links {
             display: flex;
-            gap: 0.8rem;
+            gap: 0.4rem;
             flex-wrap: wrap;
             align-items: center;
         }
@@ -234,7 +231,7 @@
             padding: 0.4rem 0.8rem;
             border-radius: 30px;
             transition: all 0.25s ease;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .nav-links a:hover,
         .nav-links a.active {
@@ -257,12 +254,12 @@
             padding: 3rem 0 2rem;
         }
         .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 400;
+            font-size: 2.8rem;
+            font-weight: 300;
             color: #7A3A4A;
             letter-spacing: 0.5px;
         }
-        .hero h1 span { color: #D47A8A; font-weight: 300; }
+        .hero h1 span { color: #D47A8A; font-weight: 400; }
         .hero .tagline {
             font-size: 1.05rem;
             color: #7A3A4A;
@@ -323,8 +320,8 @@
         }
         .btn:hover {
             background: #c06a7a;
-            transform: scale(1.01);
-            box-shadow: 0 4px 16px rgba(212, 122, 138, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 122, 138, 0.3);
         }
         .btn-outline {
             background: transparent;
@@ -343,7 +340,13 @@
         }
         .btn-small {
             padding: 0.4rem 1.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+        .btn-gold {
+            background: #D99A2B;
+        }
+        .btn-gold:hover {
+            background: #c6891e;
         }
         
         /* ====== SECTION TITLES ====== */
@@ -356,88 +359,106 @@
             color: #7A3A4A;
         }
         
-        /* ====== GRID ====== */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+        /* ====== GRIDS ====== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
         
-        /* ====== CARDS ====== */
+        /* ============================================================
+           ====== PREMIUM CARD DESIGNS ======
+           ============================================================ */
+        
+        /* ----- BASE CARD ----- */
         .card {
             background: #FFFFFF;
             border-radius: 24px;
-            padding: 1.8rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 2rem;
             border: 1px solid #E8CDD3;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #D47A8A, #D99A2B, #D47A8A);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .card:hover::before {
+            opacity: 1;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(212, 122, 138, 0.10);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(212, 122, 138, 0.12);
+            border-color: #D47A8A;
         }
         .card i {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #D47A8A;
             margin-bottom: 0.5rem;
         }
         .card h3 {
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: #7A3A4A;
         }
         .card p { color: #5d4d50; font-size: 0.95rem; }
         
-        /* ====== SERVICE LIST ====== */
-        .service-list {
-            list-style: none;
-            margin: 1rem 0 0.5rem;
-        }
-        .service-list li {
-            padding: 0.3rem 0;
-            border-bottom: 1px dashed #E8CDD3;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #2F2024;
-            font-size: 0.95rem;
-        }
-        .service-list i {
-            font-size: 0.85rem;
-            color: #D47A8A;
-            width: 1.2rem;
-            margin-bottom: 0;
-        }
-        
-        /* ====== SERVICE CARDS ====== */
+        /* ----- SERVICE CARD (Premium) ----- */
         .service-card {
             background: #FFFFFF;
             border-radius: 20px;
             padding: 1.8rem;
             text-align: center;
             border: 1px solid #E8CDD3;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #D47A8A, #D99A2B);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .service-card:hover::before {
+            opacity: 1;
         }
         .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(212, 122, 138, 0.10);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(212, 122, 138, 0.14);
+            border-color: #D47A8A;
         }
-        .service-icon {
-            font-size: 2.5rem;
+        .service-card .service-icon {
+            font-size: 2.8rem;
             color: #D47A8A;
             margin-bottom: 0.5rem;
+            display: block;
         }
-        .service-card h3 { color: #7A3A4A; font-size: 1.2rem; }
-        .service-card p { color: #5d4d50; font-size: 0.9rem; margin: 0.3rem 0; }
-        .service-price {
-            font-size: 1.5rem;
+        .service-card h3 {
+            color: #7A3A4A;
+            font-size: 1.2rem;
             font-weight: 600;
+        }
+        .service-card p {
+            color: #5d4d50;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+            line-height: 1.5;
+        }
+        .service-price {
+            font-size: 1.6rem;
+            font-weight: 700;
             color: #D47A8A;
             margin: 0.3rem 0;
         }
@@ -448,37 +469,109 @@
         }
         .upfront-badge {
             display: inline-block;
-            background: #2B6E4F;
+            background: linear-gradient(135deg, #2B6E4F, #1f573d);
             color: #FFFFFF;
-            padding: 0.15rem 1rem;
+            padding: 0.15rem 1.2rem;
             border-radius: 30px;
             font-size: 0.7rem;
             margin: 0.3rem 0;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .service-card .btn {
+            margin-top: 0.8rem;
         }
         
-        /* ====== GALLERY ====== */
-        .gallery-grid, .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .gallery-item, .video-item {
+        /* ----- GALLERY CARD (Premium) ----- */
+        .gallery-item {
             position: relative;
             border-radius: 16px;
             overflow: hidden;
-            background: #F8E8EC;
             aspect-ratio: 1;
             border: 3px solid transparent;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
+            background: #F8E8EC;
         }
-        .gallery-item:hover, .video-item:hover {
-            transform: scale(1.02);
+        .gallery-item:hover {
+            transform: scale(1.03);
             border-color: #D47A8A;
+            box-shadow: 0 12px 40px rgba(212, 122, 138, 0.2);
         }
-        .gallery-item img, .video-item video {
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-item .gallery-overlay span {
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .gallery-item .zoom-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            color: #FFFFFF;
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .zoom-icon {
+            opacity: 1;
+        }
+        .gallery-item .pin-lock {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(212, 122, 138, 0.9);
+            color: #FFFFFF;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+        
+        /* ----- VIDEO CARD (Premium) ----- */
+        .video-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            border: 3px solid transparent;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            background: #1a1a1a;
+        }
+        .video-item:hover {
+            transform: scale(1.03);
+            border-color: #D47A8A;
+            box-shadow: 0 12px 40px rgba(212, 122, 138, 0.2);
+        }
+        .video-item video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -489,31 +582,66 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
+            font-size: 4rem;
             color: #FFFFFF;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            text-shadow: 0 0 40px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease;
             pointer-events: none;
-            opacity: 0.9;
         }
-        .gallery-item .zoom-icon {
+        .video-item:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .video-item .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .video-item:hover .video-overlay {
+            opacity: 1;
+        }
+        .video-item .video-overlay span {
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .video-item .duration-badge {
             position: absolute;
             bottom: 12px;
             right: 12px;
-            background: rgba(0,0,0,0.5);
-            color: #FFFFFF;
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(4px);
-            pointer-events: none;
+            color: #FFFFFF;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
         }
+        .video-item .pin-lock {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(212, 122, 138, 0.9);
+            color: #FFFFFF;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+        
+        /* ----- EMPTY STATE ----- */
         .empty-state {
             color: #795F66;
             text-align: center;
-            padding: 2.5rem;
-            font-size: 1.1rem;
+            padding: 3rem;
+            font-size: 1.05rem;
             background: #F8E8EC;
             border-radius: 16px;
+            border: 2px dashed #E8CDD3;
         }
         
         /* ====== MODAL / VIEWER ====== */
@@ -524,8 +652,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -542,17 +670,18 @@
         }
         .modal-close {
             position: absolute;
-            top: -40px;
+            top: -50px;
             right: 0;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: #FFFFFF;
             background: none;
             border: none;
             cursor: pointer;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
             transition: 0.2s;
+            z-index: 10;
         }
-        .modal-close:hover { color: #ddd; }
+        .modal-close:hover { color: #ddd; transform: rotate(90deg); }
         .modal-content img {
             max-width: 95vw;
             max-height: 85vh;
@@ -568,10 +697,11 @@
         }
         .modal-title {
             color: #FFFFFF;
-            margin-top: 0.5rem;
+            margin-top: 0.8rem;
             font-size: 1.1rem;
             text-align: center;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
+            font-weight: 400;
         }
         
         /* ====== PIN MODAL ====== */
@@ -581,7 +711,8 @@
             padding: 2.5rem;
             max-width: 420px;
             width: 90%;
-            border: 2px solid #E8CDD3;
+            border: 1px solid #E8CDD3;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
         }
         .pin-modal .modal-close {
             position: absolute;
@@ -591,7 +722,7 @@
             color: #795F66;
             text-shadow: none;
         }
-        .pin-modal .modal-close:hover { color: #7A3A4A; }
+        .pin-modal .modal-close:hover { color: #7A3A4A; transform: none; }
         .pin-modal h2 { color: #7A3A4A; margin-bottom: 0.3rem; }
         .code-input {
             display: flex;
@@ -600,7 +731,7 @@
             margin: 1rem 0;
         }
         .code-input input {
-            padding: 0.6rem 1rem;
+            padding: 0.7rem 1rem;
             border: 2px solid #E8CDD3;
             border-radius: 30px;
             font-size: 1rem;
@@ -608,6 +739,7 @@
             text-align: center;
             letter-spacing: 4px;
             font-weight: 600;
+            transition: 0.2s;
         }
         .code-input input:focus {
             border-color: #D47A8A;
@@ -617,22 +749,19 @@
             background: #D47A8A;
             color: #FFFFFF;
             border: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 30px;
-            font-weight: 500;
+            font-weight: 600;
             transition: 0.2s;
         }
         .code-input button:hover { background: #c06a7a; }
         .pin-message { margin-top: 0.5rem; font-weight: 500; }
         
-        /* ====== REGISTER MODAL ====== */
-        .form-group {
-            margin: 1rem 0;
-            text-align: left;
-        }
+        /* ====== FORM ====== */
+        .form-group { margin: 1rem 0; text-align: left; }
         .form-group label {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.3rem;
             color: #7A3A4A;
             font-size: 0.9rem;
@@ -649,6 +778,7 @@
             border-color: #D47A8A;
             outline: none;
         }
+        .form-group input::placeholder { color: #b5a0a5; }
         
         /* ====== ACCOUNT CARD ====== */
         .account-card {
@@ -658,6 +788,10 @@
             border: 1px solid #E8CDD3;
             max-width: 600px;
             margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        .account-card:hover {
+            box-shadow: 0 12px 40px rgba(212, 122, 138, 0.08);
         }
         .account-card .user-id {
             background: #F8E8EC;
@@ -665,7 +799,7 @@
             border-radius: 12px;
             text-align: center;
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #7A3A4A;
             margin: 1rem 0;
             display: flex;
@@ -677,7 +811,7 @@
         .copy-btn {
             background: #F8E8EC;
             border: none;
-            padding: 0.2rem 0.8rem;
+            padding: 0.2rem 1rem;
             border-radius: 30px;
             cursor: pointer;
             color: #7A3A4A;
@@ -698,14 +832,15 @@
         }
         .payment-option:hover {
             border-color: #D47A8A;
-            background: #fff5f7;
+            background: #FFF5F7;
         }
         .payment-option i {
             font-size: 1.6rem;
             color: #D47A8A;
             margin-right: 0.5rem;
+            width: 2rem;
         }
-        .payment-option span { font-weight: 500; color: #7A3A4A; }
+        .payment-option span { font-weight: 600; color: #7A3A4A; }
         .payment-section { display: none; margin-top: 0.8rem; }
         .payment-section.show { display: block; }
         
@@ -727,11 +862,13 @@
             background: #D47A8A;
             color: #FFFFFF;
             border: none;
-            padding: 0.2rem 1rem;
+            padding: 0.3rem 1.2rem;
             border-radius: 30px;
             cursor: pointer;
             font-size: 0.8rem;
+            font-weight: 500;
         }
+        .address-box button:hover { background: #c06a7a; }
         
         /* ====== PIN INPUT GROUP ====== */
         .pin-input-group {
@@ -753,9 +890,9 @@
         /* ====== PAYMENT STATUS ====== */
         .payment-status {
             margin-top: 0.5rem;
-            font-weight: 500;
-            padding: 0.5rem;
-            border-radius: 8px;
+            font-weight: 600;
+            padding: 0.8rem;
+            border-radius: 12px;
         }
         .payment-status.pending { background: #fff3cd; color: #856404; }
         .payment-status.approved { background: #d4edda; color: #155724; }
@@ -766,7 +903,7 @@
             background: #25D366;
             color: #FFFFFF;
             border: none;
-            padding: 0.7rem 2rem;
+            padding: 0.8rem 2.5rem;
             border-radius: 60px;
             font-size: 1rem;
             display: inline-flex;
@@ -774,12 +911,13 @@
             gap: 0.7rem;
             text-decoration: none;
             transition: 0.2s;
-            font-weight: 500;
+            font-weight: 600;
             margin-top: 0.5rem;
         }
         .whatsapp-book-btn:hover {
             background: #1da851;
-            transform: scale(1.01);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
         }
         
         /* ====== CONTACT BLOCK ====== */
@@ -803,10 +941,17 @@
         .payment-icons {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem 1rem;
+            gap: 0.5rem 1.5rem;
             margin: 0.8rem 0;
         }
-        .payment-icons i { font-size: 1.1rem; color: #D47A8A; }
+        .payment-icons span {
+            background: #F8E8EC;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #7A3A4A;
+        }
+        .payment-icons i { font-size: 1.1rem; color: #D47A8A; margin-right: 0.3rem; }
         
         /* ====== BOOKING BOX ====== */
         .booking-box {
@@ -814,13 +959,14 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            background: #F8E8EC;
-            padding: 1.2rem 1.8rem;
+            background: linear-gradient(135deg, #F8E8EC, #FFF5F7);
+            padding: 1.2rem 2rem;
             border-radius: 60px;
             margin: 1.2rem 0;
+            border: 1px solid #E8CDD3;
         }
         .booking-box i { font-size: 1.4rem; color: #D47A8A; }
-        .booking-box span { font-weight: 500; margin-left: 8px; color: #7A3A4A; }
+        .booking-box span { font-weight: 600; margin-left: 8px; color: #7A3A4A; }
         .booking-notes {
             display: flex;
             flex-wrap: wrap;
@@ -835,6 +981,40 @@
             border-radius: 40px;
         }
         
+        /* ====== PROGRESS BAR ====== */
+        .progress-wrapper {
+            margin: 1rem 0;
+            display: none;
+        }
+        .progress-wrapper.show {
+            display: block;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #E8CDD3;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D47A8A, #D99A2B);
+            border-radius: 30px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #7A3A4A;
+            margin-top: 0.3rem;
+        }
+        .progress-text .percent {
+            font-weight: 600;
+            color: #D47A8A;
+        }
+        
         /* ====== FOOTER ====== */
         .footer {
             text-align: center;
@@ -847,23 +1027,28 @@
         .footer span { font-size: 0.8rem; opacity: 0.8; }
         
         /* ====== RESPONSIVE ====== */
+        @media (max-width: 992px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 1.5rem; }
+            .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        }
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                padding: 0.8rem 0;
+                padding: 0.8rem;
             }
             .nav-links {
                 justify-content: center;
-                gap: 0.4rem;
+                gap: 0.3rem;
+                width: 100%;
             }
-            .nav-links a { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+            .nav-links a { font-size: 0.8rem; padding: 0.3rem 0.6rem; flex: 1; text-align: center; }
             .hero h1 { font-size: 2rem; }
-            .grid-2 { grid-template-columns: 1fr; gap: 1rem; }
+            .hero .tagline { font-size: 0.9rem; padding: 0.2rem 1rem; }
             .section-title { font-size: 1.4rem; }
-            .booking-box { flex-direction: column; text-align: center; gap: 1rem; }
-            .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .booking-box { flex-direction: column; text-align: center; gap: 1rem; border-radius: 30px; padding: 1.2rem; }
+            .grid-3 { grid-template-columns: 1fr; }
             .contact-block { flex-direction: column; align-items: flex-start; border-radius: 30px; }
             .modal-content { max-width: 98vw; }
             .modal-content img, .modal-content video { max-width: 98vw; max-height: 75vh; }
@@ -873,16 +1058,22 @@
             .logo-icon { width: 40px; height: 40px; }
             .logo-sophia { font-size: 1.5rem; }
             .logo-sub { font-size: 0.6rem; }
+            .hero-info { gap: 0.3rem 1rem; }
+            .hero-info span { font-size: 0.8rem; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.6rem; }
-            .hero .tagline { font-size: 0.9rem; padding: 0.2rem 1rem; }
-            .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
-            .gallery-grid, .video-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; }
-            .modal-close { top: -30px; font-size: 1.8rem; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+            .gallery-item, .video-item { border-radius: 12px; }
+            .modal-close { top: -35px; font-size: 1.8rem; }
             .logo-icon { width: 32px; height: 32px; }
             .logo-sophia { font-size: 1.2rem; }
             .logo-sub { font-size: 0.5rem; letter-spacing: 1px; }
+            .payment-option { padding: 0.8rem; }
+            .payment-option i { font-size: 1.2rem; }
+            .code-input { flex-direction: column; align-items: center; }
+            .code-input input { width: 100%; }
+            .code-input button { width: 100%; }
         }
     </style>
 </head>
@@ -937,11 +1128,11 @@
         </div>
     </div>
     <div class="nav-links">
-        <a href="#" class="active" data-page="home">Home</a>
-        <a href="#" data-page="services">Services</a>
-        <a href="#" data-page="gallery">Gallery</a>
-        <a href="#" data-page="videos">Videos</a>
-        <a href="#" data-page="account">Account</a>
+        <a href="#" class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
+        <a href="#" data-page="services"><i class="fas fa-spa"></i> Services</a>
+        <a href="#" data-page="gallery"><i class="fas fa-images"></i> Gallery</a>
+        <a href="#" data-page="videos"><i class="fas fa-video"></i> Videos</a>
+        <a href="#" data-page="account"><i class="fas fa-user"></i> Account</a>
     </div>
 </nav>
 
@@ -954,16 +1145,16 @@
             <h1>Sophia <span>Message & Therapy</span></h1>
             <div>
                 <span class="tagline">Gentle · Deep · Restorative</span>
-                <span class="badge-us">US Resident Only</span>
+                <span class="badge-us"><i class="fas fa-flag-usa"></i> US Resident Only</span>
             </div>
             <div class="hero-info">
                 <span><i class="fas fa-calendar-check"></i> Online Booking</span>
-                <span><i class="fas fa-home"></i> Home Delivery / In-House</span>
+                <span><i class="fas fa-home"></i> In-House / Home Delivery</span>
                 <span><i class="fas fa-phone-alt"></i> +1 (404) 907-0581</span>
             </div>
             <div class="hero-cta">
-                <a href="#" class="btn" data-page="services">Explore Services</a>
-                <a href="#" class="btn btn-outline" data-page="book">Book Now</a>
+                <a href="#" class="btn" data-page="services"><i class="fas fa-spa"></i> Explore Services</a>
+                <a href="#" class="btn btn-outline" data-page="book"><i class="fas fa-calendar-plus"></i> Book Now</a>
             </div>
         </div>
 
@@ -971,9 +1162,9 @@
             <div class="card">
                 <i class="fas fa-spa"></i>
                 <h3>Our Services</h3>
-                <p style="margin-bottom:0.5rem;color:#5d4d50;">Book a session. Pay 40% upfront to confirm.</p>
+                <p style="margin-bottom:0.8rem;color:#5d4d50;">Book a session. Pay 40% upfront to confirm.</p>
                 <ul class="service-list" id="homeServiceList"></ul>
-                <a href="#" class="btn btn-small" data-page="services" style="margin-top:0.5rem;">View All Services</a>
+                <a href="#" class="btn btn-small" data-page="services" style="margin-top:0.8rem;"><i class="fas fa-arrow-right"></i> View All Services</a>
             </div>
             <div class="card">
                 <i class="fas fa-credit-card"></i>
@@ -992,7 +1183,7 @@
                     <i class="fas fa-sms"></i>
                     <a href="sms:+14049070581">Text Message</a>
                 </div>
-                <div style="margin-top:0.8rem;background:#F8E8EC;padding:0.3rem 1.2rem;border-radius:50px;display:inline-block;font-size:0.9rem;color:#7A3A4A;">
+                <div style="margin-top:0.8rem;background:#F8E8EC;padding:0.3rem 1.2rem;border-radius:50px;display:inline-block;font-size:0.85rem;color:#7A3A4A;">
                     <i class="fas fa-truck-fast"></i> Home Delivery Available
                 </div>
             </div>
@@ -1000,7 +1191,7 @@
 
         <div class="booking-box">
             <div><i class="fas fa-calendar-circle-plus"></i><span>Book a Service · 40% Upfront</span></div>
-            <a href="#" class="btn" data-page="book">Book Now</a>
+            <a href="#" class="btn" data-page="book"><i class="fas fa-calendar-plus"></i> Book Now</a>
         </div>
         <div class="booking-notes">
             <span><i class="fas fa-circle-check"></i> 40% Upfront to Confirm</span>
@@ -1011,38 +1202,36 @@
 
     <!-- ====== SERVICES PAGE ====== -->
     <div id="page-services" class="page">
-        <h2 class="section-title">Our Services & Pricing</h2>
-        <p style="color:#795F66;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
+        <h2 class="section-title"><i class="fas fa-spa" style="color:#D47A8A;"></i> Our Services & Pricing</h2>
+        <p style="color:#795F66;margin-bottom:1.5rem;">Pay 40% upfront to confirm your booking. Choose payment method below.</p>
         <div class="grid-3" id="servicesGrid"></div>
     </div>
 
     <!-- ====== GALLERY PAGE ====== -->
     <div id="page-gallery" class="page">
-        <h2 class="section-title">Premium Gallery</h2>
-        <p style="color:#795F66;margin-bottom:1rem;">Click any image to view full size.</p>
+        <h2 class="section-title"><i class="fas fa-images" style="color:#D47A8A;"></i> Premium Gallery</h2>
+        <p style="color:#795F66;margin-bottom:1.5rem;">Click any image to view full size. <i class="fas fa-lock" style="color:#D47A8A;"></i> Some content may require PIN.</p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </div>
 
     <!-- ====== VIDEOS PAGE ====== -->
     <div id="page-videos" class="page">
-        <h2 class="section-title">Video Library</h2>
-        <p style="color:#795F66;margin-bottom:1rem;">Click any video to watch full screen.</p>
+        <h2 class="section-title"><i class="fas fa-video" style="color:#D47A8A;"></i> Video Library</h2>
+        <p style="color:#795F66;margin-bottom:1.5rem;">Click any video to watch full screen. <i class="fas fa-lock" style="color:#D47A8A;"></i> Some content may require PIN.</p>
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
     <!-- ====== ACCOUNT PAGE ====== -->
     <div id="page-account" class="page">
-        <h2 class="section-title">My Account</h2>
+        <h2 class="section-title"><i class="fas fa-user" style="color:#D47A8A;"></i> My Account</h2>
         <div id="accountContent"></div>
     </div>
 
     <!-- ====== BOOK PAGE ====== -->
     <div id="page-book" class="page">
-        <h2 class="section-title">Book a Session</h2>
-        <p style="color:#795F66;margin-bottom:1rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
-        <div id="bookContent">
-            <!-- Will be filled by JavaScript -->
-        </div>
+        <h2 class="section-title"><i class="fas fa-calendar-plus" style="color:#D47A8A;"></i> Book a Session</h2>
+        <p style="color:#795F66;margin-bottom:1.5rem;">Pay 40% upfront to confirm your booking. Choose a service and payment method.</p>
+        <div id="bookContent"></div>
     </div>
 
     <!-- ====== VIEWER MODAL ====== -->
@@ -1058,16 +1247,16 @@
     <div class="modal pin-modal" id="unlockModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
-            <h2>Enter PIN</h2>
-            <p style="color:#795F66;">Enter your PIN to unlock content</p>
+            <h2><i class="fas fa-key" style="color:#D47A8A;"></i> Enter PIN</h2>
+            <p style="color:#795F66;">Enter your PIN to unlock premium content</p>
             <div class="code-input">
-                <input type="text" id="unlockCodeInput" placeholder="Enter PIN" maxlength="10">
-                <button id="unlockCodeBtn">Unlock</button>
+                <input type="text" id="unlockCodeInput" placeholder="Enter PIN" maxlength="10" autocomplete="off">
+                <button id="unlockCodeBtn"><i class="fas fa-unlock"></i> Unlock</button>
             </div>
             <div id="unlockMessage" class="pin-message"></div>
             <hr style="margin:1rem 0;border-color:#E8CDD3;">
-            <p style="font-size:0.85rem;color:#795F66;">Contact WhatsApp for PIN</p>
-            <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp btn-small" style="margin-top:0.3rem;">
+            <p style="font-size:0.85rem;color:#795F66;"><i class="fas fa-info-circle"></i> Contact WhatsApp for PIN</p>
+            <a href="https://wa.me/14049070581" target="_blank" class="btn btn-whatsapp btn-small" style="margin-top:0.3rem;justify-content:center;">
                 <i class="fab fa-whatsapp"></i> Get PIN
             </a>
         </div>
@@ -1077,21 +1266,21 @@
     <div class="modal pin-modal" id="registerModal">
         <div class="modal-content">
             <button class="modal-close" id="registerClose">&times;</button>
-            <h2>Create Account</h2>
+            <h2><i class="fas fa-user-plus" style="color:#D47A8A;"></i> Create Account</h2>
             <p style="color:#795F66;">Get your unique ID to access premium content</p>
             <div class="form-group">
-                <label>Full Name</label>
+                <label><i class="fas fa-user"></i> Full Name</label>
                 <input type="text" id="regName" placeholder="Enter your full name">
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label><i class="fas fa-envelope"></i> Email</label>
                 <input type="email" id="regEmail" placeholder="Enter your email">
             </div>
             <div class="form-group">
-                <label>Phone</label>
+                <label><i class="fas fa-phone"></i> Phone</label>
                 <input type="tel" id="regPhone" placeholder="Enter your phone number">
             </div>
-            <button class="btn" id="registerBtn" style="width:100%;justify-content:center;">Register</button>
+            <button class="btn" id="registerBtn" style="width:100%;justify-content:center;"><i class="fas fa-check"></i> Register</button>
             <div id="registerMessage" style="margin-top:0.5rem;font-weight:500;"></div>
         </div>
     </div>
@@ -1119,7 +1308,7 @@
     // ============================================================
     // ====== VERSION SYSTEM ======
     // ============================================================
-    const APP_VERSION = '2026.08.23.11';
+    const APP_VERSION = '2026.08.23.12';
     const APP_KEY = 'sophia_app_version';
     
     (function checkVersion() {
@@ -1148,6 +1337,13 @@
             }
         }
     })();
+
+    // ============================================================
+    // ====== CLOUDINARY CONFIG ======
+    // ============================================================
+    const CLOUDINARY_CLOUD_NAME = 'bpupxsnv';
+    const CLOUDINARY_UPLOAD_PRESET = 'sophia_uploads';
+    const CLOUDINARY_BASE_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}`;
 
     // ============================================================
     // ====== DATA ======
@@ -1281,14 +1477,14 @@
     }
 
     // ============================================================
-    // ====== RENDER SERVICES ======
+    // ====== RENDER SERVICES (Premium Cards) ======
     // ============================================================
     function renderServices() {
         const grid = document.getElementById('servicesGrid');
         if (!grid) return;
         loadServices();
         if (services.length === 0) {
-            grid.innerHTML = '<div class="empty-state">No services available yet.</div>';
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-spa" style="font-size:2rem;color:#D47A8A;display:block;margin-bottom:0.5rem;"></i>No services available yet.</div>';
             return;
         }
         let html = '';
@@ -1296,14 +1492,14 @@
             const s = services[i];
             const upfrontMin = Math.ceil(s.price * 0.4);
             html += `<div class="service-card">
-                <div class="service-icon"><i class="${s.icon}"></i></div>
+                <span class="service-icon"><i class="${s.icon}"></i></span>
                 <h3>${s.name}</h3>
                 <p>${s.description}</p>
                 <div class="service-price">$${s.price}</div>
-                <div class="service-duration">${s.duration}</div>
+                <div class="service-duration"><i class="fas fa-clock"></i> ${s.duration}</div>
                 <span class="upfront-badge">40% Upfront: $${upfrontMin}</span>
                 <br>
-                <button class="btn btn-small" onclick="bookService(${s.id}, ${s.price})" style="margin-top:0.5rem;">Book Now</button>
+                <button class="btn btn-small" onclick="bookService(${s.id}, ${s.price})" style="margin-top:0.8rem;"><i class="fas fa-calendar-plus"></i> Book Now</button>
             </div>`;
         }
         grid.innerHTML = html;
@@ -1314,15 +1510,16 @@
         if (!c) return;
         loadServices();
         let html = '';
-        for (let i = 0; i < Math.min(services.length, 5); i++) {
-            html += `<li><i class="${services[i].icon}"></i> ${services[i].name} – $${services[i].price}</li>`;
+        const display = services.slice(0, 5);
+        for (let i = 0; i < display.length; i++) {
+            html += `<li><i class="${display[i].icon}"></i> ${display[i].name} – <strong>$${display[i].price}</strong></li>`;
         }
         if (services.length > 5) html += `<li><i class="fas fa-ellipsis-h"></i> And more...</li>`;
-        c.innerHTML = html;
+        c.innerHTML = html || '<li>No services available</li>';
     }
 
     // ============================================================
-    // ====== RENDER GALLERY ======
+    // ====== RENDER GALLERY (Premium Cards with Cloudinary) ======
     // ============================================================
     function renderGallery() {
         const grid = document.getElementById('galleryGrid');
@@ -1330,20 +1527,37 @@
         grid.innerHTML = '';
         loadGallery();
         if (galleryItems.length === 0) {
-            grid.innerHTML = '<div class="empty-state">No images uploaded yet.</div>';
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-images" style="font-size:2rem;color:#D47A8A;display:block;margin-bottom:0.5rem;"></i>No images uploaded yet.</div>';
             return;
         }
         for (let i = 0; i < galleryItems.length; i++) {
             const item = galleryItems[i];
+            const isLocked = item.pin && !unlockCodes[item.id];
             const div = document.createElement('div');
             div.className = 'gallery-item';
-            div.innerHTML = `<img src="${item.src}" alt="${item.title || 'Image'}" loading="lazy" onclick="openViewer('image', '${item.src}', '${item.title || ''}')"><div class="zoom-icon"><i class="fas fa-search-plus"></i></div>`;
+            const cloudinaryUrl = item.cloudinaryUrl || item.src;
+            div.innerHTML = `
+                <img src="${cloudinaryUrl}" alt="${item.title || 'Image'}" loading="lazy">
+                ${isLocked ? `<div class="pin-lock"><i class="fas fa-lock"></i> PIN</div>` : ''}
+                <div class="gallery-overlay"><span>${item.title || 'Untitled'}</span></div>
+                <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
+            `;
+            div.addEventListener('click', function() {
+                if (isLocked) {
+                    showUnlockModal(function() {
+                        renderGallery();
+                        renderVideos();
+                    });
+                } else {
+                    openViewer('image', cloudinaryUrl, item.title || '');
+                }
+            });
             grid.appendChild(div);
         }
     }
 
     // ============================================================
-    // ====== RENDER VIDEOS ======
+    // ====== RENDER VIDEOS (Premium Cards with Cloudinary) ======
     // ============================================================
     function renderVideos() {
         const grid = document.getElementById('videoGrid');
@@ -1351,17 +1565,103 @@
         grid.innerHTML = '';
         loadVideos();
         if (videoItems.length === 0) {
-            grid.innerHTML = '<div class="empty-state">No videos uploaded yet.</div>';
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-video" style="font-size:2rem;color:#D47A8A;display:block;margin-bottom:0.5rem;"></i>No videos uploaded yet.</div>';
             return;
         }
         for (let i = 0; i < videoItems.length; i++) {
             const item = videoItems[i];
+            const isLocked = item.pin && !unlockCodes[item.id];
             const div = document.createElement('div');
             div.className = 'video-item';
-            div.innerHTML = `<video src="${item.src}" preload="metadata" onclick="openViewer('video', '${item.src}', '${item.title || ''}')"></video><div class="play-icon"><i class="fas fa-play-circle" onclick="openViewer('video', '${item.src}', '${item.title || ''}')"></i></div>`;
+            const cloudinaryUrl = item.cloudinaryUrl || item.src;
+            div.innerHTML = `
+                <video src="${cloudinaryUrl}" preload="metadata"></video>
+                ${isLocked ? `<div class="pin-lock"><i class="fas fa-lock"></i> PIN</div>` : ''}
+                <div class="play-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="video-overlay"><span>${item.title || 'Untitled'}</span></div>
+                ${item.duration ? `<div class="duration-badge">${item.duration}</div>` : ''}
+            `;
+            div.addEventListener('click', function() {
+                if (isLocked) {
+                    showUnlockModal(function() {
+                        renderGallery();
+                        renderVideos();
+                    });
+                } else {
+                    openViewer('video', cloudinaryUrl, item.title || '');
+                }
+            });
             grid.appendChild(div);
         }
     }
+
+    // ============================================================
+    // ====== UNLOCK MODAL ======
+    // ============================================================
+    let unlockCallback = null;
+
+    function showUnlockModal(callback) {
+        unlockCallback = callback || null;
+        document.getElementById('unlockModal').classList.add('active');
+        document.getElementById('unlockCodeInput').value = '';
+        document.getElementById('unlockMessage').textContent = '';
+    }
+
+    document.getElementById('unlockCodeBtn').addEventListener('click', function() {
+        const code = document.getElementById('unlockCodeInput').value.trim().toUpperCase();
+        const msg = document.getElementById('unlockMessage');
+        if (!code || code.length < 4) {
+            msg.textContent = '❌ Please enter a valid PIN';
+            msg.style.color = '#C0392B';
+            return;
+        }
+        let valid = false;
+        let unlockedIds = [];
+        for (const key in localStorage) {
+            if (key.startsWith('sophia_pin_')) {
+                const storedPin = localStorage.getItem(key);
+                if (storedPin && storedPin.toUpperCase() === code) {
+                    const id = key.replace('sophia_pin_', '');
+                    unlockedIds.push(id);
+                    valid = true;
+                }
+            }
+        }
+        if (valid) {
+            for (const id of unlockedIds) {
+                unlockCodes[id] = true;
+            }
+            saveUnlocked();
+            msg.textContent = '✅ Content unlocked! ' + unlockedIds.length + ' items available.';
+            msg.style.color = '#2B6E4F';
+            setTimeout(() => {
+                document.getElementById('unlockModal').classList.remove('active');
+                if (unlockCallback) {
+                    unlockCallback();
+                    unlockCallback = null;
+                }
+                renderGallery();
+                renderVideos();
+            }, 1000);
+        } else {
+            msg.textContent = '❌ Invalid PIN. Contact WhatsApp.';
+            msg.style.color = '#C0392B';
+        }
+    });
+
+    document.getElementById('modalClose').addEventListener('click', function() {
+        document.getElementById('unlockModal').classList.remove('active');
+        unlockCallback = null;
+    });
+    document.getElementById('unlockModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            unlockCallback = null;
+        }
+    });
+    document.getElementById('unlockCodeInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') document.getElementById('unlockCodeBtn').click();
+    });
 
     // ============================================================
     // ====== VIEWER ======
@@ -1373,9 +1673,9 @@
 
     function openViewer(type, src, title) {
         if (type === 'image') {
-            viewerContent.innerHTML = `<img src="${src}" alt="${title}">`;
+            viewerContent.innerHTML = `<img src="${src}" alt="${title}" loading="lazy">`;
         } else if (type === 'video') {
-            viewerContent.innerHTML = `<video src="${src}" controls autoplay></video>`;
+            viewerContent.innerHTML = `<video src="${src}" controls autoplay playsinline></video>`;
         }
         viewerTitle.textContent = title || '';
         viewerModal.classList.add('active');
@@ -1405,32 +1705,32 @@
                 <i class="fas fa-user-circle" style="font-size:4rem;color:#D47A8A;margin-bottom:1rem;"></i>
                 <h3>Not Logged In</h3>
                 <p style="color:#795F66;margin:0.5rem 0;">Create an account to get your unique ID.</p>
-                <button class="btn" onclick="showRegister()">Create Account</button>
+                <button class="btn" onclick="showRegister()"><i class="fas fa-user-plus"></i> Create Account</button>
             </div>`;
             return;
         }
         container.innerHTML = `<div class="account-card">
-            <h3 style="text-align:center;">My Account</h3>
+            <h3 style="text-align:center;"><i class="fas fa-id-card" style="color:#D47A8A;"></i> My Account</h3>
             <div class="user-id">
-                <i class="fas fa-id-card"></i> Your ID: ${currentUser.id}
+                <i class="fas fa-id-badge"></i> Your ID: ${currentUser.id}
                 <button class="copy-btn" onclick="copyText('${currentUser.id}')"><i class="fas fa-copy"></i> Copy</button>
             </div>
-            <p><strong>Name:</strong> ${currentUser.name}</p>
-            <p><strong>Email:</strong> ${currentUser.email}</p>
-            <p><strong>Phone:</strong> ${currentUser.phone}</p>
+            <p><strong><i class="fas fa-user"></i> Name:</strong> ${currentUser.name}</p>
+            <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${currentUser.email}</p>
+            <p><strong><i class="fas fa-phone"></i> Phone:</strong> ${currentUser.phone}</p>
             <hr style="margin:1rem 0;border-color:#E8CDD3;">
             <div style="text-align:center;margin-top:0.5rem;display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
                 <a href="https://wa.me/14049070581?text=My%20ID%20is%3A%20${currentUser.id}" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem;">
                     <i class="fab fa-whatsapp"></i> Contact Admin
                 </a>
-                <button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;">Logout</button>
+                <button class="btn" onclick="logoutUser(); loadAccountPage();" style="font-size:0.9rem;background:#8a7b6b;"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>`;
     }
 
     function copyText(text) {
         if (navigator.clipboard) {
-            navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+            navigator.clipboard.writeText(text).then(() => alert('Copied: ' + text));
         } else {
             const ta = document.createElement('textarea');
             ta.value = text;
@@ -1438,7 +1738,7 @@
             ta.select();
             document.execCommand('copy');
             document.body.removeChild(ta);
-            alert('Copied!');
+            alert('Copied: ' + text);
         }
     }
 
@@ -1478,6 +1778,9 @@
             setTimeout(() => {
                 registerModal.classList.remove('active');
                 loadAccountPage();
+                if (currentBooking) {
+                    handlePageNavigation('book');
+                }
             }, 1500);
         } else {
             registerMessage.textContent = result.message;
@@ -1486,20 +1789,12 @@
     });
 
     // ============================================================
-    // ====== BOOK SERVICE (FIXED) ======
+    // ====== BOOK SERVICE ======
     // ============================================================
     function bookService(id, price) {
-        console.log('📚 Book Service called:', id, price);
-        
-        // Find the selected service
         loadServices();
         const selectedService = services.find(s => s.id === id);
-        if (!selectedService) {
-            console.error('❌ Service not found:', id);
-            return;
-        }
-        
-        // Save booking details
+        if (!selectedService) return;
         currentBooking = {
             id: id,
             price: price,
@@ -1508,57 +1803,18 @@
             duration: selectedService.duration,
             icon: selectedService.icon
         };
-        console.log('✅ Service selected:', currentBooking);
-        
-        // Check if user is logged in
         currentUser = getCurrentUser();
         if (!currentUser) {
-            // Show register modal first, then proceed to book
             showRegister();
-            // After registration, the flow continues via handlePageNavigation
             return;
         }
-        
-        // User is logged in, proceed to book page
-        navigateToBookPage();
-    }
-
-    function navigateToBookPage() {
-        console.log('📖 Navigating to book page');
-        
-        // Update navigation
-        const navLinks = document.querySelectorAll('.nav-links a');
-        for (let i = 0; i < navLinks.length; i++) {
-            navLinks[i].classList.toggle('active', navLinks[i].dataset.page === 'book');
-        }
-        
-        // Show book page
-        const pages = {
-            home: document.getElementById('page-home'),
-            services: document.getElementById('page-services'),
-            gallery: document.getElementById('page-gallery'),
-            videos: document.getElementById('page-videos'),
-            account: document.getElementById('page-account'),
-            book: document.getElementById('page-book')
-        };
-        
-        for (const key in pages) {
-            pages[key].classList.toggle('active', key === 'book');
-        }
-        
-        // Render book page content
-        renderBookPage();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        handlePageNavigation('book');
     }
 
     function renderBookPage() {
         const container = document.getElementById('bookContent');
         if (!container) return;
-        
-        // Load services to get full details
         loadServices();
-        
-        // If no booking selected, try to find the first service as default
         if (!currentBooking && services.length > 0) {
             const first = services[0];
             currentBooking = {
@@ -1570,41 +1826,39 @@
                 icon: first.icon
             };
         }
-        
-        // Calculate minimum upfront (40%)
         const minUpfront = currentBooking ? Math.ceil(currentBooking.price * 0.4) : 0;
-        
+
         let html = `
             <div class="grid-2">
                 <div class="card">
                     <i class="fas fa-hand-sparkles"></i>
                     <h3>Your Service</h3>
                     ${currentBooking ? `
-                        <div style="padding:1rem;background:#F8E8EC;border-radius:16px;margin-bottom:1rem;">
-                            <h4 style="color:#7A3A4A;font-size:1.1rem;">${currentBooking.name}</h4>
+                        <div style="padding:1.2rem;background:#F8E8EC;border-radius:16px;margin-bottom:1rem;">
+                            <h4 style="color:#7A3A4A;font-size:1.1rem;"><i class="${currentBooking.icon}" style="color:#D47A8A;"></i> ${currentBooking.name}</h4>
                             <p style="color:#795F66;font-size:0.9rem;">${currentBooking.description || 'Professional therapy service'}</p>
                             <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem;">
-                                <span style="font-weight:600;color:#D47A8A;">Price: $${currentBooking.price}</span>
-                                <span style="color:#795F66;">Duration: ${currentBooking.duration || '60 minutes'}</span>
+                                <span style="font-weight:700;color:#D47A8A;font-size:1.2rem;">$${currentBooking.price}</span>
+                                <span style="color:#795F66;"><i class="fas fa-clock"></i> ${currentBooking.duration || '60 minutes'}</span>
                             </div>
-                            <div style="margin-top:0.5rem;background:#2B6E4F;color:white;padding:0.2rem 1rem;border-radius:30px;display:inline-block;font-size:0.8rem;">
+                            <div style="margin-top:0.5rem;background:#2B6E4F;color:white;padding:0.2rem 1.2rem;border-radius:30px;display:inline-block;font-size:0.8rem;font-weight:600;">
                                 40% Upfront: $${minUpfront}
                             </div>
                         </div>
                     ` : `
                         <p style="color:#795F66;">Please select a service first.</p>
-                        <a href="#" class="btn btn-small" data-page="services">Browse Services</a>
+                        <a href="#" class="btn btn-small" data-page="services"><i class="fas fa-arrow-left"></i> Browse Services</a>
                     `}
                     <div style="margin-top:1rem;">
-                        <label style="font-weight:500;color:#7A3A4A;">Your Upfront Payment (40% min):</label>
-                        <input type="number" id="upfrontAmount" placeholder="Min $${minUpfront}" min="${minUpfront}" value="${minUpfront}" style="width:100%;padding:0.7rem;border-radius:30px;border:2px solid #E8CDD3;margin-top:0.3rem;">
-                        <p style="font-size:0.8rem;color:#795F66;margin-top:0.3rem;">Minimum 40% of service price</p>
+                        <label style="font-weight:600;color:#7A3A4A;display:block;margin-bottom:0.3rem;">Your Upfront Payment (40% min):</label>
+                        <input type="number" id="upfrontAmount" placeholder="Min $${minUpfront}" min="${minUpfront}" value="${minUpfront}" style="width:100%;padding:0.7rem 1rem;border-radius:30px;border:2px solid #E8CDD3;font-size:1rem;transition:0.2s;">
+                        <p style="font-size:0.8rem;color:#795F66;margin-top:0.3rem;"><i class="fas fa-info-circle"></i> Minimum 40% of service price</p>
                     </div>
                 </div>
                 <div class="card">
                     <i class="fas fa-credit-card"></i>
                     <h3>Pay Upfront</h3>
-                    <p>Choose payment method:</p>
+                    <p style="color:#795F66;margin-bottom:0.8rem;">Choose payment method:</p>
 
                     <!-- APPLE PAY -->
                     <div class="payment-option" onclick="togglePayment('apple')">
@@ -1612,13 +1866,13 @@
                         <span>Apple Pay</span>
                         <div id="applePaySection" class="payment-section">
                             <div class="form-group" style="margin:0.5rem 0;">
-                                <label>Apple Card PIN (16 digits)</label>
+                                <label><i class="fas fa-lock"></i> Apple Card PIN (16 digits)</label>
                                 <div class="pin-input-group">
                                     <input type="password" id="applePin" placeholder="Enter 16-digit PIN" maxlength="16">
                                     <button onclick="togglePin()"><i class="fas fa-eye" id="eyeIcon"></i></button>
                                 </div>
                             </div>
-                            <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;">Pay with Apple Pay</button>
+                            <button class="btn" onclick="submitPayment('apple')" style="width:100%;justify-content:center;"><i class="fab fa-apple-pay"></i> Pay with Apple Pay</button>
                         </div>
                     </div>
 
@@ -1628,10 +1882,10 @@
                         <span>Razer Gold</span>
                         <div id="razerSection" class="payment-section">
                             <div class="form-group" style="margin:0.5rem 0;">
-                                <label>Razer Gold PIN</label>
+                                <label><i class="fas fa-lock"></i> Razer Gold PIN</label>
                                 <input type="text" id="razerPin" placeholder="Enter Razer Gold PIN">
                             </div>
-                            <button class="btn" onclick="submitPayment('razer')" style="width:100%;justify-content:center;">Pay with Razer Gold</button>
+                            <button class="btn btn-gold" onclick="submitPayment('razer')" style="width:100%;justify-content:center;"><i class="fas fa-gamepad"></i> Pay with Razer Gold</button>
                         </div>
                     </div>
 
@@ -1646,17 +1900,17 @@
                                 <button onclick="copyBTC()"><i class="fas fa-copy"></i> Copy</button>
                             </div>
                             <div class="form-group" style="margin:0.5rem 0;">
-                                <label>Transaction ID</label>
+                                <label><i class="fas fa-hashtag"></i> Transaction ID</label>
                                 <input type="text" id="cryptoConfirm" placeholder="Paste transaction ID">
                             </div>
-                            <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;">Confirm Payment</button>
+                            <button class="btn" onclick="submitPayment('crypto')" style="width:100%;justify-content:center;"><i class="fab fa-bitcoin"></i> Confirm Payment</button>
                         </div>
                     </div>
 
-                    <div id="paymentStatus" style="margin-top:0.5rem;font-weight:500;"></div>
+                    <div id="paymentStatus" style="margin-top:0.5rem;font-weight:600;"></div>
 
-                    <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1rem;background:#d4edda;border-radius:16px;text-align:center;">
-                        <p style="color:#2B6E4F;font-weight:600;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
+                    <div id="whatsappSection" style="display:none;margin-top:1rem;padding:1.2rem;background:#d4edda;border-radius:16px;text-align:center;border:2px solid #2B6E4F;">
+                        <p style="color:#2B6E4F;font-weight:700;font-size:1.1rem;"><i class="fas fa-check-circle"></i> Payment Approved!</p>
                         <p style="font-size:0.9rem;color:#5d4d50;">Contact us on WhatsApp to complete your booking:</p>
                         <a href="https://wa.me/14049070581" target="_blank" class="whatsapp-book-btn">
                             <i class="fab fa-whatsapp"></i> Book via WhatsApp
@@ -1665,15 +1919,10 @@
                 </div>
             </div>
         `;
-        
         container.innerHTML = html;
-        
-        // Reset payment status
         document.getElementById('paymentStatus').textContent = '';
         document.getElementById('paymentStatus').className = '';
         document.getElementById('whatsappSection').style.display = 'none';
-        
-        // Set upfront amount
         const upfrontInput = document.getElementById('upfrontAmount');
         if (upfrontInput && currentBooking) {
             upfrontInput.placeholder = 'Min $' + minUpfront;
@@ -1708,25 +1957,13 @@
 
     function copyBTC() {
         const address = document.getElementById('btcAddress').textContent;
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(address).then(() => alert('BTC Address copied!'));
-        } else {
-            const ta = document.createElement('textarea');
-            ta.value = address;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            alert('BTC Address copied!');
-        }
+        copyText(address);
     }
 
     // ============================================================
     // ====== SUBMIT PAYMENT ======
     // ============================================================
     function submitPayment(method) {
-        console.log('💳 Submitting payment:', method);
-        
         currentUser = getCurrentUser();
         if (!currentUser) {
             document.getElementById('paymentStatus').textContent = 'Please create an account first!';
@@ -1800,15 +2037,13 @@
         loadPayments();
         payments.push(paymentData);
         savePayments();
-        console.log('✅ Payment saved:', paymentData);
 
         document.getElementById('paymentStatus').textContent = '✅ Payment submitted! Waiting for admin approval.';
         document.getElementById('paymentStatus').className = 'payment-status pending';
 
-        // Check for approval (simulated)
         setTimeout(function() {
             checkPaymentApproval(paymentData.id);
-        }, 1000);
+        }, 1500);
     }
 
     function checkPaymentApproval(paymentId) {
@@ -1828,7 +2063,6 @@
             document.getElementById('paymentStatus').textContent = '❌ Payment Declined. Please contact admin.';
             document.getElementById('paymentStatus').className = 'payment-status declined';
         } else {
-            // Check again in 3 seconds
             setTimeout(function() { checkPaymentApproval(paymentId); }, 3000);
         }
     }
@@ -1847,19 +2081,12 @@
     };
 
     function handlePageNavigation(page) {
-        console.log('🔀 Navigating to:', page);
-        
-        // Update nav links
         for (let i = 0; i < navLinks.length; i++) {
             navLinks[i].classList.toggle('active', navLinks[i].dataset.page === page);
         }
-        
-        // Show page
         for (const key in pages) {
             pages[key].classList.toggle('active', key === page);
         }
-        
-        // Load page content
         if (page === 'account') loadAccountPage();
         if (page === 'gallery') renderGallery();
         if (page === 'videos') renderVideos();
@@ -1868,7 +2095,6 @@
         if (page === 'book') {
             renderBookPage();
             loadPayments();
-            // Check for any approved payments
             for (let i = 0; i < payments.length; i++) {
                 if (payments[i].status === 'approved' && !payments[i].notified) {
                     payments[i].notified = true;
@@ -1883,104 +2109,23 @@
                 }
             }
         }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     for (let i = 0; i < navLinks.length; i++) {
         navLinks[i].addEventListener('click', function(e) {
             e.preventDefault();
-            const page = this.dataset.page;
-            handlePageNavigation(page);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            handlePageNavigation(this.dataset.page);
         });
     }
 
-    // Also handle [data-page] links
     document.querySelectorAll('[data-page]').forEach(function(el) {
         if (el.tagName !== 'A') {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
                 const page = this.dataset.page;
-                if (page) {
-                    handlePageNavigation(page);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
+                if (page) handlePageNavigation(page);
             });
-        }
-    });
-
-    // ============================================================
-    // ====== UNLOCK MODAL ======
-    // ============================================================
-    const unlockModal = document.getElementById('unlockModal');
-    const unlockClose = document.getElementById('modalClose');
-    const unlockCodeInput = document.getElementById('unlockCodeInput');
-    const unlockCodeBtn = document.getElementById('unlockCodeBtn');
-    const unlockMessage = document.getElementById('unlockMessage');
-
-    unlockCodeBtn.addEventListener('click', function() {
-        const code = unlockCodeInput.value.trim().toUpperCase();
-        if (!code || code.length < 4) {
-            unlockMessage.textContent = 'Please enter a valid PIN';
-            unlockMessage.style.color = '#C0392B';
-            return;
-        }
-        let valid = false;
-        for (const key in localStorage) {
-            if (key.startsWith('sophia_pin_')) {
-                const storedPin = localStorage.getItem(key);
-                if (storedPin && storedPin.toUpperCase() === code) {
-                    valid = true;
-                    break;
-                }
-            }
-        }
-        if (valid) {
-            unlockMessage.textContent = '✅ Content unlocked!';
-            unlockMessage.style.color = '#2B6E4F';
-            setTimeout(() => {
-                unlockModal.classList.remove('active');
-                renderGallery();
-                renderVideos();
-            }, 1200);
-        } else {
-            unlockMessage.textContent = '❌ Invalid PIN. Contact WhatsApp.';
-            unlockMessage.style.color = '#C0392B';
-        }
-    });
-
-    unlockClose.addEventListener('click', () => unlockModal.classList.remove('active'));
-    unlockModal.addEventListener('click', function(e) { if (e.target === this) unlockModal.classList.remove('active'); });
-
-    // ============================================================
-    // ====== REGISTER COMPLETE HANDLER ======
-    // ============================================================
-    // After registration, if there was a pending booking, go to book page
-    const originalRegister = registerBtn.click;
-    registerBtn.addEventListener('click', function() {
-        const name = regName.value.trim();
-        const email = regEmail.value.trim();
-        const phone = regPhone.value.trim();
-        if (!name || !email || !phone) {
-            registerMessage.textContent = 'Please fill in all fields';
-            registerMessage.style.color = '#C0392B';
-            return;
-        }
-        const result = registerUser(name, email, phone);
-        if (result.success) {
-            registerMessage.textContent = '✅ Account created! Your ID: ' + result.user.id;
-            registerMessage.style.color = '#2B6E4F';
-            regName.value = ''; regEmail.value = ''; regPhone.value = '';
-            setTimeout(() => {
-                registerModal.classList.remove('active');
-                loadAccountPage();
-                // If there was a pending booking, go to book page
-                if (currentBooking) {
-                    handlePageNavigation('book');
-                }
-            }, 1500);
-        } else {
-            registerMessage.textContent = result.message;
-            registerMessage.style.color = '#C0392B';
         }
     });
 
@@ -1999,18 +2144,15 @@
     renderGallery();
     renderVideos();
     loadAccountPage();
-
-    // Check if book page should be pre-rendered
     renderBookPage();
 
     console.log('🌸 Sophia Therapy v' + APP_VERSION + ' ready!');
+    console.log('☁️ Cloudinary: ' + CLOUDINARY_CLOUD_NAME);
     console.log('📸 Gallery: ' + galleryItems.length + ' images');
     console.log('🎬 Videos: ' + videoItems.length + ' videos');
     console.log('💼 Services: ' + services.length + ' services');
     console.log('👤 Users: ' + users.length + ' users');
     console.log('📱 Contact: +1 (404) 907-0581');
-    console.log('🔗 Adsterra: Loaded');
 </script>
-
 </body>
 </html>
