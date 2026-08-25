@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophia Massage & Therapy Spa</title>
+  <meta name="description" content="Sophia Massage & Therapy Spa - relaxing and professional wellness services.">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fffafc;
+      color: #33272d;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #7b3158, #b65d82);
+      color: white;
+      padding: 70px 20px 55px;
+      text-align: center;
+    }
+    header h1 { font-size: 38px; margin-bottom: 10px; }
+    header p { max-width: 650px; margin: auto; font-size: 17px; opacity: .95; }
+    .btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 13px 22px;
+      border-radius: 30px;
+      background: white;
+      color: #7b3158;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section { padding: 50px 18px; max-width: 1050px; margin: auto; }
+    .title { text-align: center; margin-bottom: 30px; }
+    .title h2 { font-size: 30px; color: #7b3158; }
+    .title p { margin-top: 6px; color: #75666c; }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #f0dce5;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 7px 22px rgba(70, 35, 50, .07);
+    }
+    .card .icon { font-size: 34px; }
+    .card h3 { margin: 10px 0 7px; color: #7b3158; }
+    .card p { color: #6d6267; font-size: 14px; }
+    .card button {
+      width: 100%;
+      border: 0;
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #7b3158;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .about {
+      background: #f9edf2;
+      max-width: none;
+    }
+    .about-inner { max-width: 850px; margin: auto; text-align: center; }
+    .booking {
+      text-align: center;
+      background: white;
+      border-radius: 20px;
+      padding: 35px 20px;
+      box-shadow: 0 7px 22px rgba(70, 35, 50, .07);
+    }
+    .whatsapp {
+      background: #25D366;
+      color: white;
+      display: inline-block;
+      padding: 14px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 18px;
+    }
+    footer {
+      background: #2f2027;
+      color: #ddd;
+      text-align: center;
+      padding: 28px 15px;
+      font-size: 14px;
+    }
+    footer a { color: #fff; }
+    @media (max-width: 600px) {
+      header h1 { font-size: 30px; }
+      section { padding: 40px 15px; }
+    }
+  </style>
+  <script src="https://pl30955345.profitableratecpmnetwork.com/2f/a6/43/2fa643caf6f6161c798274f7ef01f6ce.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>🌸 Sophia Massage & Therapy Spa</h1>
+  <p>Relax, recharge and enjoy a professional wellness experience designed around your comfort.</p>
+  <a class="btn" href="#services">View Services</a>
+</header>
+
+<section id="services">
+  <div class="title">
+    <h2>Our Services</h2>
+    <p>Choose a service below to contact Sophia directly on WhatsApp.</p>
+  </div>
+
+  <div class="services">
+    <div class="card">
+      <div class="icon">💆‍♀️</div>
+      <h3>Relaxation Massage</h3>
+      <p>A gentle wellness massage focused on relaxation and stress relief.</p>
+      <button onclick="bookService('Relaxation Massage')">Book This Service</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🌿</div>
+      <h3>Therapeutic Massage</h3>
+      <p>A focused session designed around general muscle tension and wellness.</p>
+      <button onclick="bookService('Therapeutic Massage')">Book This Service</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">✨</div>
+      <h3>Deep Relaxation</h3>
+      <p>A longer wellness experience for clients who want extra time to unwind.</p>
+      <button onclick="bookService('Deep Relaxation')">Book This Service</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏠</div>
+      <h3>Home Service</h3>
+      <p>Ask about availability for a professional wellness session at your location.</p>
+      <button onclick="bookService('Home Service')">Ask About Home Service</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧖‍♀️</div>
+      <h3>Spa Wellness Session</h3>
+      <p>A calm, comfortable session focused on relaxation and personal wellness.</p>
+      <button onclick="bookService('Spa Wellness Session')">Book This Service</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">❤️</div>
+      <h3>Custom Session</h3>
+      <p>Not sure what to choose? Message Sophia and discuss the experience you need.</p>
+      <button onclick="bookService('Custom Session')">Message Sophia</button>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-inner">
+    <div class="title">
+      <h2>About Sophia</h2>
+    </div>
+    <p>
+      Welcome to Sophia Massage & Therapy Spa. My goal is to provide a calm,
+      respectful and comfortable environment where clients can take time to
+      relax and focus on their wellness.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="booking">
+    <div class="title">
+      <h2>Ready to Book?</h2>
+      <p>Send Sophia a message on WhatsApp to check availability and arrange your session.</p>
+    </div>
+    <a class="whatsapp" href="https://wa.me/14049070581?text=Hello%20Sophia%2C%20I%27d%20like%20to%20book%20a%20massage%20and%20therapy%20session." target="_blank">
+      💬 Chat on WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sophia Massage & Therapy Spa. All rights reserved.</p>
+  <p style="margin-top:8px;">WhatsApp: <a href="https://wa.me/14049070581" target="_blank">+1 (404) 907-0581</a></p>
+  <p style="margin-top:8px;"><a href="https://sophia-threrapy.onrender.com">sophia-threrapy.onrender.com</a></p>
+</footer>
+
+<script>
+  function bookService(service) {
+    const message =
+      "Hello Sophia 👋%0A%0A" +
+      "I found your website and I'm interested in:%0A" +
+      "🌸 " + encodeURIComponent(service) + "%0A%0A" +
+      "I'd like to know the available times, price and booking details.";
+
+    window.open("https://wa.me/14049070581?text=" + message, "_blank");
+  }
+</script>
+
+</body>
+</html>
